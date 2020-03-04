@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trip_it_app/models/location.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 
@@ -9,52 +8,33 @@ class MapView extends StatelessWidget {
   Widget build(BuildContext context) {
     var markers = <Marker>[
       Marker(
-        width: 80.0,
-        height: 80.0,
-        point: LatLng(51.5, -0.09),
+        width: 40.0,
+        height: 40.0,
+        point: LatLng(45.171547, 	5.722387),
         builder: (ctx) => Container(
-          child: FlutterLogo(),
-        ),
-      ),
-      Marker(
-        width: 80.0,
-        height: 80.0,
-        point: LatLng(53.3498, -6.2603),
-        builder: (ctx) => Container(
-          child: FlutterLogo(
-            colors: Colors.green,
-          ),
-        ),
-      ),
-      Marker(
-        width: 80.0,
-        height: 80.0,
-        point: LatLng(48.8566, 2.3522),
-        builder: (ctx) => Container(
-          child: FlutterLogo(colors: Colors.purple),
+          child: FlutterLogo(colors: Colors.blue),
         ),
       ),
     ];
 
-    return Padding(
-        padding: EdgeInsets.all(8.0),
+    return Container(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: Text('This is a map that is showing (51.5, -0.9).'),
-            ),
-            Flexible(
+           Flexible(
               child: FlutterMap(
                 options: MapOptions(
-                  center: LatLng(51.5, -0.09),
-                  zoom: 5.0,
+                  center: markers.first.point,
+                  zoom: 7.0,
                 ),
                 layers: [
                   TileLayerOptions(
-                      urlTemplate:
-                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                      subdomains: ['a', 'b', 'c']),
+                    urlTemplate: "https://api.mapbox.com/v4/"
+                    "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
+                    additionalOptions: {
+                      'accessToken': 'pk.eyJ1Ijoic2NoaWRsIiwiYSI6ImNrN2RkaDRzdTBta2MzbXBhcXByOWwxZnoifQ.PMQVxwHF6t00YTYstdvWHQ',
+                      'id': 'mapbox.streets',
+                    },
+                  ),
                   MarkerLayerOptions(markers: markers)
                 ],
               ),
