@@ -12,7 +12,7 @@ class MapView extends StatelessWidget {
         height: 40.0,
         point: LatLng(45.171547, 	5.722387),
         builder: (ctx) => Container(
-          child: FlutterLogo(colors: Colors.blue),
+          child: Image.asset("assets/tripit_logo.png"),
         ),
       ),
     ];
@@ -23,8 +23,8 @@ class MapView extends StatelessWidget {
            Flexible(
               child: FlutterMap(
                 options: MapOptions(
-                  center: markers.first.point,
-                  zoom: 7.0,
+                  center: LatLng(	48.864716,	2.349014),
+                  zoom: 5.5,
                 ),
                 layers: [
                   TileLayerOptions(
