@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text("Trip it!"),
         ),
-        drawer: DrawerWidget()
+        drawer: DrawerWidget(),
         body: Center(
           child: MapView(),
         ),
