@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_it_app/widgets/drawer.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/';
@@ -12,7 +13,8 @@ class HomeScreen extends StatelessWidget {
         ),
         body: Center(
           child: Text("Welcome Home"),
-        )
+        ),
+        drawer: DrawerWidget()
     );
   }
 }
