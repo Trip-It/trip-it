@@ -12,7 +12,7 @@ class MapView extends StatelessWidget {
         height: 40.0,
         point: LatLng(45.171547, 	5.722387),
         builder: (ctx) => Container(
-          child: Image.asset("assets/tripit_logo.png"),
+          child: Image.asset("assets/position_mark.png"),
         ),
       ),
     ];
