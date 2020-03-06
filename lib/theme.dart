@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 final ThemeData tripitThemeData = ThemeData(
   // Define the default brightness and colors.
   brightness: Brightness.light,
-  primaryColor: TripItColors.primaryDarkBlue,
-  accentColor: TripItColors.primaryLightBlue,
+  primaryColor: TripItColors.primaryLightBlue,
+  accentColor: TripItColors.primaryDarkBlue,
 
   // Define the default font family.
   fontFamily: 'Roboto',
