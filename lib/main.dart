@@ -5,6 +5,7 @@ import 'package:trip_it_app/screens/home.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
 import 'package:trip_it_app/screens/trip.dart';
+import 'package:trip_it_app/theme.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: tripitThemeData,
       debugShowCheckedModeBanner: false,
       initialRoute: HomeScreen.routeName,
       routes: {
