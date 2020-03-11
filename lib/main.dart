@@ -5,6 +5,8 @@ import 'package:trip_it_app/screens/home.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
 import 'package:trip_it_app/screens/trip.dart';
+import 'package:trip_it_app/screens/test.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
         PreferencesScreen.routeName: (context) => PreferencesScreen(),
         CardsScreen.routeName: (context) => CardsScreen(),
         AboutScreen.routeName: (context) => AboutScreen(),
+        TestScreen.routeName: (context) => TestScreen(),
       },
     );
   }
