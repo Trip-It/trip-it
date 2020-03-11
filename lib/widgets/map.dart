@@ -1,21 +1,38 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
+import 'package:user_location/user_location.dart';
 
 class MapView extends StatelessWidget {
+
+  ///Map controller to manage app
+  MapController mapController = MapController();
+  UserLocationOptions userLocationOptions;
+  StreamController<LatLng> markerlocationStream = StreamController();
+  List<Marker> markers = [];
+
+  LatLng position = LatLng(45.171547, 	5.722387);
+
   @override
   Widget build(BuildContext context) {
-    var markers = <Marker>[
-      Marker(
-        width: 40.0,
-        height: 40.0,
-        point: LatLng(45.171547, 	5.722387),
-        builder: (ctx) => Container(
-          child: Image.asset("assets/position_mark.png"),
-        ),
-      ),
-    ];
+    markerlocationStream.stream.listen((onData) {
+      // print(onData.latitude);
+    });
+
+    userLocationOptions = UserLocationOptions(
+        context: context,
+        mapController: mapController,
+        markers: markers,
+        onLocationUpdate: (LatLng pos) =>
+            position = pos,
+        updateMapLocationOnPositionChange: true,
+        showMoveToCurrentLocationFloatingActionButton: true,
+        zoomToCurrentLocationOnLoad: true,
+        fabBottom: 50,
+        fabRight: 50,
+        verbose: false);
 
     return Container(
         child: Column(
@@ -23,8 +40,11 @@ class MapView extends StatelessWidget {
            Flexible(
               child: FlutterMap(
                 options: MapOptions(
-                  center: LatLng(45.171547, 	5.722387),
+                  center: position,
                   zoom: 14,
+                  plugins: [
+                    UserLocationPlugin(), //Use user location on map
+                  ],
                 ),
                 layers: [
                   TileLayerOptions(
@@ -35,13 +55,19 @@ class MapView extends StatelessWidget {
                       'id': 'mapbox.streets',
                     },
                   ),
-                  MarkerLayerOptions(markers: markers)
+                  MarkerLayerOptions(markers: markers),
+                  userLocationOptions,
                 ],
+                mapController: mapController,
               ),
             ),
           ],
         ),
     );
+
+    void dispose(){
+      markerlocationStream.close();
+    }
   }
 
 }
