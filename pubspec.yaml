@@ -30,13 +30,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  # Flutter Launcher Icons
-  flutter_launcher_icons: ^0.7.0
+# Flutter Launcher Icons
+  flutter_launcher_icons: "^0.7.0"
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/tripit_logo.png"
+  image_path: "assets/tripit_logo2.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -55,6 +55,8 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - assets/tripit_logo.png
+    - assets/tripit_logo2.png
+    - assets/tripit_logo3.png
     - assets/position_mark.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
