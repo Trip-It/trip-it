@@ -23,8 +23,8 @@ class MapView extends StatelessWidget {
            Flexible(
               child: FlutterMap(
                 options: MapOptions(
-                  center: LatLng(	48.864716,	2.349014),
-                  zoom: 5.5,
+                  center: LatLng(45.171547, 	5.722387),
+                  zoom: 14,
                 ),
                 layers: [
                   TileLayerOptions(
