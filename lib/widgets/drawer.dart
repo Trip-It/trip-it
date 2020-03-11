@@ -90,12 +90,14 @@ class DrawerWidget extends StatelessWidget{
           ),
           color: TripItColors.primaryDarkBlue,
         ),
+        /*
         ListTile(
           title: Text('Test'),
           onTap: () {
             Navigator.pushNamed(context, TestScreen.routeName);
           },
         ),
+        */
       ],
     ),
     ),
