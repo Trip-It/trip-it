@@ -1,16 +1,17 @@
-# trip_it_app
+# Trip it!
 
-A new Flutter application.
+Electrical Vehicle navigation for the future of mobility.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Get started
 
-A few resources to get you started if this is your first Flutter project:
+* Clone the repository to get started
+* Check out our [worklfow guidelines](https://github.com/Trip-It/trip-it/wiki).
+* After finishing your work, create a pull request
+* Latest stable version can be found on `master`
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### About
+
+This project is **OpenSource** and thus accessible to anyone.
+It is the mobile version of [trip-It! routeplanner](https://sourceforge.net/projects/tripit/).
