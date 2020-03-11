@@ -4,6 +4,7 @@ import 'package:trip_it_app/screens/cards.dart';
 import 'package:trip_it_app/screens/home.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
+import 'package:trip_it_app/screens/splashscreen.dart';
 import 'package:trip_it_app/screens/trip.dart';
 import 'package:trip_it_app/theme.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: tripitThemeData,
       debugShowCheckedModeBanner: false,
-      initialRoute: HomeScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       routes: {
         HomeScreen.routeName: (context) => HomeScreen(),
         ProfilesScreen.routeName: (context) => ProfilesScreen(),
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         PreferencesScreen.routeName: (context) => PreferencesScreen(),
         CardsScreen.routeName: (context) => CardsScreen(),
         AboutScreen.routeName: (context) => AboutScreen(),
+        SplashScreen.routeName: (context)=> SplashScreen(),
       },
     );
   }

@@ -3,9 +3,13 @@ import 'package:trip_it_app/widgets/drawer.dart';
 import 'package:trip_it_app/widgets/map.dart';
 import 'package:trip_it_app/models/location.dart';
 
-class HomeScreen extends StatelessWidget {
-  static const routeName = '/';
+class HomeScreen extends StatefulWidget {
+  static const routeName = '/home';
+ @override
+  _HomeScreenState createState() => new _HomeScreenState();
+}
 
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 

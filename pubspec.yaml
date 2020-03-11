@@ -19,6 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+   
 
   # Map
   flutter_map: ^0.8.2
@@ -48,7 +49,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+    
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
@@ -56,6 +57,7 @@ flutter:
   assets:
     - assets/tripit_logo.png
     - assets/position_mark.png
+    - assets/trip-it.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
