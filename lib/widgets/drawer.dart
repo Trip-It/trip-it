@@ -4,6 +4,7 @@ import 'package:trip_it_app/screens/cards.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
 import 'package:trip_it_app/screens/trip.dart';
+import 'package:trip_it_app/screens/test.dart';
 import 'package:trip_it_app/theme.dart';
 
 class DrawerWidget extends StatelessWidget{
@@ -88,6 +89,12 @@ class DrawerWidget extends StatelessWidget{
             },
           ),
           color: TripItColors.primaryDarkBlue,
+        ),
+        ListTile(
+          title: Text('Test'),
+          onTap: () {
+            Navigator.pushNamed(context, TestScreen.routeName);
+          },
         ),
       ],
     ),
