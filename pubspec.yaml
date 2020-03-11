@@ -56,6 +56,11 @@ flutter:
   assets:
     - assets/tripit_logo.png
     - assets/position_mark.png
+    - assets/AboutUs_logo.png
+    - assets/BWI_logo.png
+    - assets/Contact_logo.png
+    - assets/License_logo.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
