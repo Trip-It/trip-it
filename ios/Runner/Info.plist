@@ -41,5 +41,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>Trip it! needs access to your location when open in order to be useful as a navigation application.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Trip it! needs access to your location when in the background in order to be useful as a navigation application.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Trip it! needs access to your location when open and in the background in order to be useful as a navigation application.</string>
 </dict>
 </plist>
