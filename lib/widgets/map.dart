@@ -38,8 +38,8 @@ class MapView extends StatelessWidget {
         updateMapLocationOnPositionChange: followUser,
         showMoveToCurrentLocationFloatingActionButton: true,
         zoomToCurrentLocationOnLoad: true,
-        fabBottom: 50,
-        fabRight: 50,
+        fabBottom: 30,
+        fabRight: 10,
         verbose: false);
 
     return Container(
