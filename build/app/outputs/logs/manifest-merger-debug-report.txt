@@ -5,6 +5,9 @@ INJECTED from /root/AndroidStudioProjects/trip_it_app/android/app/src/main/Andro
 INJECTED from /root/AndroidStudioProjects/trip_it_app/android/app/src/main/AndroidManifest.xml:1:1-30:12
 INJECTED from /root/AndroidStudioProjects/trip_it_app/android/app/src/main/AndroidManifest.xml:1:1-30:12
 MERGED from /root/AndroidStudioProjects/trip_it_app/android/app/src/main/AndroidManifest.xml:1:1-30:12
+MERGED from [:path_provider] /root/AndroidStudioProjects/trip_it_app/build/path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:path_provider_macos] /root/AndroidStudioProjects/trip_it_app/build/path_provider_macos/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:sqflite] /root/AndroidStudioProjects/trip_it_app/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.fragment:fragment:1.0.0] /root/.gradle/caches/transforms-2/files-2.1/b8b68c04ee72209a3beca37e17f7088d/fragment-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /root/.gradle/caches/transforms-2/files-2.1/f046f38cf99e9cbe4891b184ce64db19/legacy-support-core-ui-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /root/.gradle/caches/transforms-2/files-2.1/0f0610cdcf96e6cfa9529b6a3246e3f6/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -56,7 +59,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] /root/.grad
 	android:label
 		ADDED from /root/AndroidStudioProjects/trip_it_app/android/app/src/main/AndroidManifest.xml:10:9-36
 	android:icon
-		ADDED from /root/AndroidStudioProjects/trip_it_app/android/app/src/main/AndroidManifest.xml:11:9-43
+		ADDED from /root/AndroidStudioProjects/trip_it_app/android/app/src/main/AndroidManifest.xml:11:9-45
 	android:name
 		ADDED from /root/AndroidStudioProjects/trip_it_app/android/app/src/main/AndroidManifest.xml:9:9-57
 activity#com.ense3.tripit.trip_it_app.MainActivity
@@ -93,6 +96,12 @@ uses-sdk
 INJECTED from /root/AndroidStudioProjects/trip_it_app/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /root/AndroidStudioProjects/trip_it_app/android/app/src/main/AndroidManifest.xml
 INJECTED from /root/AndroidStudioProjects/trip_it_app/android/app/src/main/AndroidManifest.xml
+MERGED from [:path_provider] /root/AndroidStudioProjects/trip_it_app/build/path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:path_provider] /root/AndroidStudioProjects/trip_it_app/build/path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_macos] /root/AndroidStudioProjects/trip_it_app/build/path_provider_macos/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_macos] /root/AndroidStudioProjects/trip_it_app/build/path_provider_macos/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:sqflite] /root/AndroidStudioProjects/trip_it_app/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:sqflite] /root/AndroidStudioProjects/trip_it_app/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [androidx.fragment:fragment:1.0.0] /root/.gradle/caches/transforms-2/files-2.1/b8b68c04ee72209a3beca37e17f7088d/fragment-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment:1.0.0] /root/.gradle/caches/transforms-2/files-2.1/b8b68c04ee72209a3beca37e17f7088d/fragment-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /root/.gradle/caches/transforms-2/files-2.1/f046f38cf99e9cbe4891b184ce64db19/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44

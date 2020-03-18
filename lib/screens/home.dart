@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/screens/searchbar.dart';
+import 'package:trip_it_app/widgets/drawer.dart';
 import 'package:trip_it_app/widgets/map.dart';
 import 'package:trip_it_app/models/location.dart';
 
@@ -13,6 +14,10 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Trip it!"),
+        ),
+        drawer: DrawerWidget(),
+        body: Center(
+          child: MapView(false),
         ),
         body: Stack(
           children: <Widget>[
@@ -30,6 +35,7 @@ class HomeScreen extends StatelessWidget {
 
         //body: Center(
           //child: MapView(),
-        );
+    );
+
   }
 }
