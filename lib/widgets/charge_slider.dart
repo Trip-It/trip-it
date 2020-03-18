@@ -28,7 +28,7 @@ class _ChargeSliderWidgetState extends State<ChargeSliderWidget> {
         children: <Widget>[
           Container(
             padding: EdgeInsets.all(8.0),
-            child:           Text(
+            child: Text(
               widget.title,
               style: TextStyle(
                 fontSize: 14.0,
