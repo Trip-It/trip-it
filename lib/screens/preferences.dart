@@ -8,6 +8,7 @@ class PreferencesScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text("Preferences"),
         ),
         body: Center(
