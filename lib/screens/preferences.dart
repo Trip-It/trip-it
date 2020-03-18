@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/cars_dropdown.dart';
+import 'package:trip_it_app/widgets/charge_slider.dart';
 
 class PreferencesScreen extends StatelessWidget {
   static const routeName = '/preferences';
@@ -26,6 +27,24 @@ class PreferencesScreen extends StatelessWidget {
                   CarsDropdownWidget(),
                 ],
               ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 12.0),
+            decoration: BoxDecoration(
+                color: TripItColors.primaryLightBlue,
+                borderRadius: BorderRadius.circular(10)
+            ),
+            padding: new EdgeInsets.all(2.0),
+            child: ChargeSliderWidget(5,20,"Minimum charge"),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 12.0),
+            decoration: BoxDecoration(
+                color: TripItColors.primaryLightBlue,
+                borderRadius: BorderRadius.circular(10)
+            ),
+            padding: new EdgeInsets.all(2.0),
+            child: ChargeSliderWidget(10,100,"Maximum charge"),
           ),
         ],
       ),
