@@ -35,16 +35,18 @@ class PreferencesScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10)
             ),
             padding: new EdgeInsets.all(2.0),
-            child: ChargeSliderWidget(5,20,10,"Minimum charge"),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 12.0),
-            decoration: BoxDecoration(
-                color: TripItColors.primaryLightBlue,
-                borderRadius: BorderRadius.circular(10)
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                children: <Widget>[
+                  ChargeSliderWidget(5,20,10,"Minimum charge"),
+                  ChargeSliderWidget(30,100,80,"Maximum charge"),
+                ],
+              ),
             ),
-            padding: new EdgeInsets.all(2.0),
-            child: ChargeSliderWidget(30,100,80,"Maximum charge"),
           ),
         ],
       ),
