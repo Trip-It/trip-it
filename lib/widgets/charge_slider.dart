@@ -5,17 +5,20 @@ import 'package:flutter_fluid_slider/flutter_fluid_slider.dart';
 class ChargeSliderWidget extends StatefulWidget {
   final double min;
   final double max;
+  final double start;
   final String title;
 
   /// Set [min] value selectable, [max] value selectable
-  const ChargeSliderWidget(this.min, this.max, this.title);
+  const ChargeSliderWidget(this.min, this.max, this.start, this.title);
 
   @override
-  State<StatefulWidget> createState() => _ChargeSliderWidgetState();
+  State<StatefulWidget> createState() => _ChargeSliderWidgetState(start);
 }
 
 class _ChargeSliderWidgetState extends State<ChargeSliderWidget> {
-  double charge = 10;
+  double _charge;
+
+  _ChargeSliderWidgetState(this._charge);
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +43,9 @@ class _ChargeSliderWidgetState extends State<ChargeSliderWidget> {
           Container(
             padding: EdgeInsets.only(left: 8.0, top: 0.0, right: 8.0, bottom: 8.0),
             child: FluidSlider(
-              value: charge,
+              value: _charge,
               onChanged: (newCharge) {
-                setState(() => charge = newCharge);
+                setState(() => _charge = newCharge);
               },
               min: widget.min,
               max: widget.max,
