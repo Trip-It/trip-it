@@ -4,6 +4,7 @@ import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/cars_dropdown.dart';
 import 'package:trip_it_app/widgets/charge_slider.dart';
 import 'package:trip_it_app/widgets/checkbox_options.dart';
+import 'package:trip_it_app/widgets/switch_options.dart';
 
 class PreferencesScreen extends StatelessWidget {
   static const routeName = '/preferences';
@@ -63,6 +64,19 @@ class PreferencesScreen extends StatelessWidget {
                   CheckboxOptionsWidget("Sport"),
                 ],
               ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 12.0),
+            decoration: BoxDecoration(
+                color: TripItColors.primaryLightBlue,
+                borderRadius: BorderRadius.circular(10)),
+            padding: new EdgeInsets.all(2.0),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              child: SwitchOptionsWidget("Plug", "Estimation"),
             ),
           ),
         ],
