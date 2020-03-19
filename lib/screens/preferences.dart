@@ -12,9 +12,10 @@ class PreferencesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Preferences"),
-      ),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("Preferences"),
+        ),
       body: ListView(
         padding: EdgeInsets.all(12.0),
         children: <Widget>[

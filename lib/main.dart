@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-    theme: ThemeData(
+      title: 'Trip It!',
+      theme: ThemeData(
       // Define the default brightness and colors.
       brightness: Brightness.light,
       primaryColor: Color.fromRGBO(32, 158, 187, 1.0),
