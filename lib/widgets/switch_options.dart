@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/theme.dart';
 
@@ -17,6 +18,8 @@ class _SwitchOptionsWidgetState extends State<SwitchOptionsWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         Text(
           widget.option1,
