@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/theme.dart';
-import 'package:trip_it_app/widgets/cars_dropdown.dart';
+import 'package:trip_it_app/widgets/dropdown.dart';
 import 'package:trip_it_app/widgets/charge_slider.dart';
 import 'package:trip_it_app/widgets/checkbox_options.dart';
 import 'package:trip_it_app/widgets/switch_options.dart';
@@ -25,12 +25,12 @@ class PreferencesScreen extends StatelessWidget {
             padding: new EdgeInsets.all(2.0),
             child: new Column(
               children: <Widget>[
-                CarsDropdownWidget(),
+                DropdownWidget("Choose a car",["Zoe R90 22kWh","Zoe R90 41kWh","Zoe R110 52kWh"]),
               ],
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 12.0),
+            margin: EdgeInsets.only(top: 6.0),
             decoration: BoxDecoration(
                 color: TripItColors.primaryLightBlue,
                 borderRadius: BorderRadius.circular(10)),
@@ -48,7 +48,7 @@ class PreferencesScreen extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 12.0),
+            margin: EdgeInsets.only(top: 6.0),
             decoration: BoxDecoration(
                 color: TripItColors.primaryLightBlue,
                 borderRadius: BorderRadius.circular(10)),
@@ -67,7 +67,7 @@ class PreferencesScreen extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 12.0),
+            margin: EdgeInsets.only(top: 6.0),
             decoration: BoxDecoration(
                 color: TripItColors.primaryLightBlue,
                 borderRadius: BorderRadius.circular(10)),
@@ -77,6 +77,30 @@ class PreferencesScreen extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: SwitchOptionsWidget("Plug", "Estimation"),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 6.0),
+            decoration: BoxDecoration(
+                color: TripItColors.primaryLightBlue,
+                borderRadius: BorderRadius.circular(10)),
+            padding: new EdgeInsets.all(2.0),
+            child:Column(
+                    children: <Widget>[
+                      DropdownWidget("Choose a language", ["English","Français","Deutsch","Espagnol"]),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 6.0),
+            decoration: BoxDecoration(
+                color: TripItColors.primaryLightBlue,
+                borderRadius: BorderRadius.circular(10)),
+            padding: new EdgeInsets.all(2.0),
+            child:Column(
+              children: <Widget>[
+                DropdownWidget("Choose a map type", ["Satellite","Normal","Hybrid"]),
+              ],
             ),
           ),
         ],

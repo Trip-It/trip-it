@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/theme.dart';
 
-class CarsDropdownWidget extends StatefulWidget {
+class DropdownWidget extends StatefulWidget {
+  final String hint;
+  final List<String> options;
+
+  DropdownWidget(this.hint, this.options);
+
   @override
-  State<StatefulWidget> createState() => _CarsDropdownWidgetState();
+  State<StatefulWidget> createState() => _DropdownWidgetState(options);
 }
 
-class _CarsDropdownWidgetState extends State<CarsDropdownWidget> {
-  List<String> _cars = ['Zoe R90 22kWh', 'Zoe R90 41kWh', 'Zoe R110 52kWh']; //TODO dynamic fill using Database
-  String _selectedCar;
+class _DropdownWidgetState extends State<DropdownWidget> {
+  List<String> _options;
+  String _selectedOption;
+
+  _DropdownWidgetState(this._options);
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +26,8 @@ class _CarsDropdownWidgetState extends State<CarsDropdownWidget> {
               borderRadius: BorderRadius.circular(10)),
           child: DropdownButton(
             isExpanded: true,
-            hint: Text('Choose a car'), // Not necessary for Option 1
-            value: _selectedCar,
+            hint: Text(widget.hint), // Not necessary for Option 1
+            value: _selectedOption,
             icon: Icon(
                 Icons.keyboard_arrow_down,
                 color: TripItColors.primaryLightBlue,
@@ -29,13 +36,13 @@ class _CarsDropdownWidgetState extends State<CarsDropdownWidget> {
             underline: SizedBox(),
             onChanged: (newValue) {
               setState(() {
-                _selectedCar = newValue;
+                _selectedOption = newValue;
               });
             },
-            items: _cars.map((car) {
+            items: _options.map((option) {
               return DropdownMenuItem(
-                child: new Text(car),
-                value: car,
+                child: new Text(option),
+                value: option,
               );
             }).toList(),
           ),
