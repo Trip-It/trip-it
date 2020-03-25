@@ -4,7 +4,7 @@ import 'package:trip_it_app/widgets/map.dart';
 import 'package:trip_it_app/models/location.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const routeName = '/home';
+  static const routeName = '/';
  @override
   _HomeScreenState createState() => new _HomeScreenState();
 }
