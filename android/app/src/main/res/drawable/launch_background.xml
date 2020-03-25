@@ -6,6 +6,6 @@
      <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/tripit" />
+            android:src="@drawable/tripit" />
     </item> 
 </layer-list>
