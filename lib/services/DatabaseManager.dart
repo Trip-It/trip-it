@@ -1,32 +1,39 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-void main() async {
-  final database = openDatabase(
-    // Set the path to the database. Note: Using the `join` function from the
-    // `path` package is best practice to ensure the path is correctly
-    // constructed for each platform.
-    join(await getDatabasesPath(), 'tripit_database.db'),
-    // When the database is first created, create a table to store information.
-    onCreate: (db, version) {
-      return db.execute(
-        "CREATE TABLE tripit(id INTEGER)",
-      );
-    },
-    // Set the version. This executes the onCreate function and provides a
-    // path to perform database upgrades and downgrades.
-    version: 1,
-  );
+class DatabaseManager {
+  DatabaseManager._();
+  static final DatabaseManager db = DatabaseManager._();
+  Database _database;
 
-  Future<void> insert(Tripit tripit) async {
+  Future<Database> get database async {
+    if (_database != null) return _database;
+    // if _database is null we instantiate it
+    _database = await initDB();
+    return _database;
+  }
+
+  initDB() async {// init the database tripitDB whith one attribut id
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, "tripitDB");
+    return await openDatabase(path, version: 1, onOpen: (db) {},
+        onCreate: (Database db, int version) async {
+      await db.execute("CREATE TABLE Tripit ("
+          "id INTEGER PRIMARY KEY,"
+          ")");
+    });
+  }
+
+  Future<void> insertDB(Tripit tripit) async {// insert more information
     // Get a reference to the database.
     final Database db = await database;
 
-  
     await db.insert(
-      'tripit',
+      'tripitDB',
       tripit.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -47,29 +54,27 @@ void main() async {
     });
   }
 
-  Future<void> update(Tripit tripit) async {
+  Future<void> updateDB(Tripit tripit) async {
     // Get a reference to the database.
     final db = await database;
 
-    
     await db.update(
-      'tripit',
+      'tripitDB',
       tripit.toMap(),
-      
+
       where: "id = ?",
       // Pass the id as a whereArg to prevent SQL injection.
       whereArgs: [tripit.id],
     );
   }
 
-  Future<void> delete(int id) async {
+  Future<void> deleteDB(int id) async {
     // Get a reference to the database.
     final db = await database;
 
-    
     await db.delete(
-      'tripit',
-      
+      'tripitDB',
+
       where: "id = ?",
       // Pass the id as a whereArg to prevent SQL injection.
       whereArgs: [id],
@@ -77,19 +82,18 @@ void main() async {
   }
 // It's just an example of implementing.
   //var example = Tripit(
-    //id: 0,
-    
- // );
+  //id: 0,
+
+  // );
 
   // Insert into the database.
-  //await insert(example);
+  //await insertDB(example);
 
-  // Print the list 
+  // Print the list
   //print(await tripit());
 
-  
   //example = Tripit(
-   // id: example.id,
+  // id: example.id,
   //);
   //await update(example);
 
@@ -97,7 +101,7 @@ void main() async {
   //print(await tripit());
 
   // Delete example from the database.
-  //await delete(example.id);
+  //await deleteDB(example.id);
 
   // Print the list
   //print(await tripit());
@@ -113,6 +117,4 @@ class Tripit {
       'id': id,
     };
   }
-
- 
 }
