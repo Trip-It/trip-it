@@ -56,7 +56,6 @@ class CardsScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, AddCardScreen.routeName);
           },
-        ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
