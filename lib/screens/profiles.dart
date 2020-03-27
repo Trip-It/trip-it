@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_it_app/theme.dart';
 
 class ProfilesScreen extends StatelessWidget {
   static const routeName = '/profiles';
@@ -8,12 +9,23 @@ class ProfilesScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: TripItColors.primaryDarkBlue,
           centerTitle: true,
           title: Text("Profiles"),
         ),
-        body: Center(
-          child: Text("Profile, profile, profile"),
-        )
+        body: Container(
+          decoration: BoxDecoration(
+            color: TripItColors.primaryDarkBlue,
+          ),
+          child: Center(
+            child: Text(
+              "Profile, profile, profile",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
     );
   }
 }
