@@ -9,6 +9,7 @@ class AddCardScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Add Card"),
+          centerTitle: true,
         ),
         body: Center(
           child: Text("That's how you add a card"),
