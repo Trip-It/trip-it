@@ -13,6 +13,8 @@ class Profile {
   String language;
   String mapType;
 
+  Profile(this.name, this.picture, this.car, this.minimumCharge, this.maximumCharge, this.restaurant, this.cinema, this.sport, this.plug, this.language, this.mapType);
+
   // Getter
   String getName() {
     return this.name;
