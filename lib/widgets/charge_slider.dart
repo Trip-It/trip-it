@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fluid_slider/flutter_fluid_slider.dart';
+import 'package:trip_it_app/theme.dart';
 
 /// Widget to display an adaptive slider within an lower and upper bound
 class ChargeSliderWidget extends StatefulWidget {
@@ -39,6 +40,11 @@ class _ChargeSliderWidgetState extends State<ChargeSliderWidget> {
           Container(
             padding: EdgeInsets.only(left: 8.0, top: 0.0, right: 8.0, bottom: 8.0),
             child: FluidSlider(
+              valueTextStyle: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: TripItColors.primaryDarkBlue,
+              ),
               value: _charge,
               onChanged: (newCharge) {
                 setState(() => _charge = newCharge);

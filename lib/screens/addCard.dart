@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class TripScreen extends StatelessWidget {
-  static const routeName = '/trip';
+class AddCardScreen extends StatelessWidget {
+  static const routeName = '/addCard';
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
         appBar: AppBar(
+          title: Text("Add Card"),
           centerTitle: true,
-          title: Text("Trip"),
         ),
         body: Center(
-          child: Text("New trip and so on..."),
+          child: Text("That's how you add a card"),
         )
     );
   }
