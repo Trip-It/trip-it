@@ -108,24 +108,41 @@ class PreferencesScreen extends StatelessWidget {
             ),
           ),
           ButtonBar(
-            alignment: MainAxisAlignment.spaceAround,
+            alignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               new RaisedButton(
-                child: new Text("Save current profile"),
-                onPressed: () {},
+                color: TripItColors.primaryLightBlue,
+                child: new Text(
+                    "Save to current profile",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  //TODO: Save in current profile
+                },
                 shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: TripItColors.primaryDarkBlue)
+                    borderRadius: new BorderRadius.circular(10.0),
+                    side: BorderSide(
+                        color: TripItColors.primaryLightBlue,
+                        width: 2.0
+                    ),
                 ),
               ),
               new RaisedButton(
-                child: new Text("New profile"),
+                color: TripItColors.primaryLightBlue,
+                child: new Text(
+                    "New profile",
+                    style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () {
+                  // Open screen to add new profile to database
                   Navigator.pushNamed(context, AddProfileScreen.routeName);
                 },
                 shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: TripItColors.primaryDarkBlue)
+                    borderRadius: new BorderRadius.circular(10.0),
+                    side: BorderSide(
+                        color: TripItColors.primaryLightBlue,
+                        width: 2.0,
+                    ),
                 ),
               ),
             ],
