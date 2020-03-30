@@ -1,4 +1,4 @@
-#Wed Mar 04 16:33:52 CET 2020
-base.0=/home/Robnooz/Android_studio_projects/trip-it/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+#Wed Mar 04 17:58:28 CET 2020
+base.0=/root/AndroidStudioProjects/trip_it_app/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

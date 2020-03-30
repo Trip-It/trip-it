@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_it_app/widgets/aboutListView.dart';
 
 class AboutScreen extends StatelessWidget {
   static const routeName = '/about';
@@ -8,10 +9,11 @@ class AboutScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text("About"),
         ),
         body: Center(
-          child: Text("We are OpenSource"),
+          child: AboutWidget(),
         )
     );
   }
