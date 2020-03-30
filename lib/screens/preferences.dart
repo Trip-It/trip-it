@@ -6,6 +6,8 @@ import 'package:trip_it_app/widgets/dropdown.dart';
 import 'package:trip_it_app/widgets/charge_slider.dart';
 import 'package:trip_it_app/widgets/checkbox_options.dart';
 import 'package:trip_it_app/widgets/switch_options.dart';
+import 'package:trip_it_app/services/DatabaseManager.dart';
+import 'package:trip_it_app/models/profile.dart';
 
 class PreferencesScreen extends StatelessWidget {
   static const routeName = '/preferences';
@@ -118,7 +120,7 @@ class PreferencesScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
-                  //TODO: Save in current profile
+                  saveInCurrentProfile();
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(10.0),
@@ -136,6 +138,7 @@ class PreferencesScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   // Open screen to add new profile to database
+                  //TODO save data from widgets and get it to the next screen
                   Navigator.pushNamed(context, AddProfileScreen.routeName);
                 },
                 shape: RoundedRectangleBorder(
@@ -151,5 +154,16 @@ class PreferencesScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Method to save the preferences in a profile
+  void saveInCurrentProfile() async{
+    DatabaseManager dbManager = DatabaseManager.db;
+
+    Profile toSave = new Profile("Name", "Elephant", "Tesla Model S", 40, 80, 1, 0, 1, 0, "Norwegian", "Hybrid");
+
+    dbManager.saveProfile(toSave);
+
+    return;
   }
 }
