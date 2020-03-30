@@ -71,7 +71,7 @@ class DrawerWidget extends StatelessWidget{
               ),
             ),
             onTap: () {
-              Navigator.pushNamed(context, ProfilesScreen.routeName);
+              Navigator.popAndPushNamed(context, ProfilesScreen.routeName);
             },
           ),
         ),
@@ -85,7 +85,7 @@ class DrawerWidget extends StatelessWidget{
             ),
             ),
             onTap: () {
-              Navigator.pushNamed(context, TripScreen.routeName);
+              Navigator.popAndPushNamed(context, TripScreen.routeName);
             },
           ),
           color: TripItColors.primaryDarkBlue,
@@ -99,7 +99,7 @@ class DrawerWidget extends StatelessWidget{
               ),
             ),
             onTap: () {
-              Navigator.pushNamed(context, PreferencesScreen.routeName);
+              Navigator.popAndPushNamed(context, PreferencesScreen.routeName);
             },
           ),
           color: TripItColors.primaryDarkBlue,
@@ -113,7 +113,7 @@ class DrawerWidget extends StatelessWidget{
               ),
             ),
             onTap: () {
-              Navigator.pushNamed(context, CardsScreen.routeName);
+              Navigator.popAndPushNamed(context, CardsScreen.routeName);
             },
           ),
           color: TripItColors.primaryDarkBlue,
@@ -127,7 +127,7 @@ class DrawerWidget extends StatelessWidget{
               ),
             ),
             onTap: () {
-              Navigator.pushNamed(context, TripScreen.routeName);
+              Navigator.popAndPushNamed(context, TripScreen.routeName);
             },
           ),
           color: TripItColors.primaryDarkBlue,
@@ -142,7 +142,7 @@ class DrawerWidget extends StatelessWidget{
               ),
             ),
             onTap: () {
-              Navigator.pushNamed(context, AboutScreen.routeName);
+              Navigator.popAndPushNamed(context, AboutScreen.routeName);
             },
           ),
           color: TripItColors.primaryDarkBlue,
