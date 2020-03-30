@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/screens/about.dart';
+import 'package:trip_it_app/screens/addProfile.dart';
 import 'package:trip_it_app/screens/addCard.dart';
 import 'package:trip_it_app/screens/cards.dart';
 import 'package:trip_it_app/screens/home.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         ProfilesScreen.routeName: (context) => ProfilesScreen(),
         TripScreen.routeName: (context) => TripScreen(),
         PreferencesScreen.routeName: (context) => PreferencesScreen(),
+        AddProfileScreen.routeName: (context) => AddProfileScreen(),
         CardsScreen.routeName: (context) => CardsScreen(),
         AboutScreen.routeName: (context) => AboutScreen(),
         TestScreen.routeName: (context) => TestScreen(),
