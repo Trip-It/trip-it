@@ -25,7 +25,7 @@
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
         android:icon="@mipmap/launcher_icon"
-        android:label="trip_it_app" >
+        android:label="Trip It!" >
         <activity
             android:name="com.ense3.tripit.trip_it_app.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

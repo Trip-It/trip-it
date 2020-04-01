@@ -19,6 +19,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite:
+  path:
+  path_provider:
 
   # Map
   flutter_map: ^0.8.2
@@ -26,6 +29,7 @@ dependencies:
   mapbox_search_flutter: any
   provider: ^3.2.0
   user_location: ^0.1.2
+  flutter_fluid_slider: ^1.0.2
 
   #URL
   url_launcher: ^5.4.2

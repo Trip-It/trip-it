@@ -28,6 +28,7 @@ class CardsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Your Cards"),
+        centerTitle: true,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +57,7 @@ class CardsScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, AddCardScreen.routeName);
           },
-        ),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
