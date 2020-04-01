@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trip_it_app/screens/addProfile.dart';
+import 'package:trip_it_app/screens/add_profile.dart';
 import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/dropdown.dart';
 import 'package:trip_it_app/widgets/charge_slider.dart';
 import 'package:trip_it_app/widgets/checkbox_options.dart';
 import 'package:trip_it_app/widgets/switch_options.dart';
-import 'package:trip_it_app/services/DatabaseManager.dart';
+import 'package:trip_it_app/services/database_manager.dart';
 import 'package:trip_it_app/models/profile.dart';
 
 class PreferencesScreen extends StatelessWidget {

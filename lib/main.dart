@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/screens/about.dart';
-import 'package:trip_it_app/screens/addProfile.dart';
-import 'package:trip_it_app/screens/addCard.dart';
+import 'package:trip_it_app/screens/add_profile.dart';
+import 'package:trip_it_app/screens/add_card.dart';
 import 'package:trip_it_app/screens/cards.dart';
 import 'package:trip_it_app/screens/home.dart';
 import 'package:trip_it_app/screens/preferences.dart';
