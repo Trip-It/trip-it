@@ -11,11 +11,11 @@ class CardsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    ChargeCard chargemapPass = ChargeCard("Chargemap Pass","assets/chargemap.png");
-    ChargeCard izivia = ChargeCard("IZIVIA","assets/izivia-pass-006solo-1.jpg");
-    ChargeCard kiwhi = ChargeCard("KiWhi","assets/carte_KiWhi-Passe-300x194.png");
-    ChargeCard newMotion = ChargeCard("New Motion","assets/chargecard.png");
-    ChargeCard plugsurfing = ChargeCard("Plugsurfing","assets/Pass-Plugsurfing.png");
+    ChargeCard chargemapPass = ChargeCard("Chargemap Pass","assets/chargemap.png","https://chargemap.com");
+    ChargeCard izivia = ChargeCard("IZIVIA","assets/izivia-pass-006solo-1.jpg","https://www.izivia.com");
+    ChargeCard kiwhi = ChargeCard("KiWhi","assets/carte_KiWhi-Passe-300x194.png","https://www.easytrip.fr/kiwhi-pass-particuliers" );
+    ChargeCard newMotion = ChargeCard("New Motion","assets/chargecard.png","https://newmotion.com/");
+    ChargeCard plugsurfing = ChargeCard("Plugsurfing","assets/Pass-Plugsurfing.png","https://www.plugsurfing.com/home");
 
     final cards = [
       chargemapPass,

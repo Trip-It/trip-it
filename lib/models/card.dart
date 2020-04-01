@@ -4,7 +4,8 @@
 class ChargeCard {
   String name;
   String image;
+  String url;
 
-  ChargeCard(this.name, this.image);
+  ChargeCard(this.name, this.image, this.url);
 
 }
