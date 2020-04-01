@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
         body: Stack(
           children: <Widget>[
             Container(
-              child: MapView(false),
+              child: MapView(false,SearchBar.newPos),
             ),
             Positioned(
               bottom: 10,

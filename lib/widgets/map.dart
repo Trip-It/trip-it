@@ -15,12 +15,12 @@ class MapView extends StatelessWidget {
   UserLocationOptions userLocationOptions;
   StreamController<LatLng> markerlocationStream = StreamController();
   List<Marker> markers = [];
-  LatLng position = LatLng(45.171547, 	5.722387);
+  LatLng position ;
   bool followUser;
 
   /// Constructor to initialize widget, [followUser] sets if map stays centered
   /// on user location or not
-  MapView(this.followUser);
+  MapView(this.followUser,this.position);
 
 
   @override
@@ -35,9 +35,9 @@ class MapView extends StatelessWidget {
         markers: markers,
         onLocationUpdate: (LatLng pos) =>
             position = pos,
-        updateMapLocationOnPositionChange: followUser,
-        showMoveToCurrentLocationFloatingActionButton: true,
-        zoomToCurrentLocationOnLoad: true,
+        updateMapLocationOnPositionChange: false,
+        showMoveToCurrentLocationFloatingActionButton: false,
+        zoomToCurrentLocationOnLoad: false,
         fabBottom: 30,
         fabRight: 10,
         verbose: false);
