@@ -14,18 +14,24 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  sqflite:
+  path:
+  path_provider:
 
   # Map
   flutter_map: ^0.8.2
-  nominatim_location_picker: any
+  mapbox_search: any
+  mapbox_search_flutter: any
   provider: ^3.2.0
   user_location: ^0.1.2
+  flutter_fluid_slider: ^1.0.2
   search_widget: any
+    nominatim_location_picker: any
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -68,7 +74,11 @@ flutter:
     - assets/BWI_logo.png
     - assets/Contact_logo.png
     - assets/License_logo.png
-
+    - assets/carte_KiWhi-Passe-300x194.png
+    - assets/chargecard.png
+    - assets/chargemap.png
+    - assets/izivia-pass-006solo-1.jpg
+    - assets/Pass-Plugsurfing.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

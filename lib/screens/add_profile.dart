@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/widgets/about_list_view.dart';
 
-class AboutScreen extends StatelessWidget {
-  static const routeName = '/about';
+class AddProfileScreen extends StatelessWidget {
+  static const routeName = '/preferences/add';
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
         appBar: AppBar(
+          title: Text("Add Profile"),
           centerTitle: true,
-          title: Text("About"),
         ),
         body: Center(
-          child: AboutWidget(),
+          child: Text("Save your preferences as profile"),
         )
     );
   }
