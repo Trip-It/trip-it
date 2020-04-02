@@ -164,6 +164,9 @@ class PreferencesScreen extends StatelessWidget {
 
     dbManager.saveProfile(toSave);
 
+    List<Profile> profiles = await dbManager.getProfiles();
+
+    print(profiles.first.toString());
     return;
   }
 }

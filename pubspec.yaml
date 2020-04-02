@@ -81,6 +81,7 @@ flutter:
     - assets/chargemap.png
     - assets/izivia-pass-006solo-1.jpg
     - assets/Pass-Plugsurfing.png
+    - assets/freshmile.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

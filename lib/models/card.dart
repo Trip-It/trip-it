@@ -8,4 +8,15 @@ class ChargeCard {
 
   ChargeCard(this.name, this.image, this.url);
 
+  Map<String, dynamic> toMap() {
+    var map = new Map<String, dynamic>();
+    map["name"] = name;
+    map["image"] = image;
+    map["url"] = url;
+    return map;
+  }
+
+  String toString() {
+    return "Name: " + name + "\nImage: " + image + "\nURL: " + url ;
+  }
 }
