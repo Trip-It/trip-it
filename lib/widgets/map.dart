@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import 'package:user_location/user_location.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
 /// Map widget using Mapbox API
 /// with [followUser] you can set whether or not the map should stay centered
@@ -22,7 +23,7 @@ class MapView extends StatelessWidget {
   /// on user location or not
   MapView(this.followUser);
 
-
+  GlobalKey<OSMFlutterState> mapKey = GlobalKey<OSMFlutterState>();
   @override
   Widget build(BuildContext context) {
     markerlocationStream.stream.listen((onData) {
@@ -46,30 +47,29 @@ class MapView extends StatelessWidget {
         child: Column(
           children: [
            Flexible(
-              child: FlutterMap(
-                options: MapOptions(
-                  center: position,
-                  zoom: 14,
-                  plugins: [
-                    UserLocationPlugin(), //Use user location on map
-                  ],
-                ),
-                layers: [
-                  TileLayerOptions(
-                    urlTemplate: "https://api.mapbox.com/v4/"
-                    "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
-                    additionalOptions: {
-                      'accessToken': 'pk.eyJ1Ijoic2NoaWRsIiwiYSI6ImNrN2RkaDRzdTBta2MzbXBhcXByOWwxZnoifQ.PMQVxwHF6t00YTYstdvWHQ',
-                      'id': 'mapbox.streets',
-                    },
+              child: OSMFlutter(
+            key: mapKey,
+            currentLocation: true,
+            road: Road(
+                startIcon: MarkerIcon(
+                  icon: Icon(
+                    Icons.person,
+                    size: 64,
+                    color: Colors.brown,
                   ),
-                  MarkerLayerOptions(markers: markers),
-                  userLocationOptions,
-                ],
-                mapController: mapController,
+                ),
+                roadColor: Colors.blueAccent),
+            markerIcon: MarkerIcon(
+              icon: Icon(
+                Icons.person_pin_circle,
+                color: Colors.redAccent,
+                size: 56,
               ),
             ),
+            ),
+           ),
           ],
+           
         ),
     );
   }
