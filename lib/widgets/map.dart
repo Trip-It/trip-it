@@ -55,14 +55,12 @@ class MapView extends StatelessWidget {
                   icon: Icon(
                     Icons.person,
                     size: 64,
-                    color: Colors.brown,
                   ),
                 ),
                 roadColor: Colors.blueAccent),
             markerIcon: MarkerIcon(
               icon: Icon(
                 Icons.person_pin_circle,
-                color: Colors.redAccent,
                 size: 56,
               ),
             ),
