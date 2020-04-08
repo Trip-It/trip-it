@@ -6,7 +6,7 @@ import 'package:trip_it_app/widgets/dropdown.dart';
 import 'package:trip_it_app/widgets/charge_slider.dart';
 import 'package:trip_it_app/widgets/checkbox_options.dart';
 import 'package:trip_it_app/widgets/switch_options.dart';
-import 'package:trip_it_app/services/database_manager.dart';
+import 'package:trip_it_app/services/profiles_manager.dart';
 import 'package:trip_it_app/models/profile.dart';
 
 class PreferencesScreen extends StatelessWidget {
@@ -158,11 +158,17 @@ class PreferencesScreen extends StatelessWidget {
 
   /// Method to save the preferences in a profile
   void saveInCurrentProfile() async{
-    DatabaseManager dbManager = DatabaseManager.db;
+    ProfilesManager dbManager = ProfilesManager();
+    
+    print("Save button pushed");
 
-    Profile toSave = new Profile("Name", "Elephant", "Tesla Model S", 40, 80, 1, 0, 1, 0, "Norwegian", "Hybrid");
+    //Profile toSave = new Profile("Name", "Elephant", "Tesla Model S", 40, 80, 1, 0, 1, 0, "Norwegian", "Hybrid");
 
-    dbManager.saveProfile(toSave);
+    //dbManager.saveProfile(toSave);
+
+    List<Profile> profiles = await dbManager.getProfiles();
+
+    print(profiles.length.toString());
 
     return;
   }
