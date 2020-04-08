@@ -10,18 +10,16 @@ import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 /// with [followUser] you can set whether or not the map should stay centered
 /// on the most recent user location or not
 class MapView extends StatelessWidget {
-
   ///Map controller to manage app
   MapController mapController = MapController();
   UserLocationOptions userLocationOptions;
   StreamController<LatLng> markerlocationStream = StreamController();
   List<Marker> markers = [];
-  LatLng position = LatLng(45.171547, 	5.722387);
+  LatLng position = LatLng(45.171547, 5.722387);
   bool followUser;
 
-  /// Constructor to initialize widget, [followUser] sets if map stays centered
-  /// on user location or not
-  MapView(this.followUser);
+  /// Constructor to initialize widget
+  MapView();
 
   GlobalKey<OSMFlutterState> mapKey = GlobalKey<OSMFlutterState>();
   @override
@@ -30,46 +28,31 @@ class MapView extends StatelessWidget {
       // print(onData.latitude);
     });
 
-    userLocationOptions = UserLocationOptions(
-        context: context,
-        mapController: mapController,
-        markers: markers,
-        onLocationUpdate: (LatLng pos) =>
-            position = pos,
-        updateMapLocationOnPositionChange: followUser,
-        showMoveToCurrentLocationFloatingActionButton: true,
-        zoomToCurrentLocationOnLoad: true,
-        fabBottom: 50,
-        fabRight: 50,
-        verbose: false);
-
     return Container(
-        child: Column(
-          children: [
-           Flexible(
-              child: OSMFlutter(
-            key: mapKey,
-            currentLocation: true,
-            road: Road(
-                startIcon: MarkerIcon(
-                  icon: Icon(
-                    Icons.person,
-                    size: 64,
+      child: Column(
+        children: [
+          Flexible(
+            child: OSMFlutter(
+              key: mapKey,
+              currentLocation: true,
+              road: Road(
+                  startIcon: MarkerIcon(
+                    icon: Icon(
+                      Icons.person,
+                      size: 64,
+                    ),
                   ),
+                  roadColor: Colors.blueAccent),
+              markerIcon: MarkerIcon(
+                icon: Icon(
+                  Icons.person_pin_circle,
+                  size: 56,
                 ),
-                roadColor: Colors.blueAccent),
-            markerIcon: MarkerIcon(
-              icon: Icon(
-                Icons.person_pin_circle,
-                size: 56,
               ),
             ),
-            ),
-           ),
-          ],
-           
-        ),
+          ),
+        ],
+      ),
     );
   }
-
 }
