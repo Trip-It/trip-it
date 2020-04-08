@@ -1,8 +1,6 @@
-library org.tripplanner.cars;
-
+/// Class representing a car with it's physical properties
 abstract class Car
 {
-
   String getName();
 
   double getWeight();
