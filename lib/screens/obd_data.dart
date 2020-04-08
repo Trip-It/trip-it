@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trip_it_app/services/bluetooth_handler.dart';
+import 'package:trip_it_app/services/connection_manager.dart';
 
 class ObdDataScreen extends StatelessWidget {
   static const routeName = '/obd_data';
