@@ -15,9 +15,10 @@ class ChargingStation extends Location {
   String _cost;
   String _openingTime;
 
+  /// Constructor initializing all properties of the station
   ChargingStation(
-      double lat,
       double lon,
+      double lat,
       String host,
       String operator,
       String brand,

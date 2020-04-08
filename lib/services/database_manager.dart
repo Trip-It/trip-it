@@ -12,6 +12,8 @@ class DatabaseManager {
   static final DatabaseManager db = DatabaseManager._();
   Database _database;
 
+  DatabaseManager();
+
   Future<Database> get database async {
     if (_database != null) return _database;
     // if _database is null we instantiate it
@@ -229,9 +231,6 @@ class DatabaseManager {
         where: "name = ?", whereArgs: <String>[profile.getName()]);
     return res > 0 ? true : false;
   }
-
-
-  /// Methods related to ChargingStations dans 'irve_full'
 
 
 
