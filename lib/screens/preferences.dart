@@ -159,10 +159,18 @@ class PreferencesScreen extends StatelessWidget {
   /// Method to save the preferences in a profile
   void saveInCurrentProfile() async{
     DatabaseManager dbManager = DatabaseManager.db;
+    
+    print("Save button pushed");
 
-    Profile toSave = new Profile("Name", "Elephant", "Tesla Model S", 40, 80, 1, 0, 1, 0, "Norwegian", "Hybrid");
+    //Profile toSave = new Profile("Name", "Elephant", "Tesla Model S", 40, 80, 1, 0, 1, 0, "Norwegian", "Hybrid");
 
-    dbManager.saveProfile(toSave);
+    //dbManager.saveProfile(toSave);
+
+    List<Profile> profiles = await dbManager.getProfiles();
+
+
+
+    print(profiles.length.toString());
 
     return;
   }
