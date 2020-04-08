@@ -57,7 +57,7 @@ flutter:
   assets:
     - assets/tripit_logo.png
     - assets/position_mark.png
-    - assets/trip-it.png
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
