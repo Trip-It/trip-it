@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -11,6 +12,8 @@ class DatabaseManager {
   static final DatabaseManager db = DatabaseManager._();
   Database _database;
 
+  DatabaseManager();
+
   Future<Database> get database async {
     if (_database != null) return _database;
     // if _database is null we instantiate it
@@ -18,19 +21,34 @@ class DatabaseManager {
     return _database;
   }
 
-  initDB() async {// init the database tripitDB whith one attribut id
+  initDB() async {
+    // init the database tripitDB whith one attribut id
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "tripitDB");
-    return await openDatabase(path, version: 1, onOpen: (db) {},
-        onCreate: (Database db, int version) async {
-      await db.execute("CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
+    return await openDatabase(path, version: 1, onOpen: (db) async {
+      // Only copy if the database doesn't exist
+      if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound) {
+        // Load database from asset and copy
+        ByteData data = await rootBundle.load(join('data', 'trip_it_data.db'));
+        List<int> bytes =
+            data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+
+        // Save copied asset to documents
+        await new File(path).writeAsBytes(bytes);
+      }
+
+      var db = await openDatabase(path);
+    }, onCreate: (Database db, int version) async {
+      await db.execute(
+          "CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
 
       // Use the following line to create new tables
       //await db.execute("CREATE TABLE TableName(attribute TYPE)");
-        });
+    });
   }
 
-  Future<void> insertDB(Tripit tripit) async {// insert more information
+  Future<void> insertDB(Tripit tripit) async {
+    // insert more information
     // Get a reference to the database.
     final Database db = await database;
 
@@ -91,7 +109,18 @@ class DatabaseManager {
     List<Map> list = await dbClient.rawQuery('SELECT * FROM profiles');
     List<Profile> profiles = new List();
     for (int i = 0; i < list.length; i++) {
-      profiles.add(new Profile(list[i]["name"], list[i]["picture"], list[i]["car"], list[i]["minCharge"], list[i]["maxCharge"], list[i]["rest"], list[i]["cinema"], list[i]["sport"], list[i]["plug"], list[i]["language"], list[i]["mapType"]));
+      profiles.add(new Profile(
+          list[i]["name"],
+          list[i]["picture"],
+          list[i]["car"],
+          list[i]["minCharge"],
+          list[i]["maxCharge"],
+          list[i]["rest"],
+          list[i]["cinema"],
+          list[i]["sport"],
+          list[i]["plug"],
+          list[i]["language"],
+          list[i]["mapType"]));
     }
     return profiles;
   }
@@ -103,7 +132,7 @@ class DatabaseManager {
     // Check if profile is already existing
     Profile check = await this.getProfile(profile.getName());
 
-    if(profile == null){
+    if (check == null) {
       //TODO show error message
       print("Not able to save profile since it already exists!");
       return;
@@ -161,14 +190,26 @@ class DatabaseManager {
   }
 
   /// Get one profile
-  Future<Profile> getProfile(String name) async{
+  Future<Profile> getProfile(String name) async {
     var dbClient = await database;
-    List<Map> profile = await dbClient.rawQuery('SELECT * FROM profiles WHERE name = ?', [name]);
+    List<Map> profile = await dbClient
+        .rawQuery('SELECT * FROM profiles WHERE name = ?', [name]);
 
-    if(profile.isEmpty){
+    if (profile.isEmpty) {
       return null;
     } else {
-      return new Profile(profile.first["name"], profile.first["picture"], profile.first["car"], profile.first["minCharge"], profile.first["maxCharge"], profile.first["rest"], profile.first["cinema"], profile.first["sport"], profile.first["plug"], profile.first["language"], profile.first["mapType"]);
+      return new Profile(
+          profile.first["name"],
+          profile.first["picture"],
+          profile.first["car"],
+          profile.first["minCharge"],
+          profile.first["maxCharge"],
+          profile.first["rest"],
+          profile.first["cinema"],
+          profile.first["sport"],
+          profile.first["plug"],
+          profile.first["language"],
+          profile.first["mapType"]);
     }
   }
 
@@ -177,8 +218,8 @@ class DatabaseManager {
   Future<bool> deleteProfile(Profile profile) async {
     var dbClient = await database;
 
-    int res =
-    await dbClient.rawDelete('DELETE FROM profiles WHERE name = ?', [profile.getName()]);
+    int res = await dbClient
+        .rawDelete('DELETE FROM profiles WHERE name = ?', [profile.getName()]);
     return res > 0 ? true : false;
   }
 
@@ -186,7 +227,7 @@ class DatabaseManager {
   /// returns true if operation has been successful, false if not
   Future<bool> update(Profile profile) async {
     var dbClient = await database;
-    int res =   await dbClient.update("profile", profile.toMap(),
+    int res = await dbClient.update("profile", profile.toMap(),
         where: "name = ?", whereArgs: <String>[profile.getName()]);
     return res > 0 ? true : false;
   }

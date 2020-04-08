@@ -22,6 +22,12 @@ dependencies:
   sqflite:
   path:
   path_provider:
+  flutter_osm_plugin: 
+
+ #Bluetooth
+
+  flutter_blue: ^0.7.1
+
 
   # Map
   flutter_map: ^0.8.2
@@ -79,7 +85,7 @@ flutter:
     - assets/chargemap.png
     - assets/izivia-pass-006solo-1.jpg
     - assets/Pass-Plugsurfing.png
-
+    - data/trip_it_data.db
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

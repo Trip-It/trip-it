@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
         ),
         drawer: DrawerWidget(),
         body: Center(
-          child: MapView(false),
+          child: MapView(),
         ),
     );
   }
