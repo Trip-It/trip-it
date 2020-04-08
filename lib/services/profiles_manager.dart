@@ -36,7 +36,7 @@ class ProfilesManager extends DatabaseManager {
     // Check if profile is already existing
     Profile check = await this.getProfile(profile.getName());
 
-    if (check == null) {
+    if (check != null) {
       //TODO show error message
       print("Not able to save profile since it already exists!");
       return;
