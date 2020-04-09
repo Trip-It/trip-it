@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/models/card.dart';
-import 'package:trip_it_app/screens/addCard.dart';
+import 'package:trip_it_app/screens/add_card.dart';
 import 'package:trip_it_app/theme.dart';
-import 'package:trip_it_app/widgets/cardsListView.dart';
-import 'package:trip_it_app/widgets/searchBarList.dart';
 import 'package:trip_it_app/services/DatabaseManager.dart';
+import 'package:trip_it_app/widgets/cards_list_view.dart';
+import 'package:trip_it_app/widgets/search_bar_list.dart';
 
 class CardsScreen extends StatefulWidget {
   static const routeName = '/cards';

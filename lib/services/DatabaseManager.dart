@@ -29,8 +29,6 @@ class DatabaseManager {
       await db.execute("CREATE TABLE allcards(name TEXT, image TEXT, url TEXT )");
       await db.execute("CREATE TABLE temporarycards(name TEXT, image TEXT, url TEXT )");
 
-
-
       // Use the following line to create new tables
       //await db.execute("CREATE TABLE TableName(attribute TYPE)");
         });
@@ -109,7 +107,7 @@ class DatabaseManager {
     // Check if profile is already existing
     Profile check = await this.getProfile(profile.getName());
 
-    if(check == null){
+    if(profile == null){
       //TODO show error message
       print("Not able to save profile since it already exists!");
       return;
@@ -268,7 +266,7 @@ class DatabaseManager {
 
 
 
-/// Methods related to all cards
+  /// Methods related to all cards
   /// Get all cards
   Future<List<ChargeCard>> getAllCards() async {
     var dbClient = await database;
@@ -347,7 +345,6 @@ class DatabaseManager {
     await dbClient.rawDelete('DELETE FROM temporarycards WHERE name = ?', [card.name]);
     return res > 0 ? true : false;
   }
-
 
 
 // It's just an example of implementing.
