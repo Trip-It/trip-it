@@ -38,8 +38,9 @@ class DatabaseManager {
 
       var db = await openDatabase(path);
     }, onCreate: (Database db, int version) async {
-      await db.execute(
-          "CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
+      await db.execute("CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
+      await db.execute("CREATE TABLE usercards(name TEXT, image TEXT, url TEXT )");
+      await db.execute("CREATE TABLE temporarycards(name TEXT, image TEXT, url TEXT )");
 
       // Use the following line to create new tables
       //await db.execute("CREATE TABLE TableName(attribute TYPE)");

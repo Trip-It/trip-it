@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/models/card.dart';
 import 'package:trip_it_app/screens/add_card.dart';
+import 'package:trip_it_app/services/cards_manager.dart';
 import 'package:trip_it_app/theme.dart';
-import 'package:trip_it_app/services/DatabaseManager.dart';
+import 'package:trip_it_app/services/database_manager.dart';
 import 'package:trip_it_app/widgets/cards_list_view.dart';
 import 'package:trip_it_app/widgets/search_bar_list.dart';
 
@@ -18,7 +19,7 @@ class _CardsScreenState extends State<CardsScreen> {
 
   List<ChargeCard> myCards;
   Future<void> initScreen() async {
-    DatabaseManager dbManager = DatabaseManager.db;
+    CardsManager dbManager = CardsManager();
     List<ChargeCard> myNewCards = await dbManager.getCards();
     setState(() {myCards = myNewCards;});
 

@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/models/card.dart';
+import 'package:trip_it_app/services/cards_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:trip_it_app/screens/about.dart';
-import 'package:trip_it_app/screens/cards.dart';
-import 'package:trip_it_app/screens/preferences.dart';
-import 'package:trip_it_app/screens/profiles.dart';
-import 'package:trip_it_app/screens/trip.dart';
-import 'package:trip_it_app/theme.dart';
-import 'package:trip_it_app/services/DatabaseManager.dart';
+import 'package:trip_it_app/services/database_manager.dart';
 
 class CardsList extends StatefulWidget {
   final cards;
@@ -85,12 +80,12 @@ class _CardsListState extends State<CardsList> {
    }
 
   void deleteSelectedCard(ChargeCard card) async {
-    DatabaseManager dbManager = DatabaseManager.db;
+    CardsManager dbManager = CardsManager();
     dbManager.deleteCard(card);
     return;
   }
   void addSelectedCard(ChargeCard card) async{
-    DatabaseManager dbManager = DatabaseManager.db;
+    CardsManager dbManager = CardsManager();
     dbManager.saveTemporaryCard(card);
     return;
   }

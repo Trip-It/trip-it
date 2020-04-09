@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/models/card.dart';
-import 'package:trip_it_app/services/DatabaseManager.dart';
+import 'package:trip_it_app/services/cards_manager.dart';
+import 'package:trip_it_app/services/database_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/cards_list_view.dart';
@@ -46,13 +47,13 @@ class AddCardScreen extends StatelessWidget {
 
   }
   void initScreen()async{
-    DatabaseManager dbManager = DatabaseManager.db;
+    CardsManager dbManager = CardsManager();
     allCards = await dbManager.getAllCards();
   }
 
   /// Method to save a card
   void saveInCurrentCard() async{
-    DatabaseManager dbManager = DatabaseManager.db;
+    CardsManager dbManager = CardsManager();
     cardsToBeSaved = await dbManager.getTemporaryCards();
 
     for (int i = 0; i < cardsToBeSaved.length; i++) {
