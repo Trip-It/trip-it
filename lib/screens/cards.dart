@@ -6,72 +6,81 @@ import 'package:trip_it_app/widgets/cardsListView.dart';
 import 'package:trip_it_app/widgets/searchBarList.dart';
 import 'package:trip_it_app/services/DatabaseManager.dart';
 
-class CardsScreen extends StatelessWidget {
+class CardsScreen extends StatefulWidget {
   static const routeName = '/cards';
-  List<ChargeCard> myCards;
 
+
+  @override
+  State<StatefulWidget> createState() => _CardsScreenState();
+}
+
+class _CardsScreenState extends State<CardsScreen> {
+
+  List<ChargeCard> myCards;
+  Future<void> initScreen() async {
+    DatabaseManager dbManager = DatabaseManager.db;
+    List<ChargeCard> myNewCards = await dbManager.getCards();
+    setState(() {myCards = myNewCards;});
+
+  }
   @override
   Widget build(BuildContext context) {
 
     initScreen();
-    ChargeCard chargemapPass = ChargeCard("Chargemap Pass","assets/chargemap.png","https://chargemap.com");
-    ChargeCard izivia = ChargeCard("IZIVIA","assets/izivia-pass-006solo-1.jpg","https://www.izivia.com");
-    ChargeCard kiwhi = ChargeCard("KiWhi","assets/carte_KiWhi-Passe-300x194.png","https://www.easytrip.fr/kiwhi-pass-particuliers" );
-    ChargeCard newMotion = ChargeCard("New Motion","assets/chargecard.png","https://newmotion.com/");
-    ChargeCard plugsurfing = ChargeCard("Plugsurfing","assets/Pass-Plugsurfing.png","https://www.plugsurfing.com/home");
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Your Cards"),
+          centerTitle: true,
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.pushNamed(context, AddCardScreen.routeName);
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
+              child: SearchBarCards(myCards),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
+              child: (myCards == null)
+                  ? Text("You have no cards registred",
+                  style: TextStyle(color: Colors.black.withOpacity(0.4)),
+                  textAlign: TextAlign.left)
+                  : Text("You have " + myCards.length.toString() + " cards",
+                  style: TextStyle(color: Colors.black.withOpacity(0.4)),
+                  textAlign: TextAlign
+                      .left), // the number of cards should change with the length of the personal card database
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
+              height: 240,
+              child: CardsList(myCards,true),
+            ),
+          ],
+        ),
+      );
+    }
+/*
+    ChargeCard chargemapPass = ChargeCard(
+        "Chargemap Pass", "assets/chargemap.png", "https://chargemap.com");
+    ChargeCard izivia = ChargeCard(
+        "IZIVIA", "assets/izivia-pass-006solo-1.jpg", "https://www.izivia.com");
+    ChargeCard kiwhi = ChargeCard(
+        "KiWhi",
+        "assets/carte_KiWhi-Passe-300x194.png",
+        "https://www.easytrip.fr/kiwhi-pass-particuliers");
+    ChargeCard newMotion = ChargeCard(
+        "New Motion", "assets/chargecard.png", "https://newmotion.com/");
+    ChargeCard plugsurfing = ChargeCard("Plugsurfing",
+        "assets/Pass-Plugsurfing.png", "https://www.plugsurfing.com/home");
 
-    final cards = [
-      chargemapPass,
-      izivia,
-      kiwhi,
-      newMotion,
-      plugsurfing
-    ];
+    final cards = [chargemapPass, izivia, kiwhi, newMotion, plugsurfing];
+*/
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Your Cards"),
-        centerTitle: true,
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.pushNamed(context, AddCardScreen.routeName);
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      body: (myCards==null) ?
-        Container(child: Center(child: Text("You have no cards registred"),),)
-      :
-        Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-    Container(
-    margin: EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
-    child: SearchBarCards(myCards),
-    ),
-    Container(
-    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
-    child: Text("You have "+myCards.length.toString()+" cards",
-    style: TextStyle(color: Colors.black.withOpacity(0.4)),
-    textAlign: TextAlign
-        .left) // the number of cards should change with the length of the personal card database
-    ),
-
-    Container(
-    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
-    height: 240,
-    child: CardsList(myCards),
-    ),
-    ],
-    ),
-    );
-  }
-
-  void initScreen()async{
-    DatabaseManager dbManager = DatabaseManager.db;
-    myCards = await dbManager.getCards();
-  }
 }
-
-
