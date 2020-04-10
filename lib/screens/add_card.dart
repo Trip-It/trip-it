@@ -7,15 +7,31 @@ import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/cards_list_view.dart';
 import 'package:trip_it_app/widgets/search_bar_list.dart';
 
-class AddCardScreen extends StatelessWidget {
+class AddCardScreen extends StatefulWidget {
   static const routeName = '/addCard';
+  @override
+  State<StatefulWidget> createState() => _AddCardScreenState();
+}
+
+class _AddCardScreenState extends State<AddCardScreen> {
   List<ChargeCard> allCards;
   List<ChargeCard> cardsToBeSaved;
 
+  Future<void> initScreen()async{
+    CardsManager dbManager = CardsManager();
+    List<ChargeCard> myNewCards = await dbManager.getAllCards();
+    print("-------------------- init screen-----------");
+    setState(() {allCards = myNewCards;});
+
+    print(allCards[1].toString());
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    print("----------before init----------");
     initScreen();
+    print("----------after init-----------");
     return Scaffold(
         appBar: AppBar(
           title: Text("Add Card"),
@@ -46,11 +62,6 @@ class AddCardScreen extends StatelessWidget {
           );
 
   }
-  void initScreen()async{
-    CardsManager dbManager = CardsManager();
-    allCards = await dbManager.getAllCards();
-  }
-
   /// Method to save a card
   void saveInCurrentCard() async{
     CardsManager dbManager = CardsManager();
