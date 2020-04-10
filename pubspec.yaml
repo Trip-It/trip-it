@@ -22,6 +22,7 @@ dependencies:
   sqflite:
   path:
   path_provider:
+  flutter_osm_plugin:
 
   # Map
   flutter_map: ^0.8.2
@@ -30,6 +31,8 @@ dependencies:
   provider: ^3.2.0
   user_location: ^0.1.2
   flutter_fluid_slider: ^1.0.2
+  search_widget: any
+  nominatim_location_picker: any
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,12 +46,10 @@ dev_dependencies:
 # Flutter Launcher Icons
   flutter_launcher_icons: "^0.7.0"
 
-
 flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/tripit_logo2.png"
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -79,6 +80,7 @@ flutter:
     - assets/chargemap.png
     - assets/izivia-pass-006solo-1.jpg
     - assets/Pass-Plugsurfing.png
+    - data/trip_it_data.db
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

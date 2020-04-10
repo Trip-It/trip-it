@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trip_it_app/widgets/aboutListView.dart';
+import 'package:trip_it_app/widgets/about_list_view.dart';
 
 class AddProfileScreen extends StatelessWidget {
   static const routeName = '/preferences/add';
