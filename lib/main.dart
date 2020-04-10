@@ -4,6 +4,7 @@ import 'package:trip_it_app/screens/add_profile.dart';
 import 'package:trip_it_app/screens/add_card.dart';
 import 'package:trip_it_app/screens/cards.dart';
 import 'package:trip_it_app/screens/home.dart';
+import 'package:trip_it_app/screens/obd_data.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
 import 'package:trip_it_app/screens/trip.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         AboutScreen.routeName: (context) => AboutScreen(),
         TestScreen.routeName: (context) => TestScreen(),
         AddCardScreen.routeName: (context) => AddCardScreen(),
+        ObdDataScreen.routeName: (context) => ObdDataScreen(),
       },
     );
   }
