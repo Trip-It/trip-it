@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/services/connection_manager.dart';
+import 'package:trip_it_app/screens/ObdConnectionScreen.dart';
 
 class ObdDataScreen extends StatelessWidget {
   static const routeName = '/obd_data';
@@ -15,8 +16,11 @@ class ObdDataScreen extends StatelessWidget {
           child: Text('Retrieved Data'),
         ),
         floatingActionButton: FloatingActionButton(
-        onPressed: () => 1, //retrieve data from obd
-          child: const Icon(Icons.add),
+
+          child: const Icon(Icons.bluetooth),
+          onPressed: () {
+            Navigator.pushNamed(context, ObdConnectionScreen.routeName);
+          },
     )
     )
     ;

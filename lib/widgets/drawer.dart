@@ -7,6 +7,11 @@ import 'package:trip_it_app/screens/profiles.dart';
 import 'package:trip_it_app/screens/trip.dart';
 import 'package:trip_it_app/screens/test.dart';
 import 'package:trip_it_app/theme.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:trip_it_app/screens/ObdConnectionScreen.dart';
+
+
+
 
 class DrawerWidget extends StatelessWidget{
 
@@ -144,6 +149,7 @@ class DrawerWidget extends StatelessWidget{
             ),
             onTap: () {
               Navigator.popAndPushNamed(context, ObdDataScreen.routeName);
+              Alert(context:context,title:"Please connect your OBD first").show();
             },
           ),
           color: TripItColors.primaryDarkBlue,

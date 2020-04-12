@@ -14,7 +14,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -27,7 +27,7 @@ dependencies:
  #Bluetooth
 
   flutter_blue: ^0.7.1
-
+  rflutter_alert: any
 
   # Map
   flutter_map: ^0.8.2

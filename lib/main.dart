@@ -9,6 +9,7 @@ import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
 import 'package:trip_it_app/screens/trip.dart';
 import 'package:trip_it_app/screens/test.dart';
+import 'package:trip_it_app/screens/ObdConnectionScreen.dart';
 
 
 void main() => runApp(MyApp());
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         TestScreen.routeName: (context) => TestScreen(),
         AddCardScreen.routeName: (context) => AddCardScreen(),
         ObdDataScreen.routeName: (context) => ObdDataScreen(),
+        ObdConnectionScreen.routeName: (context) => ObdConnectionScreen(),
       },
     );
   }
