@@ -28,6 +28,7 @@ dependencies:
 
   flutter_blue: ^0.7.1
   rflutter_alert: any
+  shared_preferences: any
 
   # Map
   flutter_map: ^0.8.2

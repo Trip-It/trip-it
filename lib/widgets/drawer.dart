@@ -149,7 +149,7 @@ class DrawerWidget extends StatelessWidget{
             ),
             onTap: () {
               Navigator.popAndPushNamed(context, ObdDataScreen.routeName);
-              Alert(context:context,title:"Please connect your OBD first").show();
+
             },
           ),
           color: TripItColors.primaryDarkBlue,
