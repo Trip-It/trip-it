@@ -19,25 +19,38 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  path_provider: any
+    
+  sqflite:
+  path:
+  path_provider:
+  flutter_osm_plugin:
 
   # Map
   flutter_map: ^0.8.2
+  mapbox_search: any
+  mapbox_search_flutter: any
+  provider: ^3.2.0
+  user_location: ^0.1.2
+  flutter_fluid_slider: ^1.0.2
+  search_widget: any
+  nominatim_location_picker: any
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  webview_flutter: ^0.3.19
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  # Flutter Launcher Icons
-  flutter_launcher_icons: ^0.7.0
+# Flutter Launcher Icons
+  flutter_launcher_icons: "^0.7.0"
 
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/tripit_logo.png"
+  image_path: "assets/tripit_logo2.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -56,8 +69,20 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - assets/tripit_logo.png
+    - assets/tripit_logo2.png
+    - assets/tripit_logo3.png
     - assets/position_mark.png
-    
+    - assets/AboutUs_logo.png
+    - assets/BWI_logo.png
+    - assets/Contact_logo.png
+    - assets/License_logo.png
+    - assets/carte_KiWhi-Passe-300x194.png
+    - assets/chargecard.png
+    - assets/chargemap.png
+    - assets/izivia-pass-006solo-1.jpg
+    - assets/Pass-Plugsurfing.png
+    - data/trip_it_data.db
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

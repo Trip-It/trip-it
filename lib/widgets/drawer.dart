@@ -4,6 +4,7 @@ import 'package:trip_it_app/screens/cards.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
 import 'package:trip_it_app/screens/trip.dart';
+import 'package:trip_it_app/screens/test.dart';
 import 'package:trip_it_app/theme.dart';
 
 class DrawerWidget extends StatelessWidget{
@@ -22,29 +23,69 @@ class DrawerWidget extends StatelessWidget{
       padding: EdgeInsets.zero,
       children: <Widget>[
         Container(
-          child: new DrawerHeader(child: Image.asset("assets/tripit_logo.png")),
-          color: TripItColors.primaryLightBlue,
-        ),
-        Container(
-          child: ListTile(
-            leading: Icon(
-              Icons.account_circle,
-              color: Colors.white,
+          decoration: BoxDecoration(
+            color: TripItColors.primaryDarkBlue,
+          ),
+          child: GestureDetector(
+            child: DrawerHeader(
+              decoration: BoxDecoration(
+                color: TripItColors.primaryDarkBlue,
+              ),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child: LayoutBuilder(builder: (context, constraint) {
+                      return Icon(
+                        Icons.account_circle,
+                        size: constraint.biggest.height,
+                        color: Colors.white,
+                      );
+                    }),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Ford Prefect",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          "London, England",
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            title: Text('Your profile',
-              style: TextStyle(color: Colors.white),),
             onTap: () {
-              Navigator.pushNamed(context, ProfilesScreen.routeName);
+              Navigator.popAndPushNamed(context, ProfilesScreen.routeName);
             },
           ),
-          color: TripItColors.primaryDarkBlue,
         ),
         Container(
           child: ListTile(
-            title: Text('New trip',
-            style: TextStyle(color: Colors.white),),
+            title: Text(
+              'New trip',
+            style: TextStyle(
+                color: Colors.white,
+              fontSize: 16.0,
+            ),
+            ),
             onTap: () {
-              Navigator.pushNamed(context, TripScreen.routeName);
+              Navigator.popAndPushNamed(context, TripScreen.routeName);
             },
           ),
           color: TripItColors.primaryDarkBlue,
@@ -52,9 +93,13 @@ class DrawerWidget extends StatelessWidget{
         Container(
           child: ListTile(
             title: Text('Your preferences',
-              style: TextStyle(color: Colors.white),),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+              ),
+            ),
             onTap: () {
-              Navigator.pushNamed(context, PreferencesScreen.routeName);
+              Navigator.popAndPushNamed(context, PreferencesScreen.routeName);
             },
           ),
           color: TripItColors.primaryDarkBlue,
@@ -62,9 +107,13 @@ class DrawerWidget extends StatelessWidget{
         Container(
           child: ListTile(
             title: Text('Your cards',
-              style: TextStyle(color: Colors.white),),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+              ),
+            ),
             onTap: () {
-              Navigator.pushNamed(context, CardsScreen.routeName);
+              Navigator.popAndPushNamed(context, CardsScreen.routeName);
             },
           ),
           color: TripItColors.primaryDarkBlue,
@@ -72,23 +121,40 @@ class DrawerWidget extends StatelessWidget{
         Container(
           child: ListTile(
             title: Text('Your trips',
-              style: TextStyle(color: Colors.white),),
+              style: TextStyle(
+                  color: Colors.white,
+                fontSize: 16.0,
+              ),
+            ),
             onTap: () {
-              Navigator.pushNamed(context, TripScreen.routeName);
+              Navigator.popAndPushNamed(context, TripScreen.routeName);
             },
           ),
           color: TripItColors.primaryDarkBlue,
         ),
         Container(
           child: ListTile(
-            title: Text('About',
-              style: TextStyle(color: Colors.white),),
+            title: Text(
+              'About',
+              style: TextStyle(
+                  color: Colors.white,
+                fontSize: 16.0,
+              ),
+            ),
             onTap: () {
-              Navigator.pushNamed(context, AboutScreen.routeName);
+              Navigator.popAndPushNamed(context, AboutScreen.routeName);
             },
           ),
           color: TripItColors.primaryDarkBlue,
         ),
+        /*
+        ListTile(
+          title: Text('Test'),
+          onTap: () {
+            Navigator.pushNamed(context, TestScreen.routeName);
+          },
+        ),
+        */
       ],
     ),
     ),
