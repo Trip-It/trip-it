@@ -15,4 +15,4 @@ Electrical Vehicle navigation for the future of mobility.
 
 This project is **OpenSource** and thus accessible to anyone.
 It is the mobile version of [trip-It! routeplanner](https://sourceforge.net/projects/tripit/).
-This project is licensed with an Apache 2.0 license, find our license [here](https://github.com/Trip-It/trip-it/LICENSE.md)
+This project is licensed with an Apache 2.0 license.
