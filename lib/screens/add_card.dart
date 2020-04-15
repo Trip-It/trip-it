@@ -16,6 +16,7 @@ class AddCardScreen extends StatefulWidget {
 class _AddCardScreenState extends State<AddCardScreen> {
   List<ChargeCard> allCards;
   List<ChargeCard> cardsToBeSaved;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   Future<void> initScreen()async{
     CardsManager dbManager = CardsManager();
@@ -34,6 +35,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
     initScreen();
     print("----------after init-----------");
     return Scaffold(
+      key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Add Card"),
           centerTitle: true,
@@ -82,7 +84,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
   /// Method to show the snack bar
   void showSnackBar(BuildContext context) {
     final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
+    _scaffoldKey.currentState.showSnackBar(
       SnackBar(
         content: const Text('Added to your Cards'),
         action: SnackBarAction(
