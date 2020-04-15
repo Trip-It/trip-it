@@ -20,15 +20,30 @@ class DatabaseManager {
     return _database;
   }
 
+  initDB() async{
+    var dbDir = await getDatabasesPath();
+    var dbPath = join(dbDir, "tripit.db");
+
+    ByteData data = await rootBundle.load("data/trip_it_data.db");
+    List<int> bytes = data.buffer.asUint8List(data.offsetInBytes,data.lengthInBytes);
+    await File(dbPath).writeAsBytes(bytes);
+    return await openDatabase(dbPath);
+  }
+
+/*
   initDB() async {
     // init the database tripitDB whith one attribut id
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "tripitDB");
+    print("-------------------- getApplicationDocumentsDirectory  ----------");
+    String path = join(documentsDirectory.path, "trip_it_data.db");
+    print("-------------------- join(documentsDirectory.path, trip_it_data); ----------");
     return await openDatabase(path, version: 1, onOpen: (db) async {
       // Only copy if the database doesn't exist
+      print("-------------------- opening DB ----------");
       if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound) {
         // Load database from asset and copy
-        ByteData data = await rootBundle.load(join('data', 'trip_it_data.db'));
+        print("-------------------- database not found ----------");
+        ByteData data = await rootBundle.load(join(path, 'trip_it_data.db'));
         List<int> bytes =
             data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
@@ -38,6 +53,7 @@ class DatabaseManager {
 
       var db = await openDatabase(path);
     }, onCreate: (Database db, int version) async {
+      print("-------------------- CREATE Tables ----------");
       await db.execute("CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
       await db.execute("CREATE TABLE usercards(name TEXT, image TEXT, url TEXT )");
       await db.execute("CREATE TABLE temporarycards(name TEXT, image TEXT, url TEXT )");
@@ -46,7 +62,7 @@ class DatabaseManager {
       //await db.execute("CREATE TABLE TableName(attribute TYPE)");
     });
   }
-
+*/
   Future<void> insertDB(Tripit tripit) async {
     // insert more information
     // Get a reference to the database.

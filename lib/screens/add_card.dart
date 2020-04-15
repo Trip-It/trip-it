@@ -19,8 +19,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
   Future<void> initScreen()async{
     CardsManager dbManager = CardsManager();
+    print("-------------------- init screen1-----------");
     List<ChargeCard> myNewCards = await dbManager.getAllCards();
-    print("-------------------- init screen-----------");
+    print("-------------------- init screen2-----------");
     setState(() {allCards = myNewCards;});
 
     print(allCards[1].toString());
@@ -41,8 +42,8 @@ class _AddCardScreenState extends State<AddCardScreen> {
           child: Icon(Icons.check),
           onPressed: () {
             saveInCurrentCard();
-      },
-    ),
+            },
+       ),
     floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         body:Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -49,15 +49,17 @@ class _CardsListState extends State<CardsList> {
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15)),
-                              onTap: () => launch(widget.cards[index].url)),
+                              onTap: () { launch(widget.cards[index].url);}
+                          ),
                         ),
                         Container(
                           child:(widget.deleteEnable)? new InkWell(
                               child: Icon(Icons.delete, color: Colors.grey),
-                              onTap: () => deleteSelectedCard(widget.cards[index]))
+                              onTap: () { deleteSelectedCard(widget.cards[index]);}
+                             )
                             :new InkWell(
                             child: Icon(checkIcon),
-                            onTap: tappedCheckBox(widget.cards[index])),
+                            /*onTap: tappedCheckBox(widget.cards[index])*/),
 
                         ),
                       ],
@@ -74,10 +76,11 @@ class _CardsListState extends State<CardsList> {
     }
   }
 
-   tappedCheckBox(ChargeCard card) async{
+   /*tappedCheckBox(ChargeCard card) async{
         addSelectedCard(card);
         setState(() {checkIcon = newIcon;});
    }
+  */
 
   void deleteSelectedCard(ChargeCard card) async {
     CardsManager dbManager = CardsManager();
