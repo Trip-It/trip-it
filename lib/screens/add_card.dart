@@ -11,11 +11,13 @@ class AddCardScreen extends StatefulWidget {
   static const routeName = '/addCard';
   @override
   State<StatefulWidget> createState() => _AddCardScreenState();
+
 }
 
 class _AddCardScreenState extends State<AddCardScreen> {
   List<ChargeCard> allCards;
   List<ChargeCard> cardsToBeSaved;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   Future<void> initScreen()async{
     CardsManager dbManager = CardsManager();
@@ -34,17 +36,19 @@ class _AddCardScreenState extends State<AddCardScreen> {
     initScreen();
     print("----------after init-----------");
     return Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Add Card"),
           centerTitle: true,
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.check),
-          onPressed: () {
-            saveInCurrentCard();
-            },
-       ),
-    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton:new FloatingActionButton(
+                child: Icon(Icons.check),
+                onPressed: () {
+                  saveInCurrentCard();
+                },
+              ),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         body:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -81,7 +85,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
   /// Method to show the snack bar
   void showSnackBar(BuildContext context) {
     final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
+    _scaffoldKey.currentState.showSnackBar(
       SnackBar(
         content: const Text('Added to your Cards'),
         action: SnackBarAction(
