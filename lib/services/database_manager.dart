@@ -15,8 +15,13 @@ class DatabaseManager {
 
   Future<Database> get database async {
     if (_database != null) return _database;
-    // if _database is null we instantiate it
+
+    // if _database is null, instantiate it
     _database = await initDB();
+
+    // create tables that will be used in the application but are not included in the asset database
+    await createTables( _database );
+
     return _database;
   }
 
@@ -30,39 +35,16 @@ class DatabaseManager {
     return await openDatabase(dbPath);
   }
 
-/*
-  initDB() async {
-    // init the database tripitDB whith one attribut id
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    print("-------------------- getApplicationDocumentsDirectory  ----------");
-    String path = join(documentsDirectory.path, "trip_it_data.db");
-    print("-------------------- join(documentsDirectory.path, trip_it_data); ----------");
-    return await openDatabase(path, version: 1, onOpen: (db) async {
-      // Only copy if the database doesn't exist
-      print("-------------------- opening DB ----------");
-      if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound) {
-        // Load database from asset and copy
-        print("-------------------- database not found ----------");
-        ByteData data = await rootBundle.load(join(path, 'trip_it_data.db'));
-        List<int> bytes =
-            data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+  createTables(Database db) async{
 
-        // Save copied asset to documents
-        await new File(path).writeAsBytes(bytes);
-      }
+    await db.execute("CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
+    await db.execute("CREATE TABLE usercards(name TEXT, image TEXT, url TEXT )");
+    await db.execute("CREATE TABLE temporarycards(name TEXT, image TEXT, url TEXT )");
 
-      var db = await openDatabase(path);
-    }, onCreate: (Database db, int version) async {
-      print("-------------------- CREATE Tables ----------");
-      await db.execute("CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
-      await db.execute("CREATE TABLE usercards(name TEXT, image TEXT, url TEXT )");
-      await db.execute("CREATE TABLE temporarycards(name TEXT, image TEXT, url TEXT )");
-
-      // Use the following line to create new tables
-      //await db.execute("CREATE TABLE TableName(attribute TYPE)");
-    });
+    // Use the following line to create new tables
+    //await db.execute("CREATE TABLE TableName(attribute TYPE)");
   }
-*/
+
   Future<void> insertDB(Tripit tripit) async {
     // insert more information
     // Get a reference to the database.
