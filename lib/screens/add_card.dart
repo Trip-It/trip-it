@@ -69,9 +69,24 @@ class _AddCardScreenState extends State<AddCardScreen> {
     cardsToBeSaved = await dbManager.getTemporaryCards();
 
     for (int i = 0; i < cardsToBeSaved.length; i++) {
-       dbManager.saveCard(cardsToBeSaved[0]);
-       dbManager.deleteTemporaryCard(cardsToBeSaved[0]);
+       dbManager.saveCard(cardsToBeSaved[i]);
+       dbManager.deleteTemporaryCard(cardsToBeSaved[i]);
     }
+    
+    showSnackBar(context);
+    
     return;
+  }
+  
+  /// Method to show the snack bar
+  void showSnackBar(BuildContext context) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to your Cards'),
+        action: SnackBarAction(
+            label: 'DISMISS', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 }
