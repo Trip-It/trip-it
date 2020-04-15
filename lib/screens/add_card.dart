@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:trip_it_app/widgets/about_list_view.dart';
 
-class AboutScreen extends StatelessWidget {
-  static const routeName = '/about';
+class AddCardScreen extends StatelessWidget {
+  static const routeName = '/addCard';
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
         appBar: AppBar(
+          title: Text("Add Card"),
           centerTitle: true,
-          title: Text("About"),
         ),
         body: Center(
-          child: AboutWidget(),
+          child: Text("That's how you add a card"),
         )
     );
   }

@@ -19,6 +19,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite:
+  path:
+  path_provider:
+  flutter_osm_plugin:
 
   # Map
   flutter_map: ^0.8.2
@@ -26,6 +30,9 @@ dependencies:
   mapbox_search_flutter: any
   provider: ^3.2.0
   user_location: ^0.1.2
+  flutter_fluid_slider: ^1.0.2
+  search_widget: any
+  nominatim_location_picker: any
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -68,6 +75,12 @@ flutter:
     - assets/BWI_logo.png
     - assets/Contact_logo.png
     - assets/License_logo.png
+    - assets/carte_KiWhi-Passe-300x194.png
+    - assets/chargecard.png
+    - assets/chargemap.png
+    - assets/izivia-pass-006solo-1.jpg
+    - assets/Pass-Plugsurfing.png
+    - data/trip_it_data.db
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

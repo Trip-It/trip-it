@@ -8,6 +8,7 @@ class TripScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text("Trip"),
         ),
         body: Center(
