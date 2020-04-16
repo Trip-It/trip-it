@@ -29,12 +29,12 @@ class _ObdDataScreenState extends State<ObdDataScreen> {
     return ListView(
       padding: const EdgeInsets.all(8),
       children: <Widget>[
-      Container(
-      height: 50,
-      color: Colors.red,
-      child: const Center(child: Text('No Bluetooth OBD detected !')),
-    ),
-    ],
+        Container(
+          height: 50,
+          color: Colors.red,
+          child: const Center(child: Text('No Bluetooth OBD detected !')),
+        ),
+      ],
     );
   }
 

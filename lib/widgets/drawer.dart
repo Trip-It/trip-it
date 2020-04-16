@@ -141,14 +141,14 @@ class DrawerWidget extends StatelessWidget{
         Container(
           child: ListTile(
             title: Text(
-              'OBD Data',
+              'OBD Connection',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16.0,
               ),
             ),
             onTap: () {
-              Navigator.popAndPushNamed(context, ObdDataScreen.routeName);
+              Navigator.popAndPushNamed(context, ObdConnectionScreen.routeName);
 
             },
           ),
