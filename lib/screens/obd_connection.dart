@@ -5,8 +5,9 @@ import 'package:trip_it_app/screens/obd_data.dart';
 import 'package:trip_it_app/services/connection_manager.dart';
 
 class ObdConnection extends StatefulWidget {
-  static const routeName = '/ObdConnectionScreen';
-  final ConnectionManager connectionManager = new ConnectionManager();
+  static const routeName = '/ObdConnection';
+  ConnectionManager connectionManager = new ConnectionManager(); //= new ConnectionManager();
+
   @override
   _ObdConnectionState createState() => _ObdConnectionState();
 }
@@ -19,12 +20,21 @@ class _ObdConnectionState extends State<ObdConnection> {
   @override
   void initState() {
     super.initState();
+    widget.connectionManager.connectionManager();
     widget.connectionManager.fillDeviceList();
   }
 
   _buildListViewOfDevices() {
     List<Container> containers = new List<Container>();
-  //  if(_connectionManager.devicesList != null) {
+    if (widget.connectionManager.devicesList.isEmpty) {
+      containers.add(Container(
+        height: 50,
+        color: Colors.red,
+        child: Text('No devices found'),
+
+      ));
+    }
+    if (widget.connectionManager.devicesList.isNotEmpty) {
       for (BluetoothDevice device in widget.connectionManager.devicesList) {
         containers.add(
           Container(
@@ -61,10 +71,13 @@ class _ObdConnectionState extends State<ObdConnection> {
                       _connectedDevice = device;
 
                       Navigator.push(
-                        context, MaterialPageRoute(builder: (context) =>
-                          ObdDataScreen(connectedDevice: _connectedDevice,
-                            services: _services,
-                          )),
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ObdDataScreen(
+                                  connectedDevice: _connectedDevice,
+                                  services: _services,
+                                )),
                       );
                     });
                   },
@@ -74,25 +87,33 @@ class _ObdConnectionState extends State<ObdConnection> {
           ),
         );
       }
-
-      return ListView(
-        padding: const EdgeInsets.all(8),
-        children: <Widget>[
-          ...containers,
-        ],
-      );
     }
-  //}
+
+    return ListView(
+      padding: const EdgeInsets.all(8),
+      children: <Widget>[
+        ...containers,
+      ],
+    );
+  }
 
   ListView _buildView() {
     return _buildListViewOfDevices();
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: Text("Connect your OBD"),
-    ),
-    body: _buildView(),
-  );
+  Widget build(BuildContext context) =>
+      Scaffold(
+          appBar: AppBar(
+            title: Text("Connect your OBD"),
+          ),
+          body: _buildView(),
+          floatingActionButton: FloatingActionButton(
+
+              child: const Icon(Icons.bluetooth),
+              onPressed: () {
+                widget.connectionManager.fillDeviceList();
+              }));
 }
+
+
