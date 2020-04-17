@@ -20,8 +20,10 @@ class _ObdConnectionState extends State<ObdConnection> {
   @override
   void initState() {
     super.initState();
-    widget.connectionManager.connectionManager();
-    widget.connectionManager.fillDeviceList();
+    setState(() {
+      widget.connectionManager.connectionManager();
+      widget.connectionManager.fillDeviceList();
+    });
   }
 
   _buildListViewOfDevices() {
@@ -29,8 +31,9 @@ class _ObdConnectionState extends State<ObdConnection> {
     if (widget.connectionManager.devicesList.isEmpty) {
       containers.add(Container(
         height: 50,
-        color: Colors.red,
-        child: Text('No devices found'),
+        alignment: Alignment.center,
+        color: Colors.redAccent,
+        child: Text('No devices found, please search again'),
 
       ));
     }
@@ -112,7 +115,9 @@ class _ObdConnectionState extends State<ObdConnection> {
 
               child: const Icon(Icons.bluetooth),
               onPressed: () {
-                widget.connectionManager.fillDeviceList();
+                setState(() {
+                  widget.connectionManager.fillDeviceList();
+                });
               }));
 }
 
