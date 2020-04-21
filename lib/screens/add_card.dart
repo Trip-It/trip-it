@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/models/card.dart';
 import 'package:trip_it_app/services/cards_manager.dart';
@@ -18,77 +20,99 @@ class _AddCardScreenState extends State<AddCardScreen> {
   List<ChargeCard> cardsToBeSaved;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  Future<void> initScreen()async{
-    CardsManager dbManager = CardsManager();
-    print("-------------------- init screen1-----------");
-    List<ChargeCard> myNewCards = await dbManager.getAllCards();
-    print("-------------------- init screen2-----------");
-    setState(() {allCards = myNewCards;});
+  _AddCardScreenState(){
+    print("DEBUG: _AddCardScreenState::_AddCardScreenState()");
+    initScreen();
+    print("DEBUG: _AddCardScreenState::_AddCardScreenState() -- End of method");
+  }
 
-    print(allCards[1].toString());
+  Future<void> initScreen() async {
+    print("DEBUG: _AddCardScreenState::initScreen()");
+    CardsManager dbManager = CardsManager();
+    List<ChargeCard> myNewCards = await dbManager.getAllCards();
+    setState(() {
+      print(
+          "DEBUG: _AddCardScreenState::setState() -- called from within _AddCardScreenState::initScreen()");
+      allCards = myNewCards;
+    });
+
+    print("First card: " + allCards[1].toMap().toString());
+    print("DEBUG: _AddCardScreenState::initScreen() -- End of method");
   }
 
   @override
   Widget build(BuildContext context) {
 
-    print("----------before init----------");
-    initScreen();
-    print("----------after init-----------");
+
+
     return Scaffold(
       key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text("Add Card"),
-          centerTitle: true,
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.check),
-          onPressed: () {
-            showSnackBar(context);
-            saveInCurrentCard();
-            },
-       ),
-    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        body:Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+      appBar: AppBar(
+        title: Text("Add Card"),
+        centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.check),
+        onPressed: () {
+          saveInCurrentCard();
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
           Container(
-           margin: EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
+            margin: EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
             child: SearchBarCards(allCards),
           ),
-
           Container(
-           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
+            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
             height: 240,
-            child: CardsList(allCards, false),
+            child: CardsList(
+              allCards,
+              false,
+            ),
           ),
-          ],
-          ),
-          );
-
+        ],
+      ),
+    );
   }
+
   /// Method to save a card
-  void saveInCurrentCard() async{
+  void saveInCurrentCard() async {
+    print("DEBUG: _AddCardScreenState::saveInCurrentCard()");
     CardsManager dbManager = CardsManager();
     cardsToBeSaved = await dbManager.getTemporaryCards();
 
     for (int i = 0; i < cardsToBeSaved.length; i++) {
-       dbManager.saveCard(cardsToBeSaved[i]);
-       dbManager.deleteTemporaryCard(cardsToBeSaved[i]);
+      // Save in usercards
+      dbManager.saveCard(cardsToBeSaved[i]);
+      // delete from temporaryards
+      dbManager.deleteTemporaryCard(cardsToBeSaved[i]);
     }
-    
-    showSnackBar(context);
-    
+
+    // Set depending on success of save/delete action
+    bool success = true;
+
+    // Give the SnackBar info about success of save/delete
+    showSnackBar(success);
+
     return;
   }
-  
+
   /// Method to show the snack bar
-  void showSnackBar(BuildContext context) {
-    final scaffold = Scaffold.of(context);
+  void showSnackBar(bool success) {
+    print("DEBUG: _AddCardScreenState::showSnackBar()");
+
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
-        content: const Text('Added to your Cards'),
-        action: SnackBarAction(
-            label: 'DISMISS', onPressed: scaffold.hideCurrentSnackBar),
+        backgroundColor: success ? Colors.green : Colors.red, // Set color depending on success
+        content: const Text(
+          'Added to your Cards',
+          style: TextStyle(color: Colors.white),
+        ),
+        //action: SnackBarAction(
+        //    label: 'DISMISS', onPressed: ,),
       ),
     );
   }

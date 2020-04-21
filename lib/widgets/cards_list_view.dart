@@ -2,37 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:trip_it_app/models/card.dart';
 import 'package:trip_it_app/services/cards_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:trip_it_app/services/database_manager.dart';
 
 class CardsList extends StatefulWidget {
   final cards;
   final bool deleteEnable;
-  CardsList(this.cards, this.deleteEnable);
 
+  CardsList(this.cards, this.deleteEnable);
 
   State<StatefulWidget> createState() => _CardsListState(cards);
 }
+
 class _CardsListState extends State<CardsList> {
   IconData checkIcon = Icons.check_box_outline_blank;
   IconData newIcon = Icons.check_box;
-  List<ChargeCard> cards;
-  List<IconData> iconList;
+  List<ChargeCard> cards = new List();
+  List<IconData> iconList = new List(7);
 
-  _CardsListState(List<ChargeCard>cards){
+  _CardsListState(List<ChargeCard> cards) {
+    print("DEBUG::_CardsListState::_CardsListState()");
     this.cards = cards;
     if (cards != null) {
-      iconList = new List(cards.length);}
+      for (int i = 0; i < 6; i++) {
+        iconList[i] = checkIcon;
+      }
+    }
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
-
-
-    if (cards == null) {
+    if(!widget.deleteEnable){
+      initList();
+    }
+    if (cards == null || cards.isEmpty) {
       return Container(
         width: 360.0,
         child: Card(
@@ -42,8 +43,6 @@ class _CardsListState extends State<CardsList> {
         ),
       );
     } else {
-      for (int i = 0; i < cards.length; i++) {
-        iconList[i] = checkIcon;}
       return ListView.builder(
         itemCount: cards.length,
         itemBuilder: (context, index) {
@@ -65,19 +64,22 @@ class _CardsListState extends State<CardsList> {
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15)),
-                              onTap: () { launch(cards[index].url);}
-                          ),
+                              onTap: () {
+                                launch(cards[index].url);
+                              }),
                         ),
                         Container(
-                          child:(widget.deleteEnable)? new InkWell(
-                              child: Icon(Icons.delete, color: Colors.grey),
-                              onTap: () { deleteSelectedCard(cards[index]);}
-                             )
-                            :new InkWell(
-
-                            child: Icon(iconList[index]),
-                            onTap: () { tappedCheckBox(cards[index],index);}),
-
+                          child: (widget.deleteEnable)
+                              ? new InkWell(
+                                  child: Icon(Icons.delete, color: Colors.grey),
+                                  onTap: () {
+                                    deleteSelectedCard(cards[index]);
+                                  })
+                              : new InkWell(
+                                  child: iconList.isEmpty ? Icon(Icons.error_outline, color: Colors.grey,) : Icon(iconList[index]),
+                                  onTap: () {
+                                    tappedCheckBox(cards[index], index);
+                                  }),
                         ),
                       ],
                     ),
@@ -93,19 +95,35 @@ class _CardsListState extends State<CardsList> {
     }
   }
 
-   void tappedCheckBox(ChargeCard card, int index) async{
-        addSelectedCard(card);
-        setState(() {
-          iconList[index] = newIcon;}
-          );
-   }
+  void initList() async {
+    print("DEBUG: initList()");
+    CardsManager dbManager = CardsManager();
+    List<ChargeCard> myNewCards = await dbManager.getAllCards();
+    setState(() {
+      if(myNewCards != null || myNewCards.isEmpty) {
+        print("DEBUG: Cards returned from database is either null or empty!");
+        cards = myNewCards;
+      }
+    });
+  }
+
+  void tappedCheckBox(ChargeCard card, int index) async {
+    print("DEBUG::Called method: _CardsListState::tappedCheckBox()");
+    addSelectedCard(card);
+    setState(() {
+      iconList[index] = newIcon;
+    });
+  }
 
   void deleteSelectedCard(ChargeCard card) async {
+    print("DEBUG::Called method: _CardsListState::deletedSelectedCard()");
     CardsManager dbManager = CardsManager();
     dbManager.deleteCard(card);
     return;
   }
-  void addSelectedCard(ChargeCard card) async{
+
+  void addSelectedCard(ChargeCard card) async {
+    print("DEBUG::Called method: _CardsListState::addSelectedCard()");
     CardsManager dbManager = CardsManager();
     dbManager.saveTemporaryCard(card);
     /*List<ChargeCard> userCards = await dbManager.getCards();
