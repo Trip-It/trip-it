@@ -180,7 +180,26 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                     decoration: InputDecoration(
                         hintText: widget.searchHint,
                         border: InputBorder.none,
-                        hintStyle: TextStyle(color: Colors.grey))),
+                        hintStyle: TextStyle(color: Colors.grey)
+                    ),
+                    textInputAction: TextInputAction.search,
+                  onEditingComplete: () async {
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
+                    _isResult == false
+                        ? _changeAppBar()
+                        : setState(() {
+                      _isSearching = true;
+                    });
+                    dynamic res =
+                    await NominatimService().getAddressLatLng(_ctrlSearch.text);
+                    setState(() {
+                      _addresses = res;
+                    });
+                  },
+                ),
               ),
             ),
             IconButton(
