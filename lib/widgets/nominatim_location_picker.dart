@@ -19,14 +19,10 @@ class NominatimLocationPicker extends StatefulWidget {
   NominatimLocationPicker({
     this.searchHint = 'Search',
     this.awaitingForLocation = "Awaiting for you current location",
-    this.customMarkerIcon,
-    this.customMapLayer,
   });
 
   final String searchHint;
   final String awaitingForLocation;
-  final TileLayerOptions customMapLayer;
-  final Widget customMarkerIcon;
 
   @override
   _NominatimLocationPickerState createState() =>
@@ -64,13 +60,12 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         height: 50.0,
         point: new LatLng(0.0, 0.0),
         builder: (ctx) => new Container(
-            child: widget.customMarkerIcon == null
-                ? Icon(
+            child: Icon(
               Icons.location_on,
               size: 50.0,
               color: _color,
             )
-                : widget.customMarkerIcon),
+                ),
       )
     ];
   }
@@ -109,13 +104,12 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         height: 80.0,
         point: LatLng(_currentPosition.latitude, _currentPosition.longitude),
         builder: (ctx) => new Container(
-            child: widget.customMarkerIcon == null
-                ? Icon(
+            child:Icon(
               Icons.location_on,
               size: 50.0,
               color: _color,
-            )
-                : widget.customMarkerIcon),
+            ),
+        ),
       );
     });
   }
@@ -225,7 +219,6 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       lng: _lng,
       mapController: _mapController,
       markers: _markers,
-      customMapLayer: widget.customMapLayer,
     );
   }
 
@@ -268,7 +261,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                                   scrollDirection: Axis.vertical,
                                   reverse: false,
                                   child: AutoSizeText(
-                                    _desc == null ? widget.awaitingForLocation : "SET AS DEPARTURE POINT: \n\n" + _desc,
+                                    _desc == null ? widget.awaitingForLocation : "SET AS DEPARTURE POINT: \n" + _desc,
                                     style: TextStyle(fontSize: 20),
                                     textAlign: TextAlign.start,
                                   ),
@@ -346,12 +339,10 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                       point: LatLng(double.parse(_addresses[index]['lat']),
                           double.parse(_addresses[index]['lng'])),
                       builder: (ctx) => new Container(
-                          child: widget.customMarkerIcon == null
-                              ? Icon(
+                          child: Icon(
                             Icons.location_on,
-                            size: 50.0,
-                          )
-                              : widget.customMarkerIcon),
+                            size: 50.0),
+                      ),
                     );
                   });
                 },

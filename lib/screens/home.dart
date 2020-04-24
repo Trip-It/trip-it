@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:trip_it_app/screens/searchbar.dart';
 import 'package:trip_it_app/widgets/drawer.dart';
 import 'package:trip_it_app/widgets/map.dart';

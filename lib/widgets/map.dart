@@ -15,17 +15,11 @@ class MapPage extends StatefulWidget {
     @required this.lng,
     @required this.mapController,
     @required this.markers,
-    this.isNominatim = true,
-    this.apiKey,
-    this.customMapLayer,
   }) : super(key: key);
   final List<Marker> markers;
   final double lat;
   final double lng;
   final MapController mapController;
-  final bool isNominatim;
-  final String apiKey;
-  final TileLayerOptions customMapLayer;
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -40,23 +34,10 @@ class _MapPageState extends State<MapPage> {
         zoom: 13.0,
       ),
       layers: [
-        widget.isNominatim
-            ? widget.customMapLayer == null
-            ? new TileLayerOptions(
-            urlTemplate:
-            'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
-            subdomains: ['a', 'b', 'c'])
-            : widget.customMapLayer
-            : widget.customMapLayer == null
-            ? new TileLayerOptions(
-          urlTemplate: "https://api.tiles.mapbox.com/v4/"
-              "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
-          additionalOptions: {
-            'accessToken': widget.apiKey,
-            'id': 'mapbox.streets',
-          },
-        )
-            : widget.customMapLayer,
+        new TileLayerOptions(
+        urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        subdomains: ['a', 'b', 'c']
+        ),
         MarkerLayerOptions(
           markers: widget.markers,
         ),
