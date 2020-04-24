@@ -16,8 +16,7 @@ class _CardsListState extends State<CardsList> {
   IconData checkIcon = Icons.check_box_outline_blank;
   IconData newIcon = Icons.check_box;
   List<ChargeCard> cards = new List();
-  List<IconData> iconList = new List(7);
-  List<bool> checkedCard = new List(7);
+  List<IconData> iconList = new List(8);
 
   _CardsListState(List<ChargeCard> cards, bool deleteEnable) {
     this.cards = cards;
@@ -103,7 +102,7 @@ class _CardsListState extends State<CardsList> {
       }
     });
     if (cards != null) {
-      for (int i = 0; i < 6; i++) {
+      for (int i = 0; i < 7; i++) {
         iconList[i] = checkIcon;
       }
     }

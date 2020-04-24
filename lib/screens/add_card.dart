@@ -41,6 +41,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
     return Scaffold(
       key: _scaffoldKey,
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("Add Card"),
         centerTitle: true,

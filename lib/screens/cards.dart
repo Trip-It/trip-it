@@ -28,6 +28,7 @@ class _CardsScreenState extends State<CardsScreen> {
   Widget build(BuildContext context) {
     initScreen();
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("Your Cards"),
         centerTitle: true,
