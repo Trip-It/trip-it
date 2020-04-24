@@ -139,7 +139,6 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   }
 
   _buildAppbar(bool _isResult) {
-
     return new AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -153,9 +152,10 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
               ? setState(() {
             _isSearching = false;
           })
-              : print("-------------------- Should jump to current user location ---------------------");
+              : _mapController.move(_point, 18);
           setState(() {
             _isSearching = false;
+            _getCurrentLocationMarker();
           });
         },
       ),
