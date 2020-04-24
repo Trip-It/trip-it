@@ -21,23 +21,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   _AddCardScreenState(){
-    print("DEBUG: _AddCardScreenState::_AddCardScreenState()");
     initScreen();
-    print("DEBUG: _AddCardScreenState::_AddCardScreenState() -- End of method");
   }
 
   Future<void> initScreen() async {
-    print("DEBUG: _AddCardScreenState::initScreen()");
+
     CardsManager dbManager = CardsManager();
     List<ChargeCard> myNewCards = await dbManager.getAllCards();
     setState(() {
-      print(
-          "DEBUG: _AddCardScreenState::setState() -- called from within _AddCardScreenState::initScreen()");
       allCards = myNewCards;
     });
 
-    print("First card: " + allCards[1].toMap().toString());
-    print("DEBUG: _AddCardScreenState::initScreen() -- End of method");
   }
 
   @override
@@ -80,9 +74,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
   /// Method to save a card
   void saveInCurrentCard() async {
-    print("DEBUG: _AddCardScreenState::saveInCurrentCard()");
     CardsManager dbManager = CardsManager();
     cardsToBeSaved = await dbManager.getTemporaryCards();
+    if (cardsToBeSaved.length!=0){
 
     for (int i = 0; i < cardsToBeSaved.length; i++) {
       // Save in usercards
@@ -95,20 +89,28 @@ class _AddCardScreenState extends State<AddCardScreen> {
     bool success = true;
 
     // Give the SnackBar info about success of save/delete
-    showSnackBar(success);
+    showSnackBar(success);}
+    else{
+      bool success = false;
+      showSnackBar(success);
+
+    }
 
     return;
   }
 
   /// Method to show the snack bar
   void showSnackBar(bool success) {
-    print("DEBUG: _AddCardScreenState::showSnackBar()");
 
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
         backgroundColor: success ? Colors.green : Colors.red, // Set color depending on success
-        content: const Text(
+        content: success? const Text(
           'Added to your Cards',
+          style: TextStyle(color: Colors.white),
+        )
+        :const Text(
+          'Nothing selected or Card already exists ',
           style: TextStyle(color: Colors.white),
         ),
         //action: SnackBarAction(

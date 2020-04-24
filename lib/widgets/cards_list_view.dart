@@ -9,7 +9,7 @@ class CardsList extends StatefulWidget {
 
   CardsList(this.cards, this.deleteEnable);
 
-  State<StatefulWidget> createState() => _CardsListState(cards);
+  State<StatefulWidget> createState() => _CardsListState(cards, deleteEnable);
 }
 
 class _CardsListState extends State<CardsList> {
@@ -17,21 +17,19 @@ class _CardsListState extends State<CardsList> {
   IconData newIcon = Icons.check_box;
   List<ChargeCard> cards = new List();
   List<IconData> iconList = new List(7);
+  List<bool> checkedCard = new List(7);
 
-  _CardsListState(List<ChargeCard> cards) {
-    print("DEBUG::_CardsListState::_CardsListState()");
+  _CardsListState(List<ChargeCard> cards, bool deleteEnable) {
     this.cards = cards;
-    if (cards != null) {
-      for (int i = 0; i < 6; i++) {
-        iconList[i] = checkIcon;
-      }
+    if(deleteEnable==false){
+      initList();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if(!widget.deleteEnable){
-      initList();
+    if(widget.deleteEnable==true){
+      updateMyList();
     }
     if (cards == null || cards.isEmpty) {
       return Container(
@@ -80,10 +78,11 @@ class _CardsListState extends State<CardsList> {
                                   onTap: () {
                                     tappedCheckBox(cards[index], index);
                                   }),
-                        ),
+                          ),
                       ],
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -96,38 +95,71 @@ class _CardsListState extends State<CardsList> {
   }
 
   void initList() async {
-    print("DEBUG: initList()");
     CardsManager dbManager = CardsManager();
     List<ChargeCard> myNewCards = await dbManager.getAllCards();
     setState(() {
       if(myNewCards != null || myNewCards.isEmpty) {
-        print("DEBUG: Cards returned from database is either null or empty!");
+        cards = myNewCards;
+      }
+    });
+    if (cards != null) {
+      for (int i = 0; i < 6; i++) {
+        iconList[i] = checkIcon;
+      }
+    }
+  }
+
+  void initMyList() async {
+    CardsManager dbManager = CardsManager();
+    List<ChargeCard> myNewCards = await dbManager.getCards();
+    setState(() {
+      if(myNewCards != null || myNewCards.isEmpty) {
+        cards = myNewCards;
+      }
+    });
+  }
+  void updateMyList() async {
+    //print("DEBUG: updateMyList()");
+    CardsManager dbManager = CardsManager();
+    List<ChargeCard> myNewCards = await dbManager.getCards();
+    setState(() {
+      if(myNewCards != null || myNewCards.isEmpty) {
         cards = myNewCards;
       }
     });
   }
 
   void tappedCheckBox(ChargeCard card, int index) async {
-    print("DEBUG::Called method: _CardsListState::tappedCheckBox()");
-    addSelectedCard(card);
-    setState(() {
-      iconList[index] = newIcon;
-    });
+    if (iconList[index]!=newIcon){
+      addSelectedCard(card);
+      setState(() {
+        iconList[index] = newIcon;});}
+
+    else {
+      deleteSelectedTemporaryCard(card);
+      setState(() {
+        iconList[index] = checkIcon;});
+      }
+  }
+
+
+  void deleteSelectedTemporaryCard(ChargeCard card) async {
+    CardsManager dbManager = CardsManager();
+    dbManager.deleteTemporaryCard(card);
+    return;
   }
 
   void deleteSelectedCard(ChargeCard card) async {
-    print("DEBUG::Called method: _CardsListState::deletedSelectedCard()");
     CardsManager dbManager = CardsManager();
     dbManager.deleteCard(card);
     return;
   }
 
   void addSelectedCard(ChargeCard card) async {
-    print("DEBUG::Called method: _CardsListState::addSelectedCard()");
+
     CardsManager dbManager = CardsManager();
     dbManager.saveTemporaryCard(card);
-    /*List<ChargeCard> userCards = await dbManager.getCards();
-    print(userCards[1].toString());*/
+
     return;
   }
 }
