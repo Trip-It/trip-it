@@ -253,7 +253,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         children: <Widget>[
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.height * 0.15,
+            //height: MediaQuery.of(context).size.height * 0.15,
             child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
@@ -273,7 +273,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                             _desc == null
                                 ? widget.awaitingForLocation
                                 : "SET AS DEPARTURE POINT: \n" + _desc,
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 16),
                             textAlign: TextAlign.start,
                           ),
                         )))),
@@ -290,7 +290,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
     var height = MediaQuery.of(context).size.height;
 
     return new Positioned(
-      bottom: -width * 0.025 + height * 0.075,
+      bottom: height * 0.05,
       right: width * 0.1,
       child: Container(
         height: width * 0.15,
