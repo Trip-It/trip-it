@@ -31,7 +31,7 @@ class _MapPageState extends State<MapPage> {
       mapController: widget.mapController,
       options: MapOptions(
         center: LatLng(widget.lat, widget.lng),
-        zoom: 13.0,
+        zoom: 18.0,
       ),
       layers: [
         new TileLayerOptions(

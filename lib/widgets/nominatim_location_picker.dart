@@ -54,31 +54,27 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
     super.initState();
     _getCurrentLocation();
     _markers = [
-
       Marker(
         width: 50.0,
         height: 50.0,
         point: new LatLng(0.0, 0.0),
         builder: (ctx) => new Container(
             child: Icon(
-              Icons.location_on,
-              size: 50.0,
-              color: _color,
-            )
-                ),
+          Icons.location_on,
+          size: 50.0,
+          color: _color,
+        )),
       )
     ];
   }
 
   void _changeAppBar() {
-
     setState(() {
       _isSearching = !_isSearching;
     });
   }
 
   _getCurrentLocation() {
-
     final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
     geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
@@ -94,7 +90,6 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   }
 
   _getCurrentLocationMarker() {
-
     setState(() {
       _lat = _currentPosition.latitude;
       _lng = _currentPosition.longitude;
@@ -104,11 +99,11 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         height: 80.0,
         point: LatLng(_currentPosition.latitude, _currentPosition.longitude),
         builder: (ctx) => new Container(
-            child:Icon(
-              Icons.location_on,
-              size: 50.0,
-              color: _color,
-            ),
+          child: Icon(
+            Icons.location_on,
+            size: 50.0,
+            color: _color,
+          ),
         ),
       );
     });
@@ -126,7 +121,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         'latlng': _point,
         'state': _addresses[0]['state'],
         'desc':
-        "${_addresses[0]['state']}, ${_addresses[0]['city']}, ${_addresses[0]['suburb']}, ${_addresses[0]['neighbourhood']}, ${_addresses[0]['road']}"
+            "${_addresses[0]['state']}, ${_addresses[0]['city']}, ${_addresses[0]['suburb']}, ${_addresses[0]['neighbourhood']}, ${_addresses[0]['road']}"
       };
       _desc = _addresses[0]['description'];
     });
@@ -145,13 +140,12 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       primary: true,
       title: _buildTextField(_isResult),
       leading: IconButton(
-        icon:
-        Icon(_isResult ? Icons.close : Icons.my_location, color: _color),
+        icon: Icon(_isResult ? Icons.close : Icons.my_location, color: _color),
         onPressed: () {
           _isSearching
               ? setState(() {
-            _isSearching = false;
-          })
+                  _isSearching = false;
+                })
               : _mapController.move(_point, 18);
           setState(() {
             _isSearching = false;
@@ -163,7 +157,6 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   }
 
   _buildTextField(bool _isResult) {
-
     return Card(
         elevation: 4,
         shape: RoundedRectangleBorder(
@@ -176,13 +169,12 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
                 child: TextFormField(
-                    controller: _ctrlSearch,
-                    decoration: InputDecoration(
-                        hintText: widget.searchHint,
-                        border: InputBorder.none,
-                        hintStyle: TextStyle(color: Colors.grey)
-                    ),
-                    textInputAction: TextInputAction.search,
+                  controller: _ctrlSearch,
+                  decoration: InputDecoration(
+                      hintText: widget.searchHint,
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.grey)),
+                  textInputAction: TextInputAction.search,
                   onEditingComplete: () async {
                     FocusScopeNode currentFocus = FocusScope.of(context);
                     if (!currentFocus.hasPrimaryFocus) {
@@ -191,10 +183,10 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                     _isResult == false
                         ? _changeAppBar()
                         : setState(() {
-                      _isSearching = true;
-                    });
-                    dynamic res =
-                    await NominatimService().getAddressLatLng(_ctrlSearch.text);
+                            _isSearching = true;
+                          });
+                    dynamic res = await NominatimService()
+                        .getAddressLatLng(_ctrlSearch.text);
                     setState(() {
                       _addresses = res;
                     });
@@ -212,10 +204,10 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                 _isResult == false
                     ? _changeAppBar()
                     : setState(() {
-                  _isSearching = true;
-                });
+                        _isSearching = true;
+                      });
                 dynamic res =
-                await NominatimService().getAddressLatLng(_ctrlSearch.text);
+                    await NominatimService().getAddressLatLng(_ctrlSearch.text);
                 setState(() {
                   _addresses = res;
                 });
@@ -226,7 +218,6 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   }
 
   Widget mapContext(BuildContext context) {
-
     while (_currentPosition == null) {
       return new Center(
         child: Loader(),
@@ -242,19 +233,18 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   }
 
   Widget _buildBody(BuildContext context) {
-
     return new Stack(
       children: <Widget>[
         mapContext(context),
         _isSearching ? Container() : _buildDescriptionCard(),
         _isSearching ? Container() : floatingActionButton(),
+        _isSearching ? Container() : _segmentedControlZoom(),
         _isSearching ? searchOptions() : Text(''),
       ],
     );
   }
 
   Widget _buildDescriptionCard() {
-
     return new Positioned(
       bottom: MediaQuery.of(context).size.width * 0.05,
       right: MediaQuery.of(context).size.width * 0.05,
@@ -277,14 +267,16 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                         child: Center(
                             child: Scrollbar(
                                 child: new SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  reverse: false,
-                                  child: AutoSizeText(
-                                    _desc == null ? widget.awaitingForLocation : "SET AS DEPARTURE POINT: \n" + _desc,
-                                    style: TextStyle(fontSize: 20),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                )))),
+                          scrollDirection: Axis.vertical,
+                          reverse: false,
+                          child: AutoSizeText(
+                            _desc == null
+                                ? widget.awaitingForLocation
+                                : "SET AS DEPARTURE POINT: \n" + _desc,
+                            style: TextStyle(fontSize: 20),
+                            textAlign: TextAlign.start,
+                          ),
+                        )))),
                   ],
                 )),
           ),
@@ -294,7 +286,6 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   }
 
   floatingActionButton() {
-
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
@@ -306,7 +297,9 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         width: width * 0.15,
         child: FittedBox(
           child: FloatingActionButton(
-              child: Icon(Icons.arrow_forward,),
+              child: Icon(
+                Icons.arrow_forward,
+              ),
               onPressed: () {
                 setState(() {
                   _point = LatLng(
@@ -321,7 +314,6 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   }
 
   Widget searchOptions() {
-
     return new WillPopScope(
       onWillPop: () async => onWillpop(),
       child: Scaffold(
@@ -342,7 +334,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
 
                   setState(() {
                     _desc = _addresses[index][
-                    'description']; /*"${_addresses[index]['country']}, ${_addresses[index]['state']}, ${_addresses[index]['city']}, ${_addresses[index]['city_district']}, ${_addresses[index]['suburb']}";*/
+                        'description']; /*"${_addresses[index]['country']}, ${_addresses[index]['state']}, ${_addresses[index]['city']}, ${_addresses[index]['city_district']}, ${_addresses[index]['suburb']}";*/
                     _isSearching = false;
                     _lat = double.parse(_addresses[index]['lat']);
                     _lng = double.parse(_addresses[index]['lng']);
@@ -350,7 +342,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                       'latlng': LatLng(_lat, _lng),
                       'state': _addresses[index]['state'],
                       'desc':
-                      "${_addresses[index]['state']}, ${_addresses[index]['city']}, ${_addresses[index]['suburb']}, ${_addresses[index]['neighbourhood']}, ${_addresses[index]['road']}"
+                          "${_addresses[index]['state']}, ${_addresses[index]['city']}, ${_addresses[index]['suburb']}, ${_addresses[index]['neighbourhood']}, ${_addresses[index]['road']}"
                     };
                     _markers[0] = Marker(
                       width: 80.0,
@@ -358,9 +350,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                       point: LatLng(double.parse(_addresses[index]['lat']),
                           double.parse(_addresses[index]['lng'])),
                       builder: (ctx) => new Container(
-                          child: Icon(
-                            Icons.location_on,
-                            size: 50.0),
+                        child: Icon(Icons.location_on, size: 50.0),
                       ),
                     );
                   });
@@ -374,7 +364,6 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   }
 
   _buildLocationCard(String text) {
-
     return new Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -391,11 +380,59 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                   padding: EdgeInsets.all(15),
                   child: AutoSizeText(
                     text,
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
                   ))),
         ),
       ],
+    );
+  }
+
+  _segmentedControlZoom() {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+
+    return new Positioned(
+      bottom: height * 0.2,
+      right: width * 0.05,
+      child: Container(
+        height: width * 0.22,
+        width: width * 0.1,
+        child: Column(
+          children: <Widget>[
+            FittedBox(
+              child: FloatingActionButton(
+                  child: Icon(
+                    Icons.add,
+                  ),
+                  onPressed: () {
+                    if (_mapController.zoom < 19) {
+                      setState(() {
+                        _mapController.move(_mapController.center, _mapController.zoom + 1);
+                      });
+                    }
+                  }),
+            ),
+            Container(
+              padding: EdgeInsets.all(2.0),
+            ),
+            FittedBox(
+              child: FloatingActionButton(
+                  child: Text(
+                    '-',
+                    style: TextStyle(fontSize: 28),
+                  ),
+                  onPressed: () {
+                    if (_mapController.zoom > 2) {
+                      setState(() {
+                        _mapController.move(_mapController.center, _mapController.zoom - 1);
+                      });
+                    }
+                  }),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
