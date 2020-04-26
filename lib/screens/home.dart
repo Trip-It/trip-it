@@ -7,9 +7,8 @@ import 'package:trip_it_app/widgets/nominatim_location_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/';
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
+ @override
+  _HomeScreenState createState() => new _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
