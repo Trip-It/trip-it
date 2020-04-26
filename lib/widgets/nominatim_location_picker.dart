@@ -297,6 +297,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         width: width * 0.15,
         child: FittedBox(
           child: FloatingActionButton(
+              heroTag: "nextScreen",
               child: Icon(
                 Icons.arrow_forward,
               ),
@@ -402,6 +403,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
           children: <Widget>[
             FittedBox(
               child: FloatingActionButton(
+                  heroTag: "plusZoom",
                   child: Icon(
                     Icons.add,
                   ),
@@ -418,6 +420,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
             ),
             FittedBox(
               child: FloatingActionButton(
+                  heroTag: "minusZoom",
                   child: Text(
                     '-',
                     style: TextStyle(fontSize: 28),
