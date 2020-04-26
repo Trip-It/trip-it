@@ -31,8 +31,8 @@ class AddProfileScreen extends StatelessWidget {
                         ) {},
                     child: new CircleAvatar(
                       radius: (MediaQuery.of(context).size.width / 5.0),
-                      backgroundColor: Colors.green,
-                      child: Text('FB'),
+                      backgroundColor: TripItColors.primaryDarkBlue,
+                      child: Text('Tap to change image'),
                     ),
                     shape: new CircleBorder(),
                     elevation: 2.0,
