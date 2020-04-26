@@ -53,6 +53,16 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    if(controller.status == AnimationStatus.forward || controller.status == AnimationStatus.reverse)
+    {
+      controller.notifyStatusListeners(AnimationStatus.dismissed);
+    }
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
 
   Widget build(BuildContext context) {
     return Container(

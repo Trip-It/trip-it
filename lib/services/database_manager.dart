@@ -9,47 +9,84 @@ import 'package:sqflite/sqflite.dart';
 class DatabaseManager {
   DatabaseManager._();
   static final DatabaseManager db = DatabaseManager._();
-  Database _database;
+  static Database _database;
 
   DatabaseManager();
 
   Future<Database> get database async {
-    if (_database != null) return _database;
-    // if _database is null we instantiate it
-    _database = await initDB();
-    return _database;
+
+    //_database.isOpen ? print("database is open") : print("database is NOT open");
+
+    if (_database != null) {
+      return _database;
+    }
+
+      print("========== database is null, reinstantiating it ==========");
+
+      // if _database is null, instantiate it
+      _database = await initDB();
+
+      // create tables that will be used in the application but are not included in the asset database
+      await createTables( _database );
+
+      return _database;
   }
 
-  initDB() async {
-    // init the database tripitDB whith one attribut id
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "tripitDB");
-    return await openDatabase(path, version: 1, onOpen: (db) async {
-      // Only copy if the database doesn't exist
-      if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound) {
-        // Load database from asset and copy
-        ByteData data = await rootBundle.load(join('data', 'trip_it_data.db'));
-        List<int> bytes =
-            data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+  initDB() async{
+    var dbDir = await getDatabasesPath();
+    var dbPath = join(dbDir, "tripit.db");
 
-        // Save copied asset to documents
-        await new File(path).writeAsBytes(bytes);
-      }
-
-      var db = await openDatabase(path);
-    }, onCreate: (Database db, int version) async {
-      await db.execute(
-          "CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
-
-      // Use the following line to create new tables
-      //await db.execute("CREATE TABLE TableName(attribute TYPE)");
-    });
+    ByteData data = await rootBundle.load("data/trip_it_data.db");
+    List<int> bytes = data.buffer.asUint8List(data.offsetInBytes,data.lengthInBytes);
+    await File(dbPath).writeAsBytes(bytes);
+    return await openDatabase(
+        dbPath,
+        version: 1,
+        onCreate: (Database db, int version) async{
+          print("------------------------ onCreate ------------------------");
+          await db.execute("CREATE TABLE usercards(name TEXT, image TEXT, url TEXT )");
+          await db.execute("CREATE TABLE temporarycards(name TEXT, image TEXT, url TEXT )");
+          await db.execute("CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
+        });
   }
 
+  createTables(Database db) async{
+
+    // check if table already exists
+    List<Map> listProfiles = new List<Map>();
+    listProfiles.addAll(await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='profiles'"));
+    if(listProfiles.isEmpty){
+      print("table profiles does not exist... it will be created");
+      await db.execute("CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
+    } else {
+      print("table profiles already exists, wont be recreated");
+    }
+
+    List<Map> listTempCards = new List<Map>();
+    listTempCards.addAll(await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='temporarycards'"));
+    if(listTempCards.isEmpty){
+      print("table listTempCards does not exist... it will be created");
+      await db.execute("CREATE TABLE temporarycards(name TEXT, image TEXT, url TEXT )");
+    } else {
+      print("table listTempCards already exists, wont be recreated");
+    }
+
+    List<Map> listUserCards = new List<Map>();
+    listUserCards.addAll(await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='usercards'"));
+    if(listUserCards.isEmpty){
+      print("table usercards does not exist... it will be created");
+      await db.execute("CREATE TABLE usercards(name TEXT, image TEXT, url TEXT )");
+    } else {
+      print("table usercards already exists, wont be recreated");
+    }
+
+  }
+
+  /*
   Future<void> insertDB(Tripit tripit) async {
     // insert more information
     // Get a reference to the database.
-    final Database db = await database;
+    final Database db = await _database;
 
     await db.insert(
       'tripitDB',
@@ -127,8 +164,10 @@ class DatabaseManager {
 
   // Print the list
   //print(await tripit());
+  */
 }
 
+/*
 //For example, I create a class tripit with one attribut "id".
 class Tripit {
   final int id;
@@ -140,3 +179,4 @@ class Tripit {
     };
   }
 }
+   */

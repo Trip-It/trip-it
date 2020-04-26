@@ -28,14 +28,14 @@ class AboutWidget extends StatelessWidget {
       'Learn more about the team behind Trip It!',
       'Learn more about our values concerning your privacy',
       'Something to tell us?',
-      'Boring but necessary information',
+      'Apache 2.0 License',
     ];
 
     final descriptions = [
       'The Trip It! team is composed by 7 students from the engineering school Grenoble INP - Ense3, France.We worked all together in order to provide you the best route planner app for EVs.[Names]',
       'We are convinced that one\'s privacy must be respected, this is why your data is only stored locally on your phone. The only data which we could get is the anonymous feedback you decide to send or not after each trip. (This feedback allows us to refine the estimation calculations.)This is the aim emphasized by Better World Initiative.',
       'Don\'t hesitate to give us feedback or any suggestions concerning our application via : Mail Adress Contact Yves Maréchal ?',
-      'I don\'t know yet'];
+      'The project is using an Aapache 2.0 License.'];
 
     return ListView.builder(
       itemCount: titles.length,

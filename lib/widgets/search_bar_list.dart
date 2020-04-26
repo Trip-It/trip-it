@@ -48,7 +48,7 @@ class _SearchBarCardsState extends State<SearchBarCards>{
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(15.0),
         icon: Icon(Icons.search),
-        hintText:"Search for one of your cards",
+        hintText:"Search for one card",
       ),
       //onChanged: updateCardsController,
     );
