@@ -12,6 +12,10 @@ class AddProfileScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text("Add Profile"),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.close, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         body: Center(
           child: Column(
