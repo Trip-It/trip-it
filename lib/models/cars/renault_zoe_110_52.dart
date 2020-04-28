@@ -1,18 +1,18 @@
 import 'package:trip_it_app/models/car.dart';
 
-/// Class giving the physical properties of a KiaSoul27
-class KiaSoul27 implements Car
+/// Class giving the physical properties of a Renault Zoe R110 52kWh
+class RenaultZoeR110_52 with Car
 {
-  static final double carWeight = 1580;
-  static final double scx = 0.81;
-  static final double battery = 22000;
-  static final double crr = 0.0136;
+  static final double carWeight = 1502;
+  static final double scx = 0.75;
+  static final double battery = 52000;
+  static final double crr = 0.011;
   static final double lights = 105;
   static final List<double> clim = new List<double>.from([1300, 620, 520, 200, 0, 500]);
   static final List<int> TEMPERATURE = new List<int>.from([0, 5, 10, 15, 20, 25]);
-  static final List<double> EFFICIENCY = [0.72, 0.72, 0.72, 0.75, 0.78, 0.82, 0.85, 0.85, 0.85, 0.85, 0.85];
-  static final List<int> SPEEDS = [30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130];
-  static final String NAME = "Kia EV 27";
+  static final List<double> EFFICIENCY = [0.72, 0.72, 0.72, 0.72, 0.75, 0.78, 0.82, 0.85, 0.85, 0.85, 0.85, 0.85];
+  static final List<int> SPEEDS = [0, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130];
+  static final String NAME = "Zoe R110 52kWh";
 
   double getBattery()
   {
