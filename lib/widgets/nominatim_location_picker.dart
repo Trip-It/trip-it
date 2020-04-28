@@ -10,7 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:trip_it_app/screens/loader.dart';
-import 'package:trip_it_app/screens/trip.dart';
+import 'package:trip_it_app/screens/destination.dart';
 import 'package:trip_it_app/services/nominatim.dart';
 import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/map.dart';
@@ -161,6 +161,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
+
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -307,7 +308,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                       _currentPosition.latitude, _currentPosition.longitude);
                 });
                 // Go to next screen
-                Navigator.pushNamed(context, TripScreen.routeName);
+                Navigator.pushNamed(context, DestinationScreen.routeName);
               }),
         ),
       ),
@@ -374,6 +375,10 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
           child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
+                side: BorderSide(
+                  color: TripItColors.primaryLightBlue,
+                  width: 2.0,
+                ),
               ),
               //color: Colors.white,
               elevation: 0,
@@ -410,7 +415,8 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                   onPressed: () {
                     if (_mapController.zoom < 19) {
                       setState(() {
-                        _mapController.move(_mapController.center, _mapController.zoom + 1);
+                        _mapController.move(
+                            _mapController.center, _mapController.zoom + 1);
                       });
                     }
                   }),
@@ -428,7 +434,8 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                   onPressed: () {
                     if (_mapController.zoom > 2) {
                       setState(() {
-                        _mapController.move(_mapController.center, _mapController.zoom - 1);
+                        _mapController.move(
+                            _mapController.center, _mapController.zoom - 1);
                       });
                     }
                   }),

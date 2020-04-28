@@ -3,7 +3,7 @@ import 'package:trip_it_app/screens/about.dart';
 import 'package:trip_it_app/screens/cards.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
-import 'package:trip_it_app/screens/trip.dart';
+import 'package:trip_it_app/screens/destination.dart';
 import 'package:trip_it_app/theme.dart';
 
 class AboutWidget extends StatelessWidget {
