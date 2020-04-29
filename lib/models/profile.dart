@@ -1,7 +1,9 @@
 /// Class defining a profile
 class Profile {
   // Fields
-  String _name;
+  String id;
+  String _firstname;
+  String _lastname;
   String _picture;
   String _car;
   int _minimumCharge;
@@ -13,11 +15,19 @@ class Profile {
   String _language;
   String _mapType;
 
-  Profile(this._name, this._picture, this._car, this._minimumCharge, this._maximumCharge, this._restaurant, this._cinema, this._sport, this._plug, this._language, this._mapType);
+  Profile(this. id, this._firstname, this._lastname, this._picture, this._car, this._minimumCharge, this._maximumCharge, this._restaurant, this._cinema, this._sport, this._plug, this._language, this._mapType);
 
   // Getter
-  String getName() {
-    return this._name;
+  String getId() {
+    return this.id;
+  }
+
+  String getFirstName() {
+    return this._firstname;
+  }
+
+  String getLastName() {
+    return this._lastname;
   }
 
   String getPicture() {
@@ -61,8 +71,16 @@ class Profile {
   }
 
   // Setter
-  void setName(String name){
-    this._name = name;
+  void setId(String id){
+    this.id = id;
+  }
+
+  void setFirstName(String name){
+    this._firstname = name;
+  }
+
+  void setLastName(String name){
+    this._lastname = name;
   }
 
   void setPicture(String picture){
@@ -107,7 +125,9 @@ class Profile {
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
-    map["name"] = _name;
+    map["id"] = id;
+    map["firstname"] = _firstname;
+    map["lastname"] = _lastname;
     map["picture"] = _picture;
     map["car"] = _car;
     map["minCharge"] = _minimumCharge;
@@ -122,7 +142,7 @@ class Profile {
   }
 
   String toString() {
-    return "Name: " + _name + "\nPicture: " + _picture + "\nCar: " + _car +"\nMinimum charge: " + _minimumCharge.toString() +
+    return "ID: " + id + "\nFirst Name: " + _firstname + "\nLast Name: " + _lastname + "\nPicture: " + _picture + "\nCar: " + _car +"\nMinimum charge: " + _minimumCharge.toString() +
         "\nMaximum charge: " + _maximumCharge.toString() + "\nRestaurant: " + _restaurant.toString() + "\nCinema: " + _cinema.toString() +
         "\nSport: " + _sport.toString() + "\nPlug: " + _plug.toString() + "\nLanguage: " + _language + "\nMapType: " + _mapType;
   }
