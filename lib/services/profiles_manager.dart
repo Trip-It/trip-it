@@ -14,7 +14,9 @@ class ProfilesManager extends DatabaseManager {
     List<Profile> profiles = new List();
     for (int i = 0; i < list.length; i++) {
       profiles.add(new Profile(
-          list[i]["name"],
+          list[i]["id"],
+          list[i]["firstname"],
+          list[i]["lastname"],
           list[i]["picture"],
           list[i]["car"],
           list[i]["minCharge"],
@@ -34,7 +36,7 @@ class ProfilesManager extends DatabaseManager {
     var dbClient = await database;
 
     // Check if profile is already existing
-    Profile check = await this.getProfile(profile.getName());
+    Profile check = await this.getProfile(profile.getId());
 
     if (check != null) {
       //TODO show error message
@@ -44,9 +46,17 @@ class ProfilesManager extends DatabaseManager {
       print("Saving profile");
       await dbClient.transaction((txn) async {
         return await txn.rawInsert(
-            'INSERT INTO profiles(name, picture, car, minCharge, maxCharge, rest, cinema, sport, plug, language, mapType) VALUES(' +
+            'INSERT INTO profiles(id, firstname, lastname, picture, car, minCharge, maxCharge, rest, cinema, sport, plug, language, mapType) VALUES(' +
                 '\'' +
-                profile.getName() +
+                profile.getId() +
+                '\'' +
+                ',' +
+                '\'' +
+                profile.getFirstName() +
+                '\'' +
+                ',' +
+                '\'' +
+                profile.getLastName() +
                 '\'' +
                 ',' +
                 '\'' +
@@ -103,7 +113,9 @@ class ProfilesManager extends DatabaseManager {
       return null;
     } else {
       return new Profile(
-          profile.first["name"],
+          profile.first["id"],
+          profile.first["firstname"],
+          profile.first["lastname"],
           profile.first["picture"],
           profile.first["car"],
           profile.first["minCharge"],
@@ -123,7 +135,7 @@ class ProfilesManager extends DatabaseManager {
     var dbClient = await database;
 
     int res = await dbClient
-        .rawDelete('DELETE FROM profiles WHERE name = ?', [profile.getName()]);
+        .rawDelete('DELETE FROM profiles WHERE id = ?', [profile.getId()]);
     return res > 0 ? true : false;
   }
 
@@ -132,7 +144,7 @@ class ProfilesManager extends DatabaseManager {
   Future<bool> update(Profile profile) async {
     var dbClient = await database;
     int res = await dbClient.update("profile", profile.toMap(),
-        where: "name = ?", whereArgs: <String>[profile.getName()]);
+        where: "id = ?", whereArgs: <String>[profile.getId()]);
     return res > 0 ? true : false;
   }
 
