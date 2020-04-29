@@ -374,6 +374,10 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
           child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
+                side: BorderSide(
+                  color: TripItColors.primaryLightBlue,
+                  width: 2.0,
+                ),
               ),
               //color: Colors.white,
               elevation: 0,
@@ -394,10 +398,9 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
     var height = MediaQuery.of(context).size.height;
 
     return new Positioned(
-      bottom: height * 0.2,
+      bottom: height * 0.3,
       right: width * 0.05,
       child: Container(
-        height: width * 0.22,
         width: width * 0.1,
         child: Column(
           children: <Widget>[
