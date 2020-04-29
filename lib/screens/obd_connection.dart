@@ -10,17 +10,17 @@ import 'dart:async';
 /// showing all available Bluetooth devices and buttons for connecting and disconnecting to devices
 /// Sends services to Data Screen and stores them in OBD Database
 
-class ObdConnection extends StatefulWidget {
+class ObdConnectionScreen extends StatefulWidget {
   static const routeName = '/ObdConnection';
   ConnectionManager connectionManager =
       new ConnectionManager(); //= new ConnectionManager();
 
 
   @override
-  _ObdConnectionState createState() => _ObdConnectionState();
+  _ObdConnectionScreenState createState() => _ObdConnectionScreenState();
 }
 
-class _ObdConnectionState extends State<ObdConnection> {
+class _ObdConnectionScreenState extends State<ObdConnectionScreen> {
   BluetoothDevice _connectedDevice;
   List<BluetoothService> _services;
   final _writeController = TextEditingController();
