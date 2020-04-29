@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/screens/about.dart';
 import 'package:trip_it_app/screens/cards.dart';
+import 'package:trip_it_app/screens/obd_connection.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
 import 'package:trip_it_app/screens/trip.dart';
@@ -128,6 +129,20 @@ class DrawerWidget extends StatelessWidget{
             ),
             onTap: () {
               Navigator.popAndPushNamed(context, TripScreen.routeName);
+            },
+          ),
+          color: TripItColors.primaryDarkBlue,
+        ),
+        Container(
+          child: ListTile(
+            title: Text('OBC Connection',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+              ),
+            ),
+            onTap: () {
+              Navigator.popAndPushNamed(context, ObdConnectionScreen.routeName);
             },
           ),
           color: TripItColors.primaryDarkBlue,

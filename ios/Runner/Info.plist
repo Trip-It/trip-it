@@ -47,5 +47,15 @@
     <string>Trip it! needs access to your location when in the background in order to be useful as a navigation application.</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>Trip it! needs access to your location when open and in the background in order to be useful as a navigation application.</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Need BLE permission</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>Need BLE permission</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Need Location permission</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Need Location permission</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Need Location permission</string>
 </dict>
 </plist>
