@@ -42,7 +42,6 @@ class ObdDatabaseHandler extends DatabaseManager {
 create table TableService ( 
   ID integer primary key autoincrement, 
   UUID var, 
-  service BluetoothService not null,
   Characteristics List<BluetoothCharacteristic> not null)
 ''');
 
