@@ -2,10 +2,22 @@ PODS:
   - Flutter (1.0.0)
   - flutter_compass (0.0.1):
     - Flutter
+  - flutter_keyboard_visibility (0.7.0):
+    - Flutter
+  - flutter_osm_plugin (0.0.1):
+    - Flutter
+  - flutter_plugin_android_lifecycle (0.0.1):
+    - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - geolocator (5.3.1):
+    - Flutter
+  - google_api_availability (2.0.4):
+    - Flutter
   - location (0.0.1):
+    - Flutter
+  - location_permissions (2.0.5):
     - Flutter
   - path_provider (0.0.1):
     - Flutter
@@ -22,7 +34,13 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_compass (from `.symlinks/plugins/flutter_compass/ios`)
+  - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
+  - flutter_osm_plugin (from `.symlinks/plugins/flutter_osm_plugin/ios`)
+  - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
+  - geolocator (from `.symlinks/plugins/geolocator/ios`)
+  - google_api_availability (from `.symlinks/plugins/google_api_availability/ios`)
   - location (from `.symlinks/plugins/location/ios`)
+  - location_permissions (from `.symlinks/plugins/location_permissions/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -38,8 +56,20 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_compass:
     :path: ".symlinks/plugins/flutter_compass/ios"
+  flutter_keyboard_visibility:
+    :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
+  flutter_osm_plugin:
+    :path: ".symlinks/plugins/flutter_osm_plugin/ios"
+  flutter_plugin_android_lifecycle:
+    :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
+  geolocator:
+    :path: ".symlinks/plugins/geolocator/ios"
+  google_api_availability:
+    :path: ".symlinks/plugins/google_api_availability/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
+  location_permissions:
+    :path: ".symlinks/plugins/location_permissions/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   path_provider_macos:
@@ -54,13 +84,19 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_compass: cbbd285cea1584c7ac9c4e0c3e1f17cbea55e855
+  flutter_keyboard_visibility: 6195387fb6d8f46e5cd6dda4a4154e41f800f545
+  flutter_osm_plugin: 143b50116d286ab73b00e6bad86da8af58d76f85
+  flutter_plugin_android_lifecycle: 47de533a02850f070f5696a623995e93eddcdb9b
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  geolocator: 460cc8e850b616f8c0e90944c86517d91ccbb686
+  google_api_availability: 15fa42a8cd83c0a6738507ffe6e87096f12abcb8
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
+  location_permissions: 4a49d4e5bec5b653643e551ab77963cc99bb0e4a
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
   user_location: ec382950d42014e9d796513cb4a83de2e643a477
-  webview_flutter: bec7599de6bfbe8008a739aa3ebd7b364ea9d0cd
+  webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 

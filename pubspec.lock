@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  auto_size_text:
+    dependency: transitive
+    description:
+      name: auto_size_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -42,7 +49,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.1.0+1"
   charcode:
     dependency: transitive
     description:
@@ -50,6 +57,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  clock:
+    dependency: transitive
+    description:
+      name: clock
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   collection:
     dependency: transitive
     description:
@@ -57,6 +71,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.11"
+  color:
+    dependency: transitive
+    description:
+      name: color
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
   console_log_handler:
     dependency: transitive
     description:
@@ -85,6 +106,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.3"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
+  file:
+    dependency: transitive
+    description:
+      name: file
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.1.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -96,7 +131,21 @@ packages:
       name: flutter_cache_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.3"
+    version: "1.2.1"
+  flutter_compass:
+    dependency: transitive
+    description:
+      name: flutter_compass
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.7"
+  flutter_fluid_slider:
+    dependency: "direct main"
+    description:
+      name: flutter_fluid_slider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   flutter_image:
     dependency: transitive
     description:
@@ -104,6 +153,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  flutter_keyboard_visibility:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -118,11 +174,44 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.8.2"
+  flutter_osm_plugin:
+    dependency: "direct main"
+    description:
+      name: flutter_osm_plugin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.5+1"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  geolocator:
+    dependency: transitive
+    description:
+      name: geolocator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.3.1"
+  google_api_availability:
+    dependency: transitive
+    description:
+      name: google_api_availability
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.4"
   http:
     dependency: transitive
     description:
@@ -136,7 +225,7 @@ packages:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.3"
+    version: "3.1.4"
   image:
     dependency: transitive
     description:
@@ -158,6 +247,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.1"
+  location:
+    dependency: transitive
+    description:
+      name: location
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.5.4"
+  location_permissions:
+    dependency: transitive
+    description:
+      name: location_permissions
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.5"
   logging:
     dependency: transitive
     description:
@@ -165,6 +268,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.11.4"
+  mapbox_search:
+    dependency: "direct main"
+    description:
+      name: mapbox_search
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  mapbox_search_flutter:
+    dependency: "direct main"
+    description:
+      name: mapbox_search_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   matcher:
     dependency: transitive
     description:
@@ -179,6 +296,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
+  nominatim_location_picker:
+    dependency: "direct main"
+    description:
+      name: nominatim_location_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0+5"
   path:
     dependency: "direct main"
     description:
@@ -242,6 +366,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  provider:
+    dependency: "direct main"
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.0"
   quiver:
     dependency: transitive
     description:
@@ -249,6 +380,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.23.1"
+  search_widget:
+    dependency: "direct main"
+    description:
+      name: search_widget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -267,7 +412,14 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.1"
+    version: "1.3.0"
+  sqflite_common:
+    dependency: transitive
+    description:
+      name: sqflite_common
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+1"
   stack_trace:
     dependency: transitive
     description:
@@ -331,6 +483,41 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.6"
+  url_launcher:
+    dependency: "direct main"
+    description:
+      name: url_launcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.4.2"
+  url_launcher_macos:
+    dependency: transitive
+    description:
+      name: url_launcher_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1+4"
+  url_launcher_platform_interface:
+    dependency: transitive
+    description:
+      name: url_launcher_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
+  url_launcher_web:
+    dependency: transitive
+    description:
+      name: url_launcher_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1+1"
+  user_location:
+    dependency: "direct main"
+    description:
+      name: user_location
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
   uuid:
     dependency: transitive
     description:
@@ -352,6 +539,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
+  webview_flutter:
+    dependency: "direct main"
+    description:
+      name: webview_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.19+9"
   xml:
     dependency: transitive
     description:
@@ -367,5 +561,5 @@ packages:
     source: hosted
     version: "2.2.0"
 sdks:
-  dart: ">=2.6.0 <3.0.0"
-  flutter: ">=1.10.15 <2.0.0"
+  dart: ">=2.7.0 <3.0.0"
+  flutter: ">=1.12.13+hotfix.6 <2.0.0"

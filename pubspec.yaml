@@ -19,6 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
   sqflite:
   path:
   path_provider:
@@ -34,6 +35,8 @@ dependencies:
   search_widget: any
   nominatim_location_picker: any
 
+  #URL
+  url_launcher: ^5.4.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -61,7 +64,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+    
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
@@ -80,6 +83,9 @@ flutter:
     - assets/chargemap.png
     - assets/izivia-pass-006solo-1.jpg
     - assets/Pass-Plugsurfing.png
+    - assets/freshmile.png
+    - assets/NoCardsImage.png
+    - assets/cargenow.png
     - data/trip_it_data.db
 
 

@@ -230,6 +230,12 @@
       "languageVersion": "1.8"
     },
     {
+      "name": "splashscreen",
+      "rootUri": "file:///C:/flutter_windows_v1.12.13+hotfix.7-stable/flutter/.pub-cache/hosted/pub.dartlang.org/splashscreen-1.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "sqflite",
       "rootUri": "file:///usr/share/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-1.2.1",
       "packageUri": "lib/",
