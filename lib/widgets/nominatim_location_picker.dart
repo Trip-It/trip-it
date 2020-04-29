@@ -86,6 +86,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       });
     }).catchError((e) {
       print(e);
+      print("getfirstlocation error 1");
     });
   }
 
