@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/services/connection_manager.dart';
-import 'package:trip_it_app/screens/ObdConnectionScreen.dart';
+import 'package:trip_it_app/screens/obd_connection.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,8 +18,6 @@ class ObdDataScreen extends StatefulWidget {
 class _ObdDataScreenState extends State<ObdDataScreen> {
   final keyIsFirstLoaded = 'is_first_loaded';
   final _writeController = TextEditingController();
-
-
 
 
   ListView _buildView() {
