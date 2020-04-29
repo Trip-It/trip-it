@@ -60,8 +60,6 @@ create table TableService (
     }
   }
 
-  //query data from OBD DB
-
   //insert obdService into Database db for obdServices
   Future<void> insertObdService(ObdService obdService) async {
     final Database db = await database;

@@ -10,10 +10,10 @@ class ConnectionManager {
   List<BluetoothService> _services = new List<BluetoothService>();
 
   connectionManager() {
- //  this.flutterBlue = FlutterBlue.instance;
- //  this.devicesList = new List<BluetoothDevice>();
- //  this.readValues = new Map<Guid, List<int>>();
- //  this._services = new List<BluetoothService>();
+   this.flutterBlue = FlutterBlue.instance;
+   this.devicesList = new List<BluetoothDevice>();
+   this.readValues = new Map<Guid, List<int>>();
+   this._services = new List<BluetoothService>();
   }
 
   void fillDeviceList() { //async?
@@ -39,7 +39,6 @@ class ConnectionManager {
     if (!devicesList.contains(device)) {
       devicesList.add(device);
     }
-    ;
   }
 
   void startScanDev() {

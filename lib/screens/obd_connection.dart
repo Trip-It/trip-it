@@ -13,7 +13,7 @@ import 'dart:async';
 class ObdConnectionScreen extends StatefulWidget {
   static const routeName = '/ObdConnection';
   ConnectionManager connectionManager =
-      new ConnectionManager(); //= new ConnectionManager();
+      new ConnectionManager();
 
 
   @override
@@ -109,7 +109,7 @@ class _ObdConnectionScreenState extends State<ObdConnectionScreen> {
                     ),
                     onPressed: () {
                       setState(() async {
-                        widget.connectionManager.flutterBlue.stopScan();
+                        widget.connectionManager.flutterBlue.startScan();
                         try {
                           await device.disconnect();
                         } catch (e) {
