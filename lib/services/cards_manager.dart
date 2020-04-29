@@ -7,7 +7,7 @@ import 'package:trip_it_app/models/card.dart';
 class CardsManager extends DatabaseManager {
 
   CardsManager() :super();
-
+/// MY CARDS
   /// Get cards
   Future<List<ChargeCard>> getCards() async {
     var dbClient = await database;
@@ -75,8 +75,7 @@ class CardsManager extends DatabaseManager {
 
 
 
-
-  /// Methods related to all cards
+/// Methods related to all cards
   /// Get all cards
   Future<List<ChargeCard>> getAllCards() async {
     var dbClient = await database;
@@ -101,7 +100,7 @@ class CardsManager extends DatabaseManager {
   }
 
 
-  /// Methods related to temporary cards
+/// Methods related to temporary cards
 
   /// Get cards
   Future<List<ChargeCard>> getTemporaryCards() async {
@@ -156,5 +155,77 @@ class CardsManager extends DatabaseManager {
     return res > 0 ? true : false;
   }
 
+/// Methods related to Filtered YOUR CARDS
 
+  /// Get cards
+  Future<List<ChargeCard>> getFilteredYourCards() async {
+    var dbClient = await database;
+    List<Map> list = await dbClient.rawQuery('SELECT * FROM filteredyourcards');
+    List<ChargeCard> cards = new List();
+    for (int i = 0; i < list.length; i++) {
+      cards.add(new ChargeCard(list[i]["name"], list[i]["image"], list[i]["url"]));
+    }
+    return cards;
+  }
+
+  /// Save card
+  void saveFilteredYourCard(ChargeCard card) async {
+    var dbClient = await database;
+
+    // Check if card is already existing
+    final check = await this.getCard(card.name);
+
+    if(check == null) {
+      print("Saving card");
+      await dbClient.transaction((txn) async {
+        return await txn.rawInsert(
+            'INSERT INTO filteredyourcards(name, image, url) VALUES(' +
+                '\'' +
+                card.name +
+                '\'' +
+                ',' +
+                '\'' +
+                card.image +
+                '\'' +
+                ',' +
+                '\'' +
+                card.url +
+                '\'' +
+                ')');
+      });
+    } else {
+      //TODO show error message
+      print("Not able to save filtered card since it already exists!");
+      return;
+    }
+  }
+
+  /// Method to delete a given card
+  /// returns true if operation has been successful, false if not
+  Future<bool> deleteFilteredYourCard(ChargeCard card) async {
+    var dbClient = await database;
+    int res =
+    await dbClient.rawDelete('DELETE FROM filteredyourcards WHERE name = ?', [card.name]);
+    return res > 0 ? true : false;
+
+  }
+  Future<void> deleteAllFilteredYourCard()async{
+    List<ChargeCard> cards = await getFilteredYourCards();
+    bool res;
+    int i;
+    for (i = 0; i < cards.length; i++){
+      res = await deleteFilteredYourCard(cards[i]);
+      if (res == false){
+        print("------------------Not able to clean the table--------------------");
+      }
+    }
+    //int res =
+    //await dbClient.rawDelete('DELETE * FROM filteredyourcards');
+    /*if (res == 0)  {
+       print("------------------Not able to clean the table--------------------");
+
+      return false;
+    }
+    return true;*/
+  }
 }

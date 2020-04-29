@@ -110,7 +110,7 @@ class _CardsListState extends State<CardsList> {
 
   void initMyList() async {
     CardsManager dbManager = CardsManager();
-    List<ChargeCard> myNewCards = await dbManager.getCards();
+    List<ChargeCard> myNewCards = await dbManager.getFilteredYourCards();
     setState(() {
       if(myNewCards != null || myNewCards.isEmpty) {
         cards = myNewCards;
@@ -120,7 +120,8 @@ class _CardsListState extends State<CardsList> {
   void updateMyList() async {
     //print("DEBUG: updateMyList()");
     CardsManager dbManager = CardsManager();
-    List<ChargeCard> myNewCards = await dbManager.getCards();
+    List<ChargeCard> myNewCards = await dbManager.getFilteredYourCards();
+    //getFilteredYourCards
     setState(() {
       if(myNewCards != null || myNewCards.isEmpty) {
         cards = myNewCards;

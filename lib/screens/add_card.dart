@@ -58,7 +58,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
         children: <Widget>[
           Container(
             margin: EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0),
-            child: SearchBarCards(allCards),
+            child: SearchBarCards(false),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
