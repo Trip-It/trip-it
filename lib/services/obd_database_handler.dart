@@ -9,6 +9,7 @@ import 'dart:typed_data';
 import 'package:trip_it_app/services/connection_manager.dart';
 import 'package:trip_it_app/screens/obd_data.dart';
 import 'package:flutter/foundation.dart';
+import 'package:trip_it_app/models/obd_service.dart';
 
 class ObdDatabaseHandler extends DatabaseManager {
   List<BluetoothService> realServices;
@@ -116,35 +117,4 @@ create table TableService (
   }
 }
 
-//class for saving retrieved service including its UUID and characteristic
-class ObdService {
-  int id;
-  var uuid;
-//
-  List<BluetoothCharacteristic> characteristics;
-  final String tableService = "tableSerivce";
-  final String columnID = "ID";
-  final String columnUUID = "UUID";
-  final String columnCharacteristic = "Characteristic";
 
-  //each characteristic has multiple descriptors
-  //  List<BluetoothDescriptor> descriptors;
-
-  ObdService({this.id, this.uuid, this.characteristics});
-
-  Map<String, dynamic> toMap() {
-    return {
-      'ID' : id,
-      'UUID' : uuid,
-//    'service' : service,
-      'characteristics' : characteristics,
-    };
-  }
-
-  fromMap(Map<String, dynamic> map) {
-    id = map['ID'];
-    uuid = map['UUID'];
-//    service = map['service'];
-    characteristics = map['characteristics'];
-  }
-}
