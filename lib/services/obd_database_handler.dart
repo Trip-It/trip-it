@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:typed_data';
+import 'package:trip_it_app/models/obd_service.dart';
 import 'package:trip_it_app/services/connection_manager.dart';
 import 'package:trip_it_app/screens/obd_data.dart';
 import 'package:flutter/foundation.dart';
-import 'package:trip_it_app/models/obd_service.dart';
 
 class ObdDatabaseHandler extends DatabaseManager {
   List<BluetoothService> realServices;
@@ -40,9 +40,9 @@ class ObdDatabaseHandler extends DatabaseManager {
       var db = await openDatabase(path);
     }, onCreate: (Database db, int version) async {
       await db.execute('''
-create table TableService ( 
-  ID integer primary key autoincrement, 
-  UUID var, 
+create table TableService (
+  ID integer primary key autoincrement,
+  UUID var,
   Characteristics List<BluetoothCharacteristic> not null)
 ''');
 
@@ -52,14 +52,6 @@ create table TableService (
     });
   }
 
-  void toObdService(List<BluetoothService> services) {
-    for (var i = 1; i <= services.length; i++) {
-      realObdServices.elementAt(i).uuid = services.elementAt(i).uuid;
-      realObdServices.elementAt(i).characteristics =
-          services.elementAt(i).characteristics;
-//      realObdServices.elementAt(i).service = services.elementAt(i);
-    }
-  }
 
   //insert obdService into Database db for obdServices
   Future<void> insertObdService(ObdService obdService) async {

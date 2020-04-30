@@ -47,6 +47,8 @@ class DatabaseManager {
           await db.execute("CREATE TABLE usercards(name TEXT, image TEXT, url TEXT )");
           await db.execute("CREATE TABLE temporarycards(name TEXT, image TEXT, url TEXT )");
           await db.execute("CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
+          await db.execute("CREATE TABLE obdservices(uuid GUID, uuidchar GUID)");
+          await db.execute("CREATE TABLE carstates(speed INT, soc INT, soh INT)");
         });
   }
 
@@ -79,6 +81,25 @@ class DatabaseManager {
     } else {
       print("table usercards already exists, wont be recreated");
     }
+
+    List<Map> listObdServices = new List<Map>();
+    listObdServices.addAll(await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='obdservices'"));
+    if(listObdServices.isEmpty){
+      print("table obdservices does not exist... it will be created");
+      await db.execute("CREATE TABLE obdservices(uuid GUID, uuidchar GUID)");
+    } else {
+      print("table obdservices already exists, wont be recreated");
+    }
+
+    List<Map> listCarStates = new List<Map>();
+    listCarStates.addAll(await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='carstates'"));
+    if(listUserCards.isEmpty){
+      print("table carstates does not exist... it will be created");
+      await db.execute("CREATE TABLE carstates(speed INT, soc INT, soh INT)");
+    } else {
+      print("table carstates already exists, wont be recreated");
+    }
+
 
   }
 

@@ -1,34 +1,34 @@
 import 'package:flutter_blue/flutter_blue.dart';
 
-//class for saving retrieved service including its UUID and characteristic
+
+///class for saving raw obd data(service uuid, characteristics-uuids)
+//each characteristic has multiple descriptors
+
 class ObdService {
-  int id;
-  var uuid;
-//
-  List<BluetoothCharacteristic> characteristics;
-  final String tableService = "tableSerivce";
-  final String columnID = "ID";
-  final String columnUUID = "UUID";
-  final String columnCharacteristic = "Characteristic";
+  Guid uuid; //typ: Guid
+  List<Guid> uuidChars; //UUID of characteristics
 
-  //each characteristic has multiple descriptors
-  //  List<BluetoothDescriptor> descriptors;
+  ObdService({this.uuid,this.uuidChars});
 
-  ObdService({this.id, this.uuid, this.characteristics});
+  fillObdService(BluetoothService service){
+    uuid = service.uuid;
+    for (var i=0; i <= service.characteristics.length; i++) {
+      uuidChars[i] = service.characteristics[i].uuid;
+    }
+  }
 
   Map<String, dynamic> toMap() {
     return {
-      'ID' : id,
       'UUID' : uuid,
 //    'service' : service,
-      'characteristics' : characteristics,
+      'UUID_characteristics' : uuidChars,
     };
   }
 
   fromMap(Map<String, dynamic> map) {
-    id = map['ID'];
     uuid = map['UUID'];
 //    service = map['service'];
-    characteristics = map['characteristics'];
+    uuidChars = map['characteristics'];
   }
+
 }

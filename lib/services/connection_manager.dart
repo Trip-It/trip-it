@@ -9,7 +9,7 @@ class ConnectionManager {
   BluetoothDevice _connectedDevice;
   List<BluetoothService> _services = new List<BluetoothService>();
 
-  connectionManager() {
+  connectionManager() { //ConnectionManager()?
    this.flutterBlue = FlutterBlue.instance;
    this.devicesList = new List<BluetoothDevice>();
    this.readValues = new Map<Guid, List<int>>();
