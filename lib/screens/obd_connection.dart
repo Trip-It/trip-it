@@ -12,9 +12,7 @@ import 'dart:async';
 
 class ObdConnectionScreen extends StatefulWidget {
   static const routeName = '/ObdConnection';
-  ConnectionManager connectionManager =
-      new ConnectionManager();
-
+  ConnectionManager connectionManager = new ConnectionManager();
 
   @override
   _ObdConnectionScreenState createState() => _ObdConnectionScreenState();
@@ -83,7 +81,7 @@ class _ObdConnectionScreenState extends State<ObdConnectionScreen> {
                       //writing data into OBD DB!
                       //Place code here
                       //Async >> Timer
-                      if (_connectedDevice != null){
+                      if (_connectedDevice != null) {
 //                        //Transfer data to translation
                       }
 
@@ -148,7 +146,6 @@ class _ObdConnectionScreenState extends State<ObdConnectionScreen> {
               widget.connectionManager.fillDeviceList();
             });
           }));
-
 
 //  void giveDataToDecry(Timer t)
 
