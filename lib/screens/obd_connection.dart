@@ -24,8 +24,6 @@ class _ObdConnectionScreenState extends State<ObdConnectionScreen> {
   BluetoothDevice _connectedDevice;
   List<BluetoothService> _services;
   final _writeController = TextEditingController();
-  static const savingInterval = const Duration(minutes:10);
-  Timer timerSaving;
   ObdDatabaseHandler obdDatabaseHandler;
 
   @override
@@ -86,8 +84,7 @@ class _ObdConnectionScreenState extends State<ObdConnectionScreen> {
                       //Place code here
                       //Async >> Timer
                       if (_connectedDevice != null){
-//                        Timer.periodic(savingInterval, giveDataToDecry(timerSaving));
-                        Timer.periodic(savingInterval, (timerSaving) {} );  //give data to decoding or to DB (ObdDatabaseHandler._database.insertObdDB);
+//                        //Transfer data to translation
                       }
 
                       Navigator.push(
@@ -117,11 +114,6 @@ class _ObdConnectionScreenState extends State<ObdConnectionScreen> {
                             throw e;
                           }
                         }
-                        if (_connectedDevice != null){
-                          timerSaving.cancel;
-                        _connectedDevice = null;
-                        }
-                        //CANCELING TIMER FOR SAVING DATA
                       });
                     })
               ],

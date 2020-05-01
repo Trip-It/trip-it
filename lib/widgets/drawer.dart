@@ -135,7 +135,7 @@ class DrawerWidget extends StatelessWidget{
         ),
         Container(
           child: ListTile(
-            title: Text('OBC Connection',
+            title: Text('OBD Connection',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16.0,
