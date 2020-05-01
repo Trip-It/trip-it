@@ -1,17 +1,16 @@
-import 'package:flutter_blue/flutter_blue.dart';
 import 'package:trip_it_app/services/database_manager.dart';
-import 'package:path/path.dart';
-import 'dart:io';
-import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
-import 'dart:typed_data';
 import 'package:trip_it_app/models/obd_service.dart';
 import 'package:trip_it_app/models/car_state.dart';
 import 'dart:async';
-import 'package:trip_it_app/services/connection_manager.dart';
-import 'package:trip_it_app/screens/obd_data.dart';
-import 'package:flutter/foundation.dart';
+import 'package:csv/csv.dart';
+import 'package:path/path.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:trip_it_app/models/car_state.dart';
+import 'package:trip_it_app/models/obd_service.dart';
+import 'package:sqflite/sqflite.dart';
+import 'dart:typed_data';
+
 
 class ObdDatabaseHandler extends DatabaseManager {
   ///init ObdDatabaseHandler
@@ -42,10 +41,10 @@ class ObdDatabaseHandler extends DatabaseManager {
   }
 
   //get CarState of id X
-  Future<CarState> getCard(int id) async {
+  Future<CarState> getSingleCarState(int id) async {
     var dbClient = await database;
     List<Map> carState =
-        await dbClient.rawQuery('SELECT * FROM carstates WHERE id = ?', [id]);
+    await dbClient.rawQuery('SELECT * FROM carstates WHERE id = ?', [id]);
 
     if (carState.isEmpty) {
       return null;
@@ -59,7 +58,7 @@ class ObdDatabaseHandler extends DatabaseManager {
     var dbClient = await database;
 
     // Check if carState is already existing
-    final check = await this.getCard(carState.id);
+    final check = await this.getSingleCarState(carState.id);
 
     if (check == null) {
       await dbClient.transaction((txn) async {
@@ -87,7 +86,7 @@ class ObdDatabaseHandler extends DatabaseManager {
   }
 
   //delete one carstate with id X
-  Future<bool> deleteCard(CarState carState) async {
+  Future<bool> deleteCarState(CarState carState) async {
     var dbClient = await database;
 
     int res = await dbClient
@@ -102,8 +101,8 @@ class ObdDatabaseHandler extends DatabaseManager {
     dbClient.execute('VACUUM');
   }
 
-  Future<void> startRecording(
-      Timer timerSaving, savingInterval, CarState carState) async {
+  Future<void> startRecording(Timer timerSaving, savingInterval,
+      CarState carState) async {
     Timer.periodic(savingInterval, (timerSaving) {
       this.saveCarState(carState);
     });
@@ -114,16 +113,40 @@ class ObdDatabaseHandler extends DatabaseManager {
   }
 
   Future<void> exportToCSV() async {
-    var dbClient = await database;
-    //By clicking export to CSV file for further research
+    Future<List<CarState>> list = getCarState();
+    List<CarState> carStateList = new List();
+    carStateList = await list;
+
+    List<List<dynamic>> rows = List<List<dynamic>>();
+    for (int i = 0; i < carStateList.length; i++) {
+//row refer to each column of a row in csv file and rows refer to each row in a file
+      List<dynamic> row = List();
+      row.add(carStateList[i].id);
+      row.add(carStateList[i].speed);
+      row.add(carStateList[i].soc);
+      row.add(carStateList[i].soh);
+      rows.add(row);
+    }
+
+//store file in documents folder
+    String dir = (await getExternalStorageDirectory()).absolute.path +
+        "/documents";
+    String file = "$dir";
+    File f = new File(file + "obddata.csv");
+
+// convert rows to String and write as csv file
+    String csv = const ListToCsvConverter().convert(rows);
+    f.writeAsString(csv);
   }
 
   /// Missing implementation of DatabaseHandler for ObdService
   /// Difficult because of List of Characteristics and Datatype: GUID
 
-  // In order to add all characteristics the columns need to be enhanced according to the amount of characteristics per service
-  // Column1: Service UUID, Column 2: Characteristic[1], Column 3: ..., Column N: Characteristic[N-1]
+// In order to add all characteristics the columns need to be enhanced according to the amount of characteristics per service
+// Column1: Service UUID, Column 2: Characteristic[1], Column 3: ..., Column N: Characteristic[N-1]
   addColumnsToTable() async {
     var dbClient = await database;
   }
+
 }
+
