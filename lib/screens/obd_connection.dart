@@ -89,7 +89,7 @@ class _ObdConnectionScreenState extends State<ObdConnectionScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ObdOptionScreen(
+                            builder: (context) => ObdDataScreen(
                               connectedDevice: _connectedDevice,
                               services: _services,
                             ),
