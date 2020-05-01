@@ -28,6 +28,7 @@ dependencies:
   #Bluetooth
   flutter_blue: ^0.7.0
   shared_preferences: ^0.5.7
+  csv: any
 
   # Map
   flutter_map: ^0.8.2
