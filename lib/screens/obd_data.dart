@@ -4,6 +4,7 @@ import 'package:trip_it_app/screens/obd_connection.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trip_it_app/screens/obd_data.dart';
 
 class ObdDataScreen extends StatefulWidget {
   static const routeName = '/obd_data';
@@ -230,9 +231,9 @@ class _ObdDataScreenState extends State<ObdDataScreen> {
         body: _buildView(),
         floatingActionButton: FloatingActionButton(
 
-          child: const Icon(Icons.bluetooth),
+          child: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamed(context, ObdConnectionScreen.routeName);
+            Navigator.pushNamed(context, ObdDataScreen.routeName);
           },
         )
     )

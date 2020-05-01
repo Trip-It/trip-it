@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'dart:convert';
 import 'package:trip_it_app/screens/obd_data.dart';
+import 'package:trip_it_app/screens/obd_option.dart';
 import 'package:trip_it_app/services/connection_manager.dart';
 import 'package:trip_it_app/services/obd_database_handler.dart';
 import 'dart:async';
@@ -86,13 +87,13 @@ class _ObdConnectionScreenState extends State<ObdConnectionScreen> {
                       }
 
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ObdDataScreen(
-                                  connectedDevice: _connectedDevice,
-                                  services: _services,
-                                )),
-                      );
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ObdOptionScreen(
+                              connectedDevice: _connectedDevice,
+                              services: _services,
+                            ),
+                          ));
                     });
                   },
                 ),
