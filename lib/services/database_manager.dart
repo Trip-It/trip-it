@@ -48,7 +48,7 @@ class DatabaseManager {
           await db.execute("CREATE TABLE temporarycards(name TEXT, image TEXT, url TEXT )");
           await db.execute("CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
           await db.execute("CREATE TABLE obdservices(uuid GUID, uuidchar GUID)");
-          await db.execute("CREATE TABLE carstates(speed INT, soc INT, soh INT)");
+          await db.execute("CREATE TABLE carstates(id INT, speed INT, soc INT, soh INT)");
         });
   }
 
