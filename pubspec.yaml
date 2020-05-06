@@ -25,6 +25,7 @@ dependencies:
   path_provider:
   flutter_osm_plugin:
 
+
   # Map
   flutter_map: ^0.8.2
   mapbox_search: any
@@ -87,6 +88,7 @@ flutter:
     - assets/NoCardsImage.png
     - assets/cargenow.png
     - data/trip_it_data.db
+    - assets/Wolf_profile.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

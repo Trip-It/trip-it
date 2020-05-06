@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+
 /// Class defining a profile
-class Profile {
+class Profile with ChangeNotifier{
   // Fields
   String id;
   String _firstname;
