@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trip_it_app/screens/obd_option.dart';
 import 'package:trip_it_app/services/connection_manager.dart';
 import 'package:trip_it_app/screens/obd_connection.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -229,13 +230,6 @@ class _ObdDataScreenState extends State<ObdDataScreen> {
           centerTitle: true,
         ),
         body: _buildView(),
-        floatingActionButton: FloatingActionButton(
-
-          child: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushNamed(context, ObdDataScreen.routeName);
-          },
-        )
     )
     ;
   }

@@ -11,11 +11,12 @@ import 'package:trip_it_app/screens/obd_data.dart';
 
 class ObdOptionScreen extends StatefulWidget {
   static const routeName = '/obd_option';
-  List<CarState> carStates;
-  List<ObdService> obdServices;
-  ObdDatabaseHandler databaseHandler;
-  BluetoothDevice connectedDevice;
-  List<BluetoothService> services;
+
+//  List<CarState> carStates;
+//  List<ObdService> obdServices;
+  final ObdDatabaseHandler databaseHandler = ObdDatabaseHandler();
+  final BluetoothDevice connectedDevice;
+  final List<BluetoothService> services;
 
   ObdOptionScreen({this.connectedDevice, this.services});
 
@@ -26,13 +27,14 @@ class ObdOptionScreen extends StatefulWidget {
 class _ObdOptionScreenState extends State<ObdOptionScreen> {
   static const savingInterval = Duration(minutes: 10);
   Timer timerSaving;
+
   CarState carStateFromObd; //needs to be given from DataInterpreter
 
   ListView _buildOptionsView() {
     List<Container> containers = new List<Container>();
     containers.add(Container(
       height: 50,
-      color: Colors.blue,
+      color: Colors.blueGrey,
       child: FlatButton(
         onPressed: () {
           widget.databaseHandler.startRecording(timerSaving, savingInterval,
@@ -47,24 +49,24 @@ class _ObdOptionScreenState extends State<ObdOptionScreen> {
           );
         },
         child: Text('Start recording'),
-        color: Colors.black,
       ),
+      alignment: Alignment(0, -0.75),
     ));
     containers.add(Container(
       height: 50,
-      color: Colors.blue,
+      color: Colors.blueGrey,
       child: FlatButton(
         onPressed: () {
           widget.databaseHandler
               .stopRecording(timerSaving); //Stops recording of data from OBD
         },
         child: Text('Stop recording'),
-        color: Colors.black,
       ),
+      alignment: Alignment(0, -0.25),
     ));
     containers.add(Container(
-      height: 50,
-      color: Colors.blue,
+      height: 40,
+      color: Colors.blueGrey,
       child: FlatButton(
         onPressed: () {
           widget.databaseHandler
@@ -72,34 +74,38 @@ class _ObdOptionScreenState extends State<ObdOptionScreen> {
 //          widget.databaseHandler.emptyObdServices();
         },
         child: Text('Empty Database'),
-        color: Colors.black,
       ),
+      alignment: Alignment(0, 0.25),
     ));
     containers.add(Container(
       height: 50,
-      color: Colors.blue,
+      color: Colors.blueGrey,
       child: FlatButton(
         onPressed: () {
           widget.databaseHandler.exportToCSV(); //Exports car states to CSV file
         },
         child: Text('Export to CSV'),
-        color: Colors.black,
       ),
+      alignment: Alignment(0, 0.75),
     ));
 
     return ListView(
       padding: const EdgeInsets.all(8),
       children: <Widget>[
-        ...containers,
+        containers[0],
+        containers[1],
+        containers[2],
+        containers[3],
       ],
     );
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Read OBD Data"),
+          title: Text("Select Options"),
           centerTitle: true,
         ),
         body: _buildOptionsView(),
