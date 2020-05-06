@@ -30,7 +30,7 @@ class CarState{
   }
 
   fromMap(Map<String, dynamic> map) {
-    id = map[id];
+    id = map['id'];
     speed = map['speed'];
     soc = map['SoC'];
     soh = map['SoH'];

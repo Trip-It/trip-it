@@ -23,7 +23,6 @@ class _ObdConnectionScreenState extends State<ObdConnectionScreen> {
   BluetoothDevice _connectedDevice;
   List<BluetoothService> _services;
   final _writeController = TextEditingController();
-  ObdDatabaseHandler obdDatabaseHandler;
 
   @override
   void initState() {

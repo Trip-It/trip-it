@@ -14,21 +14,18 @@ class ObdOptionScreen extends StatefulWidget {
 
 //  List<CarState> carStates;
 //  List<ObdService> obdServices;
-  final ObdDatabaseHandler databaseHandler = ObdDatabaseHandler();
+  ObdDatabaseHandler databaseHandler;
   final BluetoothDevice connectedDevice;
   final List<BluetoothService> services;
 
-  ObdOptionScreen({this.connectedDevice, this.services});
+ObdOptionScreen({this.connectedDevice, this.services}) {this.databaseHandler = ObdDatabaseHandler();}
 
   @override
   _ObdOptionScreenState createState() => _ObdOptionScreenState();
 }
 
 class _ObdOptionScreenState extends State<ObdOptionScreen> {
-  static const savingInterval = Duration(minutes: 10);
-  Timer timerSaving;
 
-  CarState carStateFromObd; //needs to be given from DataInterpreter
 
   ListView _buildOptionsView() {
     List<Container> containers = new List<Container>();
@@ -37,8 +34,7 @@ class _ObdOptionScreenState extends State<ObdOptionScreen> {
       color: Colors.blueGrey,
       child: FlatButton(
         onPressed: () {
-          widget.databaseHandler.startRecording(timerSaving, savingInterval,
-              carStateFromObd); //Starts recording of data from OBD
+          widget.databaseHandler.startRecording(); //Starts recording of data from OBD
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -58,7 +54,7 @@ class _ObdOptionScreenState extends State<ObdOptionScreen> {
       child: FlatButton(
         onPressed: () {
           widget.databaseHandler
-              .stopRecording(timerSaving); //Stops recording of data from OBD
+              .stopRecording(); //Stops recording of data from OBD
         },
         child: Text('Stop recording'),
       ),

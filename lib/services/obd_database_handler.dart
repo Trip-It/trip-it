@@ -14,9 +14,22 @@ import 'dart:typed_data';
 
 class ObdDatabaseHandler extends DatabaseManager {
   ///init ObdDatabaseHandler
+  Timer timerSaving;
+  Duration savingInterval;
+  CarState carState;
 
-  ObdDatabaseHandler() : super();
+  ObdDatabaseHandler(){
+    savingInterval = Duration(seconds: 5); //Set saving interval
+    carState = CarState(1,0,100,100); //init car state
+  }
+  
+//  ObdDatabaseHandler() : super()
 
+  //save CarState in class in order to safe in Database
+  void newCarState(CarState carStateFromObd){
+    carState = carStateFromObd;
+  }
+  
   //get all CarStates in Database
   Future<List<CarState>> getCarState() async {
     var dbClient = await database;
@@ -101,14 +114,14 @@ class ObdDatabaseHandler extends DatabaseManager {
     dbClient.execute('VACUUM');
   }
 
-  Future<void> startRecording(Timer timerSaving, savingInterval,
-      CarState carState) async {
-    Timer.periodic(savingInterval, (timerSaving) {
+  Future<void> startRecording() async {
+    Timer timer = new Timer.periodic(savingInterval, (time) {
       this.saveCarState(carState);
+      timerSaving = time;
     });
   }
 
-  Future<void> stopRecording(Timer timerSaving) async {
+  Future<void> stopRecording() async {
     timerSaving.cancel();
   }
 
@@ -138,6 +151,7 @@ class ObdDatabaseHandler extends DatabaseManager {
     String csv = const ListToCsvConverter().convert(rows);
     f.writeAsString(csv);
   }
+
 
   /// Missing implementation of DatabaseHandler for ObdService
   /// Difficult because of List of Characteristics and Datatype: GUID
