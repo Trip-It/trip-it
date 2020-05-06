@@ -20,11 +20,14 @@ class AddProfileScreen extends StatelessWidget {
         ),
         body: Center(
           child: Column(
+            //This Columns widget will contain 5 Container widgets for the picture,
+            //the text, the two texts fields and the save button
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              //Container for the picture
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: Center(
                   child: new RawMaterialButton(
                     onPressed: (
@@ -33,8 +36,7 @@ class AddProfileScreen extends StatelessWidget {
                     child: new CircleAvatar(
                       radius: (MediaQuery.of(context).size.width / 5.0),
                       backgroundColor: Colors.white,
-                      backgroundImage: AssetImage('assets/avatars/dolphin_blue.png'),
-                      child: Text('Tap to change image', textAlign: TextAlign.center,),
+                      backgroundImage: AssetImage('assets/avatars/dolphin_blue.png'), //FIXME to fit the user's choice
                     ),
                     shape: new CircleBorder(),
                     elevation: 2.0,
@@ -43,9 +45,18 @@ class AddProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              //Container for the Text 'Tap to change image'
+              Container(
+                  margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 6.0),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Center(
+                  child: Text('Tap to change image',textAlign: TextAlign.center)
+                )
+              ),
+              //Container for the TextField 'First name'
               Container(
                   margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -53,6 +64,7 @@ class AddProfileScreen extends StatelessWidget {
                     ),
                   )
               ),
+              //Container for the TextField 'Last name'
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -63,6 +75,7 @@ class AddProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              //Container for the save button
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
                 height: 200,
