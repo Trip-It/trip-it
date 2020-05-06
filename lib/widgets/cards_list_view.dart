@@ -97,7 +97,7 @@ class _CardsListState extends State<CardsList> {
     CardsManager dbManager = CardsManager();
     List<ChargeCard> myNewCards = await dbManager.getAllCards();
     setState(() {
-      if(myNewCards != null || myNewCards.isEmpty) {
+      if(myNewCards != null && myNewCards.isNotEmpty) {
         cards = myNewCards;
       }
     });
@@ -112,7 +112,7 @@ class _CardsListState extends State<CardsList> {
     CardsManager dbManager = CardsManager();
     List<ChargeCard> myNewCards = await dbManager.getFilteredYourCards();
     setState(() {
-      if(myNewCards != null || myNewCards.isEmpty) {
+      if(myNewCards != null && myNewCards.isNotEmpty) {
         cards = myNewCards;
       }
     });
@@ -123,8 +123,12 @@ class _CardsListState extends State<CardsList> {
     List<ChargeCard> myNewCards = await dbManager.getFilteredYourCards();
     //getFilteredYourCards
     setState(() {
-      if(myNewCards != null || myNewCards.isEmpty) {
+      if(myNewCards != null && myNewCards.isNotEmpty) {
         cards = myNewCards;
+        /*print("--------------------DatabaseFiltered----------------------");
+        print("RESULT:"+ cards[0].toString());
+        print("RESULT:"+ cards[1].toString());
+        print("-----------------------------------------------");*/
       }
     });
   }

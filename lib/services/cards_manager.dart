@@ -169,7 +169,7 @@ class CardsManager extends DatabaseManager {
   }
 
   /// Save card
-  void saveFilteredYourCard(ChargeCard card) async {
+  Future<void> saveFilteredYourCard(ChargeCard card) async {
     var dbClient = await database;
 
     // Check if card is already existing
@@ -203,6 +203,7 @@ class CardsManager extends DatabaseManager {
   /// Method to delete a given card
   /// returns true if operation has been successful, false if not
   Future<bool> deleteFilteredYourCard(ChargeCard card) async {
+    print("DEBUG::CardsManager::deleteFilteredYourCard(), with card: " + card.toString() );
     var dbClient = await database;
     int res =
     await dbClient.rawDelete('DELETE FROM filteredyourcards WHERE name = ?', [card.name]);
@@ -210,14 +211,20 @@ class CardsManager extends DatabaseManager {
 
   }
   Future<void> deleteAllFilteredYourCard()async{
+    print("DEBUG::CardsManager::deleteAllFilteredYourCard()");
     List<ChargeCard> cards = await getFilteredYourCards();
     bool res;
     int i;
+    print("DEBUG::CardsManager::deleteAllFilteredYourCard()::1");
+    if (cards.length==0){print("--------Empty table, not able to clean up--------- ");}
     for (i = 0; i < cards.length; i++){
+      print("DEBUG::CardsManager::deleteAllFilteredYourCard()::2");
       res = await deleteFilteredYourCard(cards[i]);
+      print("DEBUG::CardsManager::deleteAllFilteredYourCard()::3");
       if (res == false){
         print("------------------Not able to clean the table--------------------");
       }
+    print("DEBUG::CardsManager::deleteAllFilteredYourCard()::END");
     }
     //int res =
     //await dbClient.rawDelete('DELETE * FROM filteredyourcards');

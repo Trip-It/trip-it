@@ -19,11 +19,14 @@ class SearchBarCards extends StatefulWidget {
 
 class _SearchBarCardsState extends State<SearchBarCards> {
   List<ChargeCard> chargingCards = new List<ChargeCard>();
- // final cardsController = TextEditingController();
+  List<ChargeCard> filteredCards = new List<ChargeCard>();
+
+  // final cardsController = TextEditingController();
   TextEditingController _searchQuery;
   bool _isSearching = false;
   List<ChargeCard> filteredRecored;
 
+  // Constructor
   _SearchBarCardsState(bool origin) {
     if (origin == false) {
       initList();
@@ -33,6 +36,9 @@ class _SearchBarCardsState extends State<SearchBarCards> {
     }
     filteredRecored = new List<ChargeCard>();
     filteredRecored.addAll(chargingCards);
+    if (filteredRecored.isNotEmpty && filteredRecored!=null){
+      print("filteredRecored BEGINING!!!!!"+ filteredRecored[0].toString());}
+    fillFilteredList(filteredRecored);
   }
 
   //It'll open search box
@@ -45,6 +51,7 @@ class _SearchBarCardsState extends State<SearchBarCards> {
       _isSearching = true;
     });
   }
+
   //It'll close search box.
   void _stopSearching() {
     _clearSearchQuery();
@@ -54,6 +61,7 @@ class _SearchBarCardsState extends State<SearchBarCards> {
       filteredRecored.addAll(chargingCards);
     });
   }
+
   //clear search box data.
   void _clearSearchQuery() {
     setState(() {
@@ -61,6 +69,7 @@ class _SearchBarCardsState extends State<SearchBarCards> {
       updateSearchQuery("Search query");
     });
   }
+
   //Creating search box widget
   @override
   Widget build(BuildContext context) {
@@ -76,47 +85,51 @@ class _SearchBarCardsState extends State<SearchBarCards> {
       onChanged: updateSearchQuery,
     );
   }
+
   //It'll update list items after searching complete.
-  void updateSearchQuery(String newQuery) {
+  Future<void> updateSearchQuery(String newQuery) async{
     filteredRecored.clear();
+    CardsManager dbManager = CardsManager();
     if (newQuery.length > 0) {
+      print("-------Only some cards are being filtered---------");
       Set<ChargeCard> set = Set.from(chargingCards);
       set.forEach((element) => filterList(element, newQuery));
-    }
-    if (newQuery.isEmpty) {
+      await dbManager.deleteAllFilteredYourCard();
+      for (int i = 0; i < filteredRecored.length; i++)
+        await dbManager.saveFilteredYourCard(filteredRecored[i]);
+    } else { //if (newQuery.isEmpty)
+      print("-------No cards are being filtered---------");
       filteredRecored.addAll(chargingCards);
+      await dbManager.deleteAllFilteredYourCard();
+      for (int i = 0; i < filteredRecored.length; i++)
+        await dbManager.saveFilteredYourCard(filteredRecored[i]);
     }
-    setState(() {});
-    print("--------------------Local----------------------");
-    print("SEARCH RESULT:"+ filteredRecored[0].toString());
-    print("SEARCH RESULT:"+ filteredRecored[1].toString());
-    print("SEARCH RESULT:"+ filteredRecored[2].toString());
-    print("SEARCH RESULT:"+ filteredRecored[3].toString());
-    print("SEARCH RESULT:"+ filteredRecored[4].toString());
+
+    //setState(() {
+    //});
+
+    initFilteredList();
+    print("--------------------Database----------------------");
+    print("SEARCH RESULT:"+ filteredCards[0].toString());
+    print("SEARCH RESULT:"+ filteredCards[1].toString());
     print("-----------------------------------------------");
+    //print("--------------------Local----------------------");
+    //print("SEARCH RESULT:"+ filteredRecored[0].toString());
+    //print("SEARCH RESULT:"+ filteredRecored[1].toString());
+    //print("-----------------------------------------------");
   }
+
   //Filtering the list item with found match string.
   filterList(ChargeCard card, String searchQuery) {
+    print("DEBUG::filterList()");
+    //print("-------Only some cards are being filtered2---------");
     setState(() {
       if (card.name.toLowerCase().contains(searchQuery) ||
           card.name.contains(searchQuery)) {
+        //print("-------Only some cards are being filtered3---------");
         filteredRecored.add(card);
+        print("DEBUG::filteredRecored : \n" + filteredRecored.toString() );
       }
-
-      CardsManager dbManager = CardsManager();
-      dbManager.deleteAllFilteredYourCard();
-      for (int i = 0; i < filteredRecored.length; i++)
-          dbManager.saveFilteredYourCard(filteredRecored[i]);
-
-      initMyList();
-      print("--------------------Database----------------------");
-      print("SEARCH RESULT:"+ chargingCards[0].toString());
-      print("SEARCH RESULT:"+ chargingCards[1].toString());
-      print("SEARCH RESULT:"+ chargingCards[2].toString());
-      print("SEARCH RESULT:"+ chargingCards[3].toString());
-      print("SEARCH RESULT:"+ chargingCards[4].toString());
-      print("-----------------------------------------------");
-
     });
   }
 
@@ -157,19 +170,40 @@ class _SearchBarCardsState extends State<SearchBarCards> {
     CardsManager dbManager = CardsManager();
     List<ChargeCard> myNewCards = await dbManager.getAllCards();
     setState(() {
-      if (myNewCards != null || myNewCards.isEmpty) {
+      if (myNewCards != null && myNewCards.isNotEmpty) {
         chargingCards = myNewCards;
       }
     });
+    return ;
   }
 
   void initMyList() async {
     CardsManager dbManager = CardsManager();
     List<ChargeCard> myNewCards = await dbManager.getCards();
     setState(() {
-      if (myNewCards != null || myNewCards.isEmpty) {
+      if (myNewCards != null && myNewCards.isNotEmpty) {
         chargingCards = myNewCards;
       }
     });
+    return ;
+  }
+  void initFilteredList() async {
+    CardsManager dbManager = CardsManager();
+    List<ChargeCard> myNewCards = await dbManager.getFilteredYourCards();
+    setState(() {
+      if(myNewCards != null && myNewCards.isNotEmpty) {
+        filteredCards = myNewCards;
+      }
+    });
+    return ;
+  }
+
+
+  void fillFilteredList(filteredRecored1) async {
+    CardsManager dbManager = CardsManager();
+    for (int i = 0; i < filteredRecored1.length; i++) {
+      await dbManager.saveFilteredYourCard(filteredRecored1[i]);
+    }
+    return ;
   }
 }
