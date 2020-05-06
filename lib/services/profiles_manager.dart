@@ -104,10 +104,10 @@ class ProfilesManager extends DatabaseManager {
   }
 
   /// Get one profile
-  Future<Profile> getProfile(String name) async {
+  Future<Profile> getProfile(String id) async {
     var dbClient = await database;
     List<Map> profile = await dbClient
-        .rawQuery('SELECT * FROM profiles WHERE name = ?', [name]);
+        .rawQuery('SELECT * FROM profiles WHERE id= ?', [id]);
 
     if (profile.isEmpty) {
       return null;
@@ -143,7 +143,7 @@ class ProfilesManager extends DatabaseManager {
   /// returns true if operation has been successful, false if not
   Future<bool> update(Profile profile) async {
     var dbClient = await database;
-    int res = await dbClient.update("profile", profile.toMap(),
+    int res = await dbClient.update('profiles', profile.toMap(),
         where: "id = ?", whereArgs: <String>[profile.getId()]);
     return res > 0 ? true : false;
   }

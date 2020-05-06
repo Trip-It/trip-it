@@ -20,6 +20,7 @@ class PreferencesScreen extends StatefulWidget {
 }
 
 class _PreferencesScreenState extends State<PreferencesScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   /// Fields to store profile information
   String car;
   double minCharge;
@@ -64,6 +65,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           centerTitle: true,
           title: Text("Preferences"),
@@ -410,7 +412,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
-                      saveInCurrentProfile();
+                      saveInCurrentProfile(myProfile);
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(10.0),
@@ -444,19 +446,27 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   }
 
   /// Method to save the preferences in a profile
-  void saveInCurrentProfile() async {
+  void saveInCurrentProfile(myProfile) async {
     ProfilesManager dbManager = ProfilesManager();
-
-    print("Save button pushed");
-
-    //Profile toSave = new Profile("Name", "Elephant", "Tesla Model S", 40, 80, 1, 0, 1, 0, "Norwegian", "Hybrid");
-
-    //dbManager.saveProfile(toSave);
-
-    //List<Profile> profiles = await dbManager.getProfiles();
-
-    //print(profiles.length.toString());
+    Profile toSave = myProfile;
+    bool success = await dbManager.update(toSave);
+    showSnackBar(success);
     return;
+  }
+  void showSnackBar(bool success) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        backgroundColor: success ? Colors.green : Colors.red, // Set color depending on success
+        content: success? const Text(
+          'Your profiles has been updated',
+          style: TextStyle(color: Colors.white),
+        )
+            :const Text(
+          'You have no profile, please create a new one',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
   }
 
 
