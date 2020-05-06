@@ -1,10 +1,29 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/raquel/AndroidStudioProjects/trip-it/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
+            "outputFile": "/home/Robnooz/Android_studio_projects/trip-it/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/Users/raquel/.gradle/caches/transforms-2/files-2.1/9611c12a11fb129c2d552e558222aed1/core-1.0.0/res/values-v16/values-v16.xml",
+                    "source": "/home/Robnooz/.gradle/caches/transforms-2/files-2.1/509c942a7f8ca5650ab3e0e55afc3e31/appcompat-1.1.0/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "/home/Robnooz/.gradle/caches/transforms-2/files-2.1/15b6a39ba103856e8d4ce18ed38c37e4/core-1.2.0/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

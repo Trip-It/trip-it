@@ -12,8 +12,8 @@
 12         to allow setting breakpoints, to provide hot reload, etc.
 13    -->
 14    <uses-permission android:name="android.permission.INTERNET" />
-14-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/debug/AndroidManifest.xml:6:5-66
-14-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/debug/AndroidManifest.xml:6:22-64
+14-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/debug/AndroidManifest.xml:6:5-66
+14-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/debug/AndroidManifest.xml:6:22-64
 15    <!--
 16     io.flutter.app.FlutterApplication is an android.app.Application that
 17         calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -21,52 +21,130 @@
 19         additional functionality it is fine to subclass or reimplement
 20         FlutterApplication and put your custom class here.
 21    -->
-22    <application
-22-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:8:5-29:19
-23        android:name="io.flutter.app.FlutterApplication"
-23-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:9:9-57
-24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-24-->[androidx.core:core:1.0.0] /Users/raquel/.gradle/caches/transforms-2/files-2.1/0a271e99b6771ad4a84318244d532fb7/core-1.0.0/AndroidManifest.xml:22:18-86
-25        android:debuggable="true"
-26        android:icon="@mipmap/launcher_icon"
-26-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:11:9-45
-27        android:label="Trip It!" >
-27-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:10:9-33
-28        <activity
-28-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:12:9-23:20
-29            android:name="com.ense3.tripit.trip_it_app.MainActivity"
-29-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:13:13-41
-30            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-30-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:16:13-163
-31            android:hardwareAccelerated="true"
-31-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:17:13-47
-32            android:launchMode="singleTop"
-32-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:14:13-43
-33            android:theme="@style/LaunchTheme"
-33-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:15:13-47
-34            android:windowSoftInputMode="adjustResize" >
-34-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:18:13-55
-35            <intent-filter>
-35-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:19:13-22:29
-36                <action android:name="android.intent.action.MAIN" />
-36-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:20:17-68
-36-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:20:25-66
-37
-38                <category android:name="android.intent.category.LAUNCHER" />
-38-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:21:17-76
-38-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:21:27-74
-39            </intent-filter>
-40        </activity>
-41        <!--
-42             Don't delete the meta-data below.
-43             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-44        -->
-45        <meta-data
-45-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:26:9-28:33
-46            android:name="flutterEmbedding"
-46-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:27:13-44
-47            android:value="2" />
-47-->/Users/raquel/AndroidStudioProjects/trip-it/android/app/src/main/AndroidManifest.xml:28:13-30
-48    </application>
-49
-50</manifest>
+22    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+22-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:8:5-79
+22-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:8:22-76
+23    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+23-->[:flutter_osm_plugin] /home/Robnooz/Android_studio_projects/trip-it/build/flutter_osm_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-81
+23-->[:flutter_osm_plugin] /home/Robnooz/Android_studio_projects/trip-it/build/flutter_osm_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-78
+24    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+24-->[:flutter_osm_plugin] /home/Robnooz/Android_studio_projects/trip-it/build/flutter_osm_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:10:5-79
+24-->[:flutter_osm_plugin] /home/Robnooz/Android_studio_projects/trip-it/build/flutter_osm_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:10:22-76
+25    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+25-->[:flutter_osm_plugin] /home/Robnooz/Android_studio_projects/trip-it/build/flutter_osm_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-81
+25-->[:flutter_osm_plugin] /home/Robnooz/Android_studio_projects/trip-it/build/flutter_osm_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:11:22-78
+26    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+27
+28    <supports-screens
+28-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:11:5-14:40
+29        android:anyDensity="true"
+29-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:12:9-34
+30        android:largeScreens="true"
+30-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:13:9-36
+31        android:normalScreens="true" />
+31-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:14:9-37
+32
+33    <uses-feature
+33-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:16:5-18:36
+34        android:name="android.hardware.location.network"
+34-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:17:9-57
+35        android:required="false" />
+35-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:18:9-33
+36    <uses-feature
+36-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:19:5-21:36
+37        android:name="android.hardware.location.gps"
+37-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:20:9-53
+38        android:required="false" />
+38-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:21:9-33
+39    <uses-feature
+39-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:22:5-24:36
+40        android:name="android.hardware.telephony"
+40-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:23:9-50
+41        android:required="false" />
+41-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:24:9-33
+42    <uses-feature
+42-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:25:5-27:36
+43        android:name="android.hardware.wifi"
+43-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:26:9-45
+44        android:required="false" />
+44-->[org.osmdroid:osmdroid-android:6.1.5] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/d0cc01b2a6ac835cddf2df8a22282ec4/osmdroid-android-6.1.5/AndroidManifest.xml:27:9-33
+45
+46    <application
+46-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:9:5-34:19
+47        android:name="io.flutter.app.FlutterApplication"
+47-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:10:9-57
+48        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+48-->[androidx.core:core:1.2.0] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/15b6a39ba103856e8d4ce18ed38c37e4/core-1.2.0/AndroidManifest.xml:24:18-86
+49        android:debuggable="true"
+50        android:icon="@mipmap/launcher_icon"
+50-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:12:9-45
+51        android:label="Trip It!" >
+51-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:11:9-33
+52        <activity
+52-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:13:9-24:20
+53            android:name="com.ense3.tripit.trip_it_app.MainActivity"
+53-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:14:13-41
+54            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+54-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:17:13-163
+55            android:hardwareAccelerated="true"
+55-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:18:13-47
+56            android:launchMode="singleTop"
+56-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:15:13-43
+57            android:theme="@style/LaunchTheme"
+57-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:16:13-47
+58            android:windowSoftInputMode="adjustResize" >
+58-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:19:13-55
+59            <intent-filter>
+59-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:20:13-23:29
+60                <action android:name="android.intent.action.MAIN" />
+60-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:21:17-68
+60-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:21:25-66
+61
+62                <category android:name="android.intent.category.LAUNCHER" />
+62-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:22:17-76
+62-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:22:27-74
+63            </intent-filter>
+64        </activity>
+65        <!--
+66             Don't delete the meta-data below.
+67             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+68        -->
+69        <meta-data
+69-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:27:9-29:33
+70            android:name="flutterEmbedding"
+70-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:28:13-44
+71            android:value="2" />
+71-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:29:13-30
+72        <meta-data
+72-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:30:9-33:15
+73            android:name="io.flutter.embedding.android.SplashScreenDrawable"
+73-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:31:13-77
+74            android:resource="@drawable/launch_background" />
+74-->/home/Robnooz/Android_studio_projects/trip-it/android/app/src/main/AndroidManifest.xml:32:13-59
+75
+76        <activity
+76-->[:url_launcher] /home/Robnooz/Android_studio_projects/trip-it/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-11:74
+77            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+77-->[:url_launcher] /home/Robnooz/Android_studio_projects/trip-it/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-74
+78            android:exported="false"
+78-->[:url_launcher] /home/Robnooz/Android_studio_projects/trip-it/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-37
+79            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+79-->[:url_launcher] /home/Robnooz/Android_studio_projects/trip-it/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-71
+80        <activity
+80-->[com.google.android.gms:play-services-base:17.2.1] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/54c6ea66bb6d1ed5d68ea295cce331dc/play-services-base-17.2.1/AndroidManifest.xml:23:9-26:75
+81            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+81-->[com.google.android.gms:play-services-base:17.2.1] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/54c6ea66bb6d1ed5d68ea295cce331dc/play-services-base-17.2.1/AndroidManifest.xml:24:13-79
+82            android:exported="false"
+82-->[com.google.android.gms:play-services-base:17.2.1] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/54c6ea66bb6d1ed5d68ea295cce331dc/play-services-base-17.2.1/AndroidManifest.xml:25:13-37
+83            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+83-->[com.google.android.gms:play-services-base:17.2.1] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/54c6ea66bb6d1ed5d68ea295cce331dc/play-services-base-17.2.1/AndroidManifest.xml:26:13-72
+84
+85        <meta-data
+85-->[com.google.android.gms:play-services-basement:17.2.1] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/cb491b034e874b530dd5fffec997787b/jetified-play-services-basement-17.2.1/AndroidManifest.xml:23:9-25:69
+86            android:name="com.google.android.gms.version"
+86-->[com.google.android.gms:play-services-basement:17.2.1] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/cb491b034e874b530dd5fffec997787b/jetified-play-services-basement-17.2.1/AndroidManifest.xml:24:13-58
+87            android:value="@integer/google_play_services_version" />
+87-->[com.google.android.gms:play-services-basement:17.2.1] /home/Robnooz/.gradle/caches/transforms-2/files-2.1/cb491b034e874b530dd5fffec997787b/jetified-play-services-basement-17.2.1/AndroidManifest.xml:25:13-66
+88    </application>
+89
+90</manifest>

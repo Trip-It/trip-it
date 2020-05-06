@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/theme.dart';
+import 'package:trip_it_app/widgets/drawer.dart';
 
 class ProfilesScreen extends StatelessWidget {
   static const routeName = '/profiles';
@@ -13,6 +14,7 @@ class ProfilesScreen extends StatelessWidget {
           centerTitle: true,
           title: Text("Profiles"),
         ),
+        drawer: DrawerWidget(),
         body: Container(
           decoration: BoxDecoration(
             color: TripItColors.primaryDarkBlue,
