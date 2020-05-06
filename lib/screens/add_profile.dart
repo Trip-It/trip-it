@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trip_it_app/theme.dart';
+import 'package:file/file.dart';
 
 class AddProfileScreen extends StatelessWidget {
   static const routeName = '/preferences/add';
@@ -31,8 +32,9 @@ class AddProfileScreen extends StatelessWidget {
                         ) {},
                     child: new CircleAvatar(
                       radius: (MediaQuery.of(context).size.width / 5.0),
-                      backgroundColor: TripItColors.primaryDarkBlue,
-                      child: Text('Tap to change image'),
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage('assets/avatars/dolphin_blue.png'),
+                      child: Text('Tap to change image', textAlign: TextAlign.center,),
                     ),
                     shape: new CircleBorder(),
                     elevation: 2.0,

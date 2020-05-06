@@ -70,6 +70,19 @@ flutter:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
   assets:
+    - assets/avatars/elephant_black.png
+    - assets/avatars/bear_red.png
+    - assets/avatars/bird_blue.png
+    - assets/avatars/dolphin_blue.png
+    - assets/avatars/fish_pink.png
+    - assets/avatars/fox_orange.png
+    - assets/avatars/parrot_purple.png
+    - assets/avatars/penguin_grey.png
+    - assets/avatars/rabbit_blue.png
+    - assets/avatars/rhino_green.png
+    - assets/avatars/tiger_yellow.png
+    - assets/avatars/turtle_green.png
+    - assets/avatars/wolf_blue.png
     - assets/tripit_logo.png
     - assets/tripit_logo2.png
     - assets/tripit_logo3.png
