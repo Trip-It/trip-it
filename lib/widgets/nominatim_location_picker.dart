@@ -31,21 +31,32 @@ class NominatimLocationPicker extends StatefulWidget {
 
 class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   Map retorno;
+  Map start;
+  Map destination;
   List _addresses = List();
   Color _color = TripItColors.primaryDarkBlue;
-  TextEditingController _ctrlSearch = TextEditingController();
+  TextEditingController _ctrlStartSearch = TextEditingController();
+  TextEditingController _ctrlDestSearch = TextEditingController();
   Position _currentPosition;
   String _desc;
   bool _isSearching = false;
+  bool _searchingStart = false;
+  bool _searchingDestination = false;
+  bool _enteredStart = false;
   double _lat;
   double _lng;
+  double _startLat;
+  double _startLng;
+  double _destLat;
+  double _destLng;
   MapController _mapController = MapController();
   List<Marker> _markers;
   LatLng _point;
 
   @override
   void dispose() {
-    _ctrlSearch.dispose();
+    _ctrlStartSearch.dispose();
+    _ctrlDestSearch.dispose();
     super.dispose();
   }
 
@@ -64,6 +75,17 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
           size: 50.0,
           color: _color,
         )),
+      ),
+      Marker(
+        width: 50.0,
+        height: 50.0,
+        point: new LatLng(0.0, 0.0),
+        builder: (ctx) => new Container(
+            child: Icon(
+              Icons.location_on,
+              size: 50.0,
+              color: _color,
+            )),
       )
     ];
   }
@@ -133,35 +155,79 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
     });
   }
 
+  /// Method to build the AppBar
   _buildAppbar(bool _isResult) {
-    return new AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      primary: true,
-      title: _buildTextField(_isResult),
-      leading: IconButton(
-        icon: Icon(_isResult ? Icons.close : Icons.my_location, color: _color),
-        onPressed: () {
-          _isSearching
-              ? setState(() {
-                  _isSearching = false;
-                })
-              : _mapController.move(_point, 18);
-          setState(() {
-            _isSearching = false;
-            _getCurrentLocationMarker();
-          });
-        },
+    return new PreferredSize(
+      preferredSize: Size.fromHeight(145.0), // here the desired height
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+            Column(
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(_isResult ? Icons.close : Icons.my_location,
+                      color: _color),
+                  onPressed: () {
+                    _isSearching
+                        ? setState(() {
+                      _isSearching = false;
+                    })
+                        : _mapController.move(_point, 18);
+                    setState(() {
+                      _isSearching = false;
+                      _getCurrentLocationMarker();
+                    });
+                  },
+                ),
+
+                ///Button which swaps start and destination
+                _enteredStart
+                ? IconButton(
+                  icon: Icon(Icons.swap_vert, color: _color,
+                  ),
+                  onPressed: (){
+                    /// Swap start and destination
+                  },
+                )
+                : Container(),
+
+                _enteredStart
+                    ? IconButton(
+                  icon: Icon(_isResult ? Icons.close : Icons.flag,
+                      color: _color),
+                  onPressed: () {
+                    _isSearching
+                        ? setState(() {
+                      _isSearching = false;
+                    })
+                        :
+                    setState(() {
+                      _isSearching = false;
+                    });
+                  },
+                )
+                    : Container(),
+              ],
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                _buildStartTextField(_isResult),
+                _enteredStart ? _buildDestTextField(_isResult) : Container(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  _buildTextField(bool _isResult) {
+  _buildStartTextField(bool _isResult) {
     return Card(
         elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
-
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,7 +236,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
                 child: TextFormField(
-                  controller: _ctrlSearch,
+                  controller: _ctrlStartSearch,
                   decoration: InputDecoration(
                       hintText: widget.searchHint,
                       border: InputBorder.none,
@@ -187,9 +253,10 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                             _isSearching = true;
                           });
                     dynamic res = await NominatimService()
-                        .getAddressLatLng(_ctrlSearch.text);
+                        .getAddressLatLng(_ctrlStartSearch.text);
                     setState(() {
                       _addresses = res;
+                      _searchingStart = true;
                     });
                   },
                 ),
@@ -206,9 +273,73 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                     ? _changeAppBar()
                     : setState(() {
                         _isSearching = true;
+                        _searchingStart = true;
                       });
-                dynamic res =
-                    await NominatimService().getAddressLatLng(_ctrlSearch.text);
+                dynamic res = await NominatimService()
+                    .getAddressLatLng(_ctrlStartSearch.text);
+                setState(() {
+                  _addresses = res;
+                });
+              },
+            ),
+          ],
+        ));
+  }
+
+  _buildDestTextField(bool _isResult) {
+    return Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Flexible(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                child: TextFormField(
+                  controller: _ctrlDestSearch,
+                  decoration: InputDecoration(
+                      hintText: widget.searchHint,
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.grey)),
+                  textInputAction: TextInputAction.search,
+                  onEditingComplete: () async {
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
+                    _isResult == false
+                        ? _changeAppBar()
+                        : setState(() {
+                            _isSearching = true;
+                          });
+                    dynamic res = await NominatimService()
+                        .getAddressLatLng(_ctrlDestSearch.text);
+                    setState(() {
+                      _addresses = res;
+                    });
+                    _searchingDestination = true;
+                  },
+                ),
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.search, color: _color),
+              onPressed: () async {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+                _isResult == false
+                    ? _changeAppBar()
+                    : setState(() {
+                        _isSearching = true;
+                        _searchingDestination = true;
+                      });
+                dynamic res = await NominatimService()
+                    .getAddressLatLng(_ctrlDestSearch.text);
                 setState(() {
                   _addresses = res;
                 });
@@ -273,7 +404,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                           child: AutoSizeText(
                             _desc == null
                                 ? widget.awaitingForLocation
-                                : "SET AS DEPARTURE POINT: \n" + _desc,
+                                : "SET POINT: \n" + _desc,
                             style: TextStyle(fontSize: 16),
                             textAlign: TextAlign.start,
                           ),
@@ -307,8 +438,6 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                   _point = LatLng(
                       _currentPosition.latitude, _currentPosition.longitude);
                 });
-                // Go to next screen
-                Navigator.pushNamed(context, DestinationScreen.routeName);
               }),
         ),
       ),
@@ -340,21 +469,55 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                     _isSearching = false;
                     _lat = double.parse(_addresses[index]['lat']);
                     _lng = double.parse(_addresses[index]['lng']);
+
                     retorno = {
                       'latlng': LatLng(_lat, _lng),
                       'state': _addresses[index]['state'],
                       'desc':
-                          "${_addresses[index]['state']}, ${_addresses[index]['city']}, ${_addresses[index]['suburb']}, ${_addresses[index]['neighbourhood']}, ${_addresses[index]['road']}"
+                      "${_addresses[index]['state']}, ${_addresses[index]['city']}, ${_addresses[index]['suburb']}, ${_addresses[index]['neighbourhood']}, ${_addresses[index]['road']}"
                     };
-                    _markers[0] = Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(double.parse(_addresses[index]['lat']),
-                          double.parse(_addresses[index]['lng'])),
-                      builder: (ctx) => new Container(
-                        child: Icon(Icons.location_on, size: 50.0),
-                      ),
-                    );
+
+                    IconData iconToUseForMarker;
+                    int markerIndex;
+
+                    if(_searchingDestination){
+                      /// The entered location is the destination
+                      _destLat = _lat;
+                      _destLng = _lng;
+                      iconToUseForMarker = Icons.flag;
+                      destination = retorno;
+
+                      /// Add a new marker
+                      _markers[1] = Marker(
+                        width: 80.0,
+                        height: 80.0,
+                        point: LatLng(double.parse(_addresses[index]['lat']),
+                            double.parse(_addresses[index]['lng'])),
+                        builder: (ctx) => new Container(
+                          child: Icon(iconToUseForMarker, size: 50.0)));
+
+                      _searchingDestination = false;
+                    } else {
+                      /// The entered location is the starting point
+                      _startLat= _lat;
+                      _startLng= _lng;
+                      iconToUseForMarker = Icons.location_on;
+                      start = retorno;
+
+                      /// Change the marker
+                      _markers[0] = Marker(
+                        width: 80.0,
+                        height: 80.0,
+                        point: LatLng(double.parse(_addresses[index]['lat']),
+                            double.parse(_addresses[index]['lng'])),
+                        builder: (ctx) => new Container(
+                          child: Icon(iconToUseForMarker, size: 50.0),
+                        ),
+                      );
+
+                      _enteredStart = true;
+                      _searchingStart = false;
+                    }
                   });
                 },
               );
