@@ -18,50 +18,35 @@ class ObdOptionScreen extends StatefulWidget {
   final BluetoothDevice connectedDevice;
   final List<BluetoothService> services;
 
-ObdOptionScreen({this.connectedDevice, this.services}) {this.databaseHandler = ObdDatabaseHandler();}
+  ObdOptionScreen({this.connectedDevice, this.services}) {
+    this.databaseHandler = ObdDatabaseHandler();
+  }
 
   @override
   _ObdOptionScreenState createState() => _ObdOptionScreenState();
 }
 
 class _ObdOptionScreenState extends State<ObdOptionScreen> {
-
+  bool recPressed = false;
 
   ListView _buildOptionsView() {
     List<Container> containers = new List<Container>();
     containers.add(Container(
-      height: 50,
+      height: 40,
+      margin: EdgeInsets.all(2),
       color: Colors.blueGrey,
       child: FlatButton(
         onPressed: () {
-          widget.databaseHandler.startRecording(); //Starts recording of data from OBD
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ObdDataScreen(
-                      connectedDevice: widget.connectedDevice,
-                      services: widget.services,
-                    )),
-          );
+          _toggleButton();
+          recPressed ? startRec() : stopRec();
         },
-        child: Text('Start recording'),
+        child: recPressed ? Text('Stop recording') : Text('Start recording'),
       ),
       alignment: Alignment(0, -0.75),
     ));
     containers.add(Container(
-      height: 50,
-      color: Colors.blueGrey,
-      child: FlatButton(
-        onPressed: () {
-          widget.databaseHandler
-              .stopRecording(); //Stops recording of data from OBD
-        },
-        child: Text('Stop recording'),
-      ),
-      alignment: Alignment(0, -0.25),
-    ));
-    containers.add(Container(
       height: 40,
+      margin: EdgeInsets.all(2),
       color: Colors.blueGrey,
       child: FlatButton(
         onPressed: () {
@@ -74,7 +59,8 @@ class _ObdOptionScreenState extends State<ObdOptionScreen> {
       alignment: Alignment(0, 0.25),
     ));
     containers.add(Container(
-      height: 50,
+      height: 40,
+      margin: EdgeInsets.all(2),
       color: Colors.blueGrey,
       child: FlatButton(
         onPressed: () {
@@ -86,30 +72,48 @@ class _ObdOptionScreenState extends State<ObdOptionScreen> {
     ));
 
     return ListView(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(2),
       children: <Widget>[
         containers[0],
         containers[1],
         containers[2],
-        containers[3],
       ],
     );
+  }
 
+  void _toggleButton() {
+    setState(() {
+      if (recPressed == false)
+        recPressed = true;
+      else
+        recPressed = false;
+    });
+  }
+
+  void startRec() {
+    widget.databaseHandler.startRecording(); //Starts recording of data from OBD
+//    Navigator.push(
+//      context,
+//      MaterialPageRoute(
+//          builder: (context) => ObdDataScreen(
+//            connectedDevice: widget.connectedDevice,
+//            services: widget.services,
+//          )),
+//    );
+  }
+
+  void stopRec() {
+    widget.databaseHandler.stopRecording(); //Stops recording of data from OBD
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Select Options"),
-          centerTitle: true,
-        ),
-        body: _buildOptionsView(),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushNamed(context, ObdConnectionScreen.routeName);
-          },
-        ));
+      appBar: AppBar(
+        title: Text("Select Options"),
+        centerTitle: true,
+      ),
+      body: Center(child: _buildOptionsView()),
+    );
   }
 }

@@ -19,7 +19,7 @@ class ObdDatabaseHandler extends DatabaseManager {
 
   ObdDatabaseHandler() {
     savingInterval = Duration(seconds: 5); //Set saving interval
-    carState = CarState(1, 0, 100, 100); //init car state
+    carState = CarState(1, 0, 100, 100); //init car state, can be deleted when Translator provides states
   }
 
 //  ObdDatabaseHandler() : super()
@@ -69,10 +69,6 @@ class ObdDatabaseHandler extends DatabaseManager {
   void saveCarState(CarState carState) async {
     var dbClient = await database;
 
-    // Check if carState is already existing
-    final check = await this.getSingleCarState(carState.id);
-
-    if (check == null) {
       await dbClient.transaction((txn) async {
         return await txn.rawInsert(
             'INSERT INTO carstates(id, speed, soc, soh) VALUES(' +
@@ -93,7 +89,6 @@ class ObdDatabaseHandler extends DatabaseManager {
                 '\'' +
                 ')');
       });
-    }
     return;
   }
 
