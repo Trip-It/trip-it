@@ -11,25 +11,24 @@ import 'package:trip_it_app/models/obd_service.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:typed_data';
 
-
 class ObdDatabaseHandler extends DatabaseManager {
   ///init ObdDatabaseHandler
   Timer timerSaving;
   Duration savingInterval;
   CarState carState;
 
-  ObdDatabaseHandler(){
+  ObdDatabaseHandler() {
     savingInterval = Duration(seconds: 5); //Set saving interval
-    carState = CarState(1,0,100,100); //init car state
+    carState = CarState(1, 0, 100, 100); //init car state
   }
-  
+
 //  ObdDatabaseHandler() : super()
 
   //save CarState in class in order to safe in Database
-  void newCarState(CarState carStateFromObd){
+  void newCarState(CarState carStateFromObd) {
     carState = carStateFromObd;
   }
-  
+
   //get all CarStates in Database
   Future<List<CarState>> getCarState() async {
     var dbClient = await database;
@@ -57,7 +56,7 @@ class ObdDatabaseHandler extends DatabaseManager {
   Future<CarState> getSingleCarState(int id) async {
     var dbClient = await database;
     List<Map> carState =
-    await dbClient.rawQuery('SELECT * FROM carstates WHERE id = ?', [id]);
+        await dbClient.rawQuery('SELECT * FROM carstates WHERE id = ?', [id]);
 
     if (carState.isEmpty) {
       return null;
@@ -122,7 +121,9 @@ class ObdDatabaseHandler extends DatabaseManager {
   }
 
   Future<void> stopRecording() async {
-    timerSaving.cancel();
+    if (timerSaving != null) {
+      timerSaving.cancel();
+    }
   }
 
   Future<void> exportToCSV() async {
@@ -142,8 +143,8 @@ class ObdDatabaseHandler extends DatabaseManager {
     }
 
 //store file in documents folder
-    String dir = (await getExternalStorageDirectory()).absolute.path +
-        "/documents";
+    String dir =
+        (await getExternalStorageDirectory()).absolute.path + "/documents";
     String file = "$dir";
     File f = new File(file + "obddata.csv");
 
@@ -151,7 +152,6 @@ class ObdDatabaseHandler extends DatabaseManager {
     String csv = const ListToCsvConverter().convert(rows);
     f.writeAsString(csv);
   }
-
 
   /// Missing implementation of DatabaseHandler for ObdService
   /// Difficult because of List of Characteristics and Datatype: GUID
@@ -161,6 +161,4 @@ class ObdDatabaseHandler extends DatabaseManager {
   addColumnsToTable() async {
     var dbClient = await database;
   }
-
 }
-
