@@ -5,11 +5,23 @@ import 'package:trip_it_app/services/profiles_manager.dart';
 import 'package:trip_it_app/models/profile.dart';
 import 'package:flutter/cupertino.dart';
 
-class AddProfileScreen extends StatelessWidget {
+class AddProfileScreen extends StatefulWidget {
   static const routeName = '/preferences/add';
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
+
+
+  AddProfileScreen();
+
+  State<StatefulWidget> createState() => _AddProfileScreen();
+}
+class _AddProfileScreen extends State<AddProfileScreen> {
+
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   int selectitem = 1;
+  List<String> listOfPictures = ["assets/Wolf_profile.png","assets/Bear.png","assets/Bird.png",
+    "assets/Dolphin.png","assets/Elephant.png","assets/Fish.png","assets/Fox.png","assets/Penguin.png",
+    "assets/Rabbit.png","assets/Rhinoceros.png","assets/Tiger.png","assets/Toucan.png","assets/Turtle.png" ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +52,21 @@ class AddProfileScreen extends StatelessWidget {
                             builder: (BuildContext builder) {
                               return Scaffold(
                                   appBar: AppBar(
-                                    centerTitle: true,
                                     title: Text(
                                       "Avatar Picker",
                                       textAlign: TextAlign.justify,
                                     ),
-                                    backgroundColor: tripitThemeData.accentColor,
+                                    backgroundColor:
+                                        tripitThemeData.accentColor,
                                     actions: <Widget>[
                                       IconButton(
                                         icon: Icon(Icons.send),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          setState(() {
+                                            myProfile.setPicture(listOfPictures[selectitem]);
+                                          });
+                                        },
                                       )
                                     ],
                                   ),
@@ -58,35 +75,48 @@ class AddProfileScreen extends StatelessWidget {
                                       magnification: 1.5,
                                       backgroundColor: Colors.black87,
                                       children: <Widget>[
-                                        Image.asset("assets/Wolf_profile.png"
-                                        ),
-                                        Image.asset("assets/Bear.png"
-                                        ),
-                                        Image.asset("assets/Bird.png"
-                                        ),
-                                        Image.asset("assets/Dolphin.png"
-                                        ),
-                                        Image.asset("assets/Elephant.png"
-                                        ),
-                                        Image.asset("assets/Fish.png"
-                                        ),
-                                        Image.asset("assets/Fox.png"
-                                        ),
-                                        Image.asset("assets/Penguin.png"
-                                        ),
-                                        Image.asset("assets/Rabbit.png"
-                                        ),
-                                        Image.asset("assets/Rhinoceros.png"
-                                        ),
-                                        Image.asset("assets/Tiger.png"
-                                        ),
-                                        Image.asset("assets/Toucan.png"
-                                        ),
-                                        Image.asset("assets/Turtle.png"
-                                        ),
+                                        Center(
+                                            child: Image.asset(
+                                                "assets/Wolf_profile.png")),
+                                        Center(
+                                            child:
+                                                Image.asset("assets/Bear.png")),
+                                        Center(
+                                            child:
+                                                Image.asset("assets/Bird.png")),
+                                        Center(
+                                            child: Image.asset(
+                                                "assets/Dolphin.png")),
+                                        Center(
+                                            child: Image.asset(
+                                                "assets/Elephant.png")),
+                                        Center(
+                                            child:
+                                                Image.asset("assets/Fish.png")),
+                                        Center(
+                                            child:
+                                                Image.asset("assets/Fox.png")),
+                                        Center(
+                                            child: Image.asset(
+                                                "assets/Penguin.png")),
+                                        Center(
+                                            child: Image.asset(
+                                                "assets/Rabbit.png")),
+                                        Center(
+                                            child: Image.asset(
+                                                "assets/Rhinoceros.png")),
+                                        Center(
+                                            child: Image.asset(
+                                                "assets/Tiger.png")),
+                                        Center(
+                                            child: Image.asset(
+                                                "assets/Toucan.png")),
+                                        Center(
+                                            child: Image.asset(
+                                                "assets/Turtle.png")),
                                       ],
-                                      itemExtent: 160, //height of each item
-                                      looping: true,
+                                      itemExtent: 180, //height of each item
+                                      looping: false,
                                       onSelectedItemChanged: (int index) {
                                         selectitem = index;
                                       },
@@ -95,11 +125,30 @@ class AddProfileScreen extends StatelessWidget {
                             });
                       },
                       child: new CircleAvatar(
-                        radius: (MediaQuery.of(context).size.width / 5.0),
-                        backgroundColor: TripItColors.primaryDarkBlue,
-                        child: Center(
-                          child: Text('Tap to change image',textAlign: TextAlign.center),)
-                      ),
+                          radius: (MediaQuery.of(context).size.width / 5.0),
+                          backgroundColor: TripItColors.primaryDarkBlue,
+                          backgroundImage: AssetImage(myProfile.getPicture()),
+                          child: Center(
+                            child: Text('Tap to change image',
+                                textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold, shadows: [
+                                Shadow( // bottomLeft
+                                    offset: Offset(-1.5, -1.5),
+                                    color: Colors.black
+                                ),
+                                Shadow( // bottomRight
+                                    offset: Offset(1.5, -1.5),
+                                    color: Colors.black
+                                ),
+                                Shadow( // topRight
+                                    offset: Offset(1.5, 1.5),
+                                    color: Colors.black
+                                ),
+                                Shadow( // topLeft
+                                    offset: Offset(-1.5, 1.5),
+                                    color: Colors.black
+                                ),
+                              ])),
+                          )),
                       shape: new CircleBorder(),
                       elevation: 2.0,
                       fillColor: Colors.white,
@@ -145,7 +194,8 @@ class AddProfileScreen extends StatelessWidget {
                         onPressed: () {
                           myProfile.setFirstName(firstNameController.text);
                           myProfile.setLastName(lastNameController.text);
-                          myProfile.setId(firstNameController.text+lastNameController.text);
+                          myProfile.setId(firstNameController.text +
+                              lastNameController.text);
                           saveInNewProfile(myProfile);
                           //TODO save data from widgets and get it to the database
                         },
