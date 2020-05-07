@@ -3,6 +3,7 @@ import 'package:trip_it_app/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_it_app/services/profiles_manager.dart';
 import 'package:trip_it_app/models/profile.dart';
+import 'package:trip_it_app/widgets/drawer.dart';
 
 class ProfilesScreen extends StatefulWidget {
   static const routeName = '/profiles';
@@ -24,7 +25,8 @@ class _ProfilesScreen extends State<ProfilesScreen> {
           centerTitle: true,
           title: Text("Profiles"),
         ),
-        body: Consumer<Profile>(//                  <--- Consumer
+        drawer: DrawerWidget(),
+        body:  Consumer<Profile>(//                  <--- Consumer
             builder: (context, myProfile, child) {
           return Container(
               decoration: BoxDecoration(

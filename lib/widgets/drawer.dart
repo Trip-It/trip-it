@@ -6,6 +6,8 @@ import 'package:trip_it_app/screens/profiles.dart';
 import 'package:trip_it_app/screens/trip.dart';
 import 'package:trip_it_app/screens/new_trip.dart';
 import 'package:trip_it_app/screens/test.dart';
+import 'package:trip_it_app/screens/trip.dart';
+import 'package:trip_it_app/screens/home.dart';
 import 'package:trip_it_app/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_it_app/models/profile.dart';
@@ -39,9 +41,10 @@ class DrawerWidget extends StatelessWidget {
                         return Container(
                           child: LayoutBuilder(builder: (context, constraint) {
                             return Wrap(children: <Widget>[
-                              Image.asset(myProfile.getPicture(), height: constraint.biggest.height, width: constraint.biggest.height)
-                            ]
-                            );
+                              Image.asset(myProfile.getPicture(),
+                                  height: constraint.biggest.height,
+                                  width: constraint.biggest.height)
+                            ]);
                           }),
                         );
                       }),
@@ -53,8 +56,10 @@ class DrawerWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text("  "+
-                                myProfile.getFirstName() +" "+
+                              Text(
+                                "  " +
+                                    myProfile.getFirstName() +
+                                    " " +
                                     myProfile.getLastName(),
                                 style: TextStyle(
                                   fontSize: 18.0,
@@ -84,6 +89,23 @@ class DrawerWidget extends StatelessWidget {
             ),
             Container(
               child: ListTile(
+                leading: Icon(Icons.map, color: Colors.white),
+                title: Text(
+                  'Map',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.popAndPushNamed(context, HomeScreen.routeName);
+                },
+              ),
+              color: TripItColors.primaryDarkBlue,
+            ),
+            Container(
+              child: ListTile(
                 title: Text(
                   'New trip',
                   style: TextStyle(
@@ -92,7 +114,7 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.popAndPushNamed(context, NewTripScreen.routeName);
+                  Navigator.popAndPushNamed(context, TripScreen.routeName);
                 },
               ),
               color: TripItColors.primaryDarkBlue,
@@ -159,13 +181,12 @@ class DrawerWidget extends StatelessWidget {
               color: TripItColors.primaryDarkBlue,
             ),
             /*
-        ListTile(
-          title: Text('Test'),
-          onTap: () {
-            Navigator.pushNamed(context, TestScreen.routeName);
-          },
-        ),
-        */
+            ListTile(
+              title: Text('Test'),
+              onTap: () {
+                Navigator.pushNamed(context, TestScreen.routeName);
+              },
+            ),*/
           ],
         ),
       ),

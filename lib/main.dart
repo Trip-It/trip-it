@@ -8,9 +8,9 @@ import 'package:trip_it_app/screens/home.dart';
 import 'package:trip_it_app/screens/new_trip.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
-import 'package:trip_it_app/screens/trip.dart';
 import 'package:trip_it_app/screens/test.dart';
 import 'package:provider/provider.dart';
+import 'package:trip_it_app/screens/trip.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<Profile>(//      <--- ChangeNotifierProvider
+    return ChangeNotifierProvider<Profile>(
+      //      <--- ChangeNotifierProvider
       create: (context) => Profile(
           "FordPrefect",
           "Ford",
