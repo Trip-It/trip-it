@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trip_it_app/models/profile.dart';
 import 'package:trip_it_app/widgets/drawer.dart';
 
 class TripScreen extends StatelessWidget {
@@ -6,16 +8,15 @@ class TripScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Trip"),
+          title: Text("Your Trips"),
         ),
         drawer: DrawerWidget(),
-        body: Center(
-          child: Text("New trip and so on..."),
-        )
-    );
+        body: Center(child: Consumer<Profile>(//                  <--- Consumer
+            builder: (context, myModel, child) {
+          return Text(myModel.toString());
+        })));
   }
 }

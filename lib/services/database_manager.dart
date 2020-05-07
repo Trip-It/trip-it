@@ -46,7 +46,7 @@ class DatabaseManager {
           print("------------------------ onCreate ------------------------");
           await db.execute("CREATE TABLE usercards(name TEXT, image TEXT, url TEXT )");
           await db.execute("CREATE TABLE temporarycards(name TEXT, image TEXT, url TEXT )");
-          await db.execute("CREATE TABLE profiles(name TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
+          await db.execute("CREATE TABLE profiles(id TEXT, firstname TEXT, lastname TEXT, picture TEXT, car TEXT, minCharge INT, maxCharge INT, rest INT, cinema INT, sport INT, plug INT, language TEXT, mapType TEXT )");
         });
   }
 
