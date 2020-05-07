@@ -456,7 +456,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
       SnackBar(
         backgroundColor: success ? Colors.green : Colors.red, // Set color depending on success
         content: success? const Text(
-          'Your profiles has been updated',
+          'Your profile has been updated',
           style: TextStyle(color: Colors.white),
         )
             :const Text(

@@ -14,10 +14,11 @@ class AddProfileScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _AddProfileScreen();
 }
 class _AddProfileScreen extends State<AddProfileScreen> {
-
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   int selectitem = 1;
+  String image = "assets/Wolf_profile.png";
   List<String> listOfPictures = ["assets/Wolf_profile.png","assets/Bear.png","assets/Bird.png",
     "assets/Dolphin.png","assets/Elephant.png","assets/Fish.png","assets/Fox.png","assets/Penguin.png",
     "assets/Rabbit.png","assets/Rhinoceros.png","assets/Tiger.png","assets/Toucan.png","assets/Turtle.png" ];
@@ -26,6 +27,7 @@ class _AddProfileScreen extends State<AddProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           title: Text("Add Profile"),
@@ -64,7 +66,7 @@ class _AddProfileScreen extends State<AddProfileScreen> {
                                         onPressed: () {
                                           Navigator.pop(context);
                                           setState(() {
-                                            myProfile.setPicture(listOfPictures[selectitem]);
+                                            image = listOfPictures[selectitem];
                                           });
                                         },
                                       )
@@ -127,7 +129,7 @@ class _AddProfileScreen extends State<AddProfileScreen> {
                       child: new CircleAvatar(
                           radius: (MediaQuery.of(context).size.width / 5.0),
                           backgroundColor: TripItColors.primaryDarkBlue,
-                          backgroundImage: AssetImage(myProfile.getPicture()),
+                          backgroundImage: AssetImage(image),
                           child: Center(
                             child: Text('Tap to change image',
                                 textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold, shadows: [
@@ -192,12 +194,18 @@ class _AddProfileScreen extends State<AddProfileScreen> {
                           style: TextStyle(color: Colors.white, fontSize: 18.0),
                         ),
                         onPressed: () {
+                          if (firstNameController.text.isEmpty||lastNameController.text.isEmpty){
+                            showSnackBar(false);
+                          }
+                          else{
                           myProfile.setFirstName(firstNameController.text);
                           myProfile.setLastName(lastNameController.text);
+                          myProfile.setPicture(image);
                           myProfile.setId(firstNameController.text +
                               lastNameController.text);
                           saveInNewProfile(myProfile);
-                          //TODO save data from widgets and get it to the database
+                          showSnackBar(true);
+                          }
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(10.0),
@@ -221,5 +229,20 @@ class _AddProfileScreen extends State<AddProfileScreen> {
     Profile toSave = myProfile;
     dbManager.saveProfile(toSave);
     return;
+  }
+  void showSnackBar(bool success) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        backgroundColor: success ? Colors.green : Colors.red, // Set color depending on success
+        content: success? const Text(
+          'Your new profile has been saved',
+          style: TextStyle(color: Colors.white),
+        )
+            :const Text(
+          'Your profile is not complete, you can not save it',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
   }
 }
