@@ -6,6 +6,7 @@ import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/services/database_manager.dart';
 import 'package:trip_it_app/widgets/cards_list_view.dart';
 import 'package:trip_it_app/widgets/search_bar_list.dart';
+import 'package:trip_it_app/widgets/drawer.dart';
 
 class CardsScreen extends StatefulWidget {
   static const routeName = '/cards';
@@ -33,6 +34,7 @@ class _CardsScreenState extends State<CardsScreen> {
         title: Text("Your Cards"),
         centerTitle: true,
       ),
+      drawer: DrawerWidget(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
