@@ -4,7 +4,6 @@ import 'package:trip_it_app/screens/cards.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
 import 'package:trip_it_app/screens/trip.dart';
-import 'package:trip_it_app/screens/home.dart';
 import 'package:trip_it_app/screens/test.dart';
 import 'package:trip_it_app/theme.dart';
 
@@ -75,23 +74,6 @@ class DrawerWidget extends StatelessWidget{
               Navigator.popAndPushNamed(context, ProfilesScreen.routeName);
             },
           ),
-        ),
-        Container(
-          child: ListTile(
-            leading: Icon(Icons.map, color: Colors.white),
-            title: Text(
-              'Map',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            onTap: () {
-              Navigator.popAndPushNamed(context, HomeScreen.routeName);
-            },
-          ),
-          color: TripItColors.primaryDarkBlue,
         ),
         Container(
           child: ListTile(
