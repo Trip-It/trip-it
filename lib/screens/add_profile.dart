@@ -195,16 +195,18 @@ class _AddProfileScreen extends State<AddProfileScreen> {
                         ),
                         onPressed: () {
                           if (firstNameController.text.isEmpty||lastNameController.text.isEmpty){
-                            showSnackBar(false);
+                            showSnackBar(0);
+                          }
+                          else if (firstNameController.text.length + lastNameController.text.length> 14){
+                            showSnackBar(1);
                           }
                           else{
                           myProfile.setFirstName(firstNameController.text);
                           myProfile.setLastName(lastNameController.text);
                           myProfile.setPicture(image);
-                          myProfile.setId(firstNameController.text +
-                              lastNameController.text);
+                          myProfile.setId(firstNameController.text + lastNameController.text);
                           saveInNewProfile(myProfile);
-                          showSnackBar(true);
+                          showSnackBar(2);
                           }
                         },
                         shape: RoundedRectangleBorder(
@@ -230,19 +232,32 @@ class _AddProfileScreen extends State<AddProfileScreen> {
     dbManager.saveProfile(toSave);
     return;
   }
-  void showSnackBar(bool success) {
+  void showSnackBar(int success) {
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
-        backgroundColor: success ? Colors.green : Colors.red, // Set color depending on success
-        content: success? const Text(
-          'Your new profile has been saved',
-          style: TextStyle(color: Colors.white),
-        )
-            :const Text(
-          'Your profile is not complete, you can not save it',
-          style: TextStyle(color: Colors.white),
-        ),
+        backgroundColor: _getBackGroundColor(success), // Set color depending on success
+        content: Text(_getContent(success), style: TextStyle(color: Colors.white),)
       ),
     );
+  }
+   Color _getBackGroundColor(int success){
+
+    Color colorToReturn = Colors.white;
+      if(success == 2)  {colorToReturn = Colors.green;}
+      if(success == 0)  {colorToReturn = Colors.red;}
+      if(success == 1)  {colorToReturn = Colors.pinkAccent;}
+      if(success == 3)  {colorToReturn = Colors.amber;}
+
+      return colorToReturn;
+   }
+  String _getContent(int success){
+
+    String text = "Error";
+    if(success == 2)  {text = "Your new profile has succefully been saved";}
+    if(success == 0)  {text = "Your profile is empty, it can't be saved";}
+    if(success == 1)  {text = "You have a lovely name but it's unfortunatly too long";}
+    if(success == 3)  {text = "You have a beautiful name, your profile has been saved";}
+
+    return text;
   }
 }
