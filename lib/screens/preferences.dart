@@ -427,8 +427,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
-                      // Open screen to add new profile to database
-                      //TODO save data from widgets and get it to the next screen
                       Navigator.pushNamed(context, AddProfileScreen.routeName);
                     },
                     shape: RoundedRectangleBorder(
