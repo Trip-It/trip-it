@@ -8,7 +8,6 @@ import 'package:trip_it_app/widgets/checkbox_options.dart';
 import 'package:trip_it_app/widgets/switch_options.dart';
 import 'package:trip_it_app/services/profiles_manager.dart';
 import 'package:trip_it_app/models/profile.dart';
-import 'package:trip_it_app/widgets/drawer.dart';
 
 class PreferencesScreen extends StatelessWidget {
   static const routeName = '/preferences';
@@ -20,7 +19,6 @@ class PreferencesScreen extends StatelessWidget {
           centerTitle: true,
           title: Text("Preferences"),
         ),
-      drawer: DrawerWidget(),
       body: ListView(
         padding: EdgeInsets.all(12.0),
         children: <Widget>[
