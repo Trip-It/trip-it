@@ -6,7 +6,6 @@ import 'package:trip_it_app/screens/cards.dart';
 import 'package:trip_it_app/screens/home.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
-import 'package:trip_it_app/screens/destination.dart';
 import 'package:trip_it_app/screens/test.dart';
 import 'package:trip_it_app/screens/trip.dart';
 
@@ -42,7 +41,6 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeScreen.routeName: (context) => HomeScreen(),
         ProfilesScreen.routeName: (context) => ProfilesScreen(),
-        DestinationScreen.routeName: (context) => DestinationScreen(),
         PreferencesScreen.routeName: (context) => PreferencesScreen(),
         AddProfileScreen.routeName: (context) => AddProfileScreen(),
         CardsScreen.routeName: (context) => CardsScreen(),

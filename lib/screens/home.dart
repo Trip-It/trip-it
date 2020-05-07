@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         drawer: DrawerWidget(),
         body: NominatimLocationPicker(
-            searchHint: 'Search place',
+            searchHint: 'Search for a place',
             awaitingForLocation: "Waiting to get your location",
           ),
     );

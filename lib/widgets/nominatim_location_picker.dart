@@ -10,7 +10,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:trip_it_app/screens/loader.dart';
-import 'package:trip_it_app/screens/destination.dart';
 import 'package:trip_it_app/services/nominatim.dart';
 import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/map.dart';
@@ -43,6 +42,8 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   bool _searchingStart = false;
   bool _searchingDestination = false;
   bool _enteredStart = false;
+  bool _enteredDest = false;
+  bool _startup = true;
   double _lat;
   double _lng;
   double _startLat;
@@ -104,7 +105,6 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       setState(() {
         _currentPosition = position;
         _getCurrentLocationMarker();
-        _getCurrentLocationDesc();
       });
     }).catchError((e) {
       print(e);
@@ -128,7 +128,9 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
           ),
         ),
       );
+      _getCurrentLocationDesc();
     });
+
   }
 
   _getCurrentLocationDesc() async {
@@ -142,10 +144,18 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       retorno = {
         'latlng': _point,
         'state': _addresses[0]['state'],
-        'desc':
-            "${_addresses[0]['state']}, ${_addresses[0]['city']}, ${_addresses[0]['suburb']}, ${_addresses[0]['neighbourhood']}, ${_addresses[0]['road']}"
+        'desc': "${_addresses[0]['state']}, ${_addresses[0]['city']}, ${_addresses[0]['suburb']}, ${_addresses[0]['neighbourhood']}, ${_addresses[0]['road']}",
+        'city': "${_addresses[0]['city']}",
       };
       _desc = _addresses[0]['description'];
+
+      if(!_startup) {
+        _ctrlStartSearch.text = _desc;
+        start = retorno;
+        _enteredStart = true;
+      } else {
+        _startup = false;
+      }
     });
   }
 
@@ -186,7 +196,46 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                   icon: Icon(Icons.swap_vert, color: _color,
                   ),
                   onPressed: (){
+
                     /// Swap start and destination
+                    String textToSwap = _ctrlStartSearch.text;
+                    double latToSwap = _startLat;
+                    double lngToSwap = _startLng;
+                    Map placeToSwap = start;
+
+                    setState(() {
+                      /// Swap coordinates
+                      _startLat = _destLat;
+                      _startLng = _destLng;
+                      _destLat = latToSwap;
+                      _destLng = lngToSwap;
+
+                      /// Swap place information Map
+                      start = destination;
+                      destination = placeToSwap;
+
+                      /// Swap markers
+                      _markers[0] = Marker(
+                        width: 80.0,
+                        height: 80.0,
+                        point: LatLng(_startLat, _startLng),
+                        builder: (ctx) => new Container(
+                          child: Icon(Icons.location_on, size: 50.0),
+                        ),
+                      );
+                      _markers[1] = Marker(
+                        width: 80.0,
+                        height: 80.0,
+                        point: LatLng(_destLat, _destLng),
+                        builder: (ctx) => new Container(
+                          child: Icon(Icons.flag, size: 50.0),
+                        ),
+                      );
+
+                      /// Swap TextField contents
+                      _ctrlStartSearch.text = _ctrlDestSearch.text;
+                      _ctrlDestSearch.text = textToSwap;
+                    });
                   },
                 )
                 : Container(),
@@ -210,13 +259,17 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
               ],
           ),
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                _buildStartTextField(_isResult),
-                _enteredStart ? _buildDestTextField(_isResult) : Container(),
-              ],
-            ),
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 10.0, 0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  _buildStartTextField(_isResult),
+                  _enteredStart ? _buildDestTextField(_isResult) : Container(),
+                ],
+              ),
+            )
+
           ),
         ],
       ),
@@ -396,25 +449,39 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                     Container(
                         width: MediaQuery.of(context).size.width * 0.7,
                         padding: EdgeInsets.all(15),
-                        child: Center(
-                            child: Scrollbar(
+                        child: Scrollbar(
                                 child: new SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           reverse: false,
                           child: AutoSizeText(
-                            _desc == null
-                                ? widget.awaitingForLocation
-                                : "SET POINT: \n" + _desc,
+                            _getCardText(),
                             style: TextStyle(fontSize: 16),
                             textAlign: TextAlign.start,
                           ),
-                        )))),
+                        ))),
                   ],
                 )),
           ),
         ],
       ),
     );
+  }
+
+  String _getCardText(){
+
+    String toReturn = "";
+
+    if(_desc == null){
+      toReturn = widget.awaitingForLocation;
+    } else {
+      if(_enteredDest){
+        toReturn = "Start the calculation of your route\nfrom \t" + start['city'] + "\nto \t" + destination['city'];
+      } else {
+        toReturn = "Please enter your starting point and your destination";
+      }
+    }
+
+    return toReturn;
   }
 
   floatingActionButton() {
@@ -473,8 +540,8 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                     retorno = {
                       'latlng': LatLng(_lat, _lng),
                       'state': _addresses[index]['state'],
-                      'desc':
-                      "${_addresses[index]['state']}, ${_addresses[index]['city']}, ${_addresses[index]['suburb']}, ${_addresses[index]['neighbourhood']}, ${_addresses[index]['road']}"
+                      'desc': "${_addresses[index]['state']}, ${_addresses[index]['city']}, ${_addresses[index]['suburb']}, ${_addresses[index]['neighbourhood']}, ${_addresses[index]['road']}",
+                      'city': "${_addresses[0]['city']}",
                     };
 
                     IconData iconToUseForMarker;
@@ -496,8 +563,17 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                         builder: (ctx) => new Container(
                           child: Icon(iconToUseForMarker, size: 50.0)));
 
+                      /// Update text in TextField
+                      _ctrlDestSearch.text = _desc;
+
+                      /// Destination has been entered
+                      _enteredDest = true;
+
+                      /// Stopped searching for the destination
                       _searchingDestination = false;
+
                     } else {
+
                       /// The entered location is the starting point
                       _startLat= _lat;
                       _startLng= _lng;
@@ -515,7 +591,13 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                         ),
                       );
 
+                      /// Update text in TextField
+                      _ctrlStartSearch.text = _desc;
+
+                      /// Start has been entered
                       _enteredStart = true;
+
+                      /// Stopped searching for starting point
                       _searchingStart = false;
                     }
                   });
