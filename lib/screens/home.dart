@@ -52,8 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           centerTitle: true,
           title: Text("Trip it!"),
-        ),
-        drawer: DrawerWidget(),
+        ),drawer: DrawerWidget(),
+
         body: NominatimLocationPicker(
             searchHint: 'Search for a place',
             awaitingForLocation: "Waiting to get your location",
