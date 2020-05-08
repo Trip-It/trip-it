@@ -5,6 +5,7 @@ import 'package:trip_it_app/services/profiles_manager.dart';
 import 'package:trip_it_app/models/profile.dart';
 import 'package:trip_it_app/widgets/drawer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:trip_it_app/screens/modify_profile.dart';
 
 class ProfilesScreen extends StatefulWidget {
   static const routeName = '/profiles';
@@ -111,8 +112,32 @@ class _ProfilesScreen extends State<ProfilesScreen> {
                         CupertinoContextMenuAction(
                           child: const Text('Modify'),
                           onPressed: () {
-
                             Navigator.pop(context);
+                            setState(() {
+                              myProfile
+                                  .setPicture(profiles[index].getPicture());
+                              myProfile.setId(profiles[index].getId());
+                              myProfile
+                                  .setLastName(profiles[index].getLastName());
+                              myProfile
+                                  .setFirstName(profiles[index].getFirstName());
+                              myProfile
+                                  .setMapType(profiles[index].getMapType());
+                              myProfile.setCar(profiles[index].getCar());
+                              myProfile.setMinimumCharge(
+                                  profiles[index].getMinimumCharge());
+                              myProfile.setMaximumCharge(
+                                  profiles[index].getMaximumCharge());
+                              myProfile.setRestaurant(
+                                  profiles[index].getRestaurant());
+                              myProfile.setCinema(profiles[index].getCinema());
+                              myProfile.setSport(profiles[index].getSport());
+                              myProfile.setPlug(profiles[index].getPlug());
+                              myProfile
+                                  .setLanguage(profiles[index].getLanguage());
+                            });
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ModifyProfileScreen(myProfile.getId(),myProfile.getFirstName(),myProfile.getLastName(), myProfile.getPicture(),),
+                            ));
                           },
                         ),
                       ],
