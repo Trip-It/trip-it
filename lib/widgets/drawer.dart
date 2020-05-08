@@ -41,10 +41,9 @@ class DrawerWidget extends StatelessWidget {
                         return Container(
                           child: LayoutBuilder(builder: (context, constraint) {
                             return Wrap(children: <Widget>[
-                              Image.asset(myProfile.getPicture(),
-                                  height: constraint.biggest.height,
-                                  width: constraint.biggest.height)
-                            ]);
+                              Image.asset(myProfile.getPicture(), height: constraint.biggest.height, width: constraint.biggest.height)
+                            ]
+                            );
                           }),
                         );
                       }),
@@ -56,10 +55,8 @@ class DrawerWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(
-                                "  " +
-                                    myProfile.getFirstName() +
-                                    " " +
+                              Text(" "+
+                                myProfile.getFirstName() +" "+
                                     myProfile.getLastName(),
                                 style: TextStyle(
                                   fontSize: 18.0,
@@ -114,7 +111,7 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.popAndPushNamed(context, TripScreen.routeName);
+                  Navigator.popAndPushNamed(context, NewTripScreen.routeName);
                 },
               ),
               color: TripItColors.primaryDarkBlue,
@@ -181,12 +178,13 @@ class DrawerWidget extends StatelessWidget {
               color: TripItColors.primaryDarkBlue,
             ),
             /*
-            ListTile(
-              title: Text('Test'),
-              onTap: () {
-                Navigator.pushNamed(context, TestScreen.routeName);
-              },
-            ),*/
+        ListTile(
+          title: Text('Test'),
+          onTap: () {
+            Navigator.pushNamed(context, TestScreen.routeName);
+          },
+        ),
+        */
           ],
         ),
       ),
