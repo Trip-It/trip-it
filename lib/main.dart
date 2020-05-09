@@ -9,6 +9,7 @@ import 'package:trip_it_app/screens/modify_profile.dart';
 import 'package:trip_it_app/screens/new_trip.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
+import 'package:trip_it_app/screens/route_choice.dart';
 import 'package:trip_it_app/screens/test.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_it_app/screens/trip.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
             AddCardScreen.routeName: (context) => AddCardScreen(),
             NewTripScreen.routeName: (context) => NewTripScreen(),
             ModifyProfileScreen.routeName: (context) => ModifyProfileScreen(myProfile.getId(), myProfile.getFirstName(), myProfile.getLastName(), myProfile.getPicture()),
+            RouteChoiceScreen.routeName: (context) => RouteChoiceScreen(),
           },
         )
         ;

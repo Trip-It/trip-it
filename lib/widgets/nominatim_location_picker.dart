@@ -10,6 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:trip_it_app/screens/loader.dart';
+import 'package:trip_it_app/screens/route_choice.dart';
 import 'package:trip_it_app/services/nominatim.dart';
 import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/map.dart';
@@ -501,10 +502,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                 Icons.arrow_forward,
               ),
               onPressed: () {
-                setState(() {
-                  _point = LatLng(
-                      _currentPosition.latitude, _currentPosition.longitude);
-                });
+                Navigator.popAndPushNamed(context, RouteChoiceScreen.routeName);
               }),
         ),
       ),
