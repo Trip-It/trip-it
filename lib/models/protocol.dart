@@ -1,4 +1,6 @@
+import 'package:trip_it_app/models/sid.dart';
+
 abstract class Protocol{
   String getName();
-  List<String> getSIDs();
+  List<SID> getSIDs();
 }
