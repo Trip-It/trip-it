@@ -19,7 +19,7 @@ class ObdDatabaseHandler extends DatabaseManager {
 
   ObdDatabaseHandler() {
     savingInterval = Duration(seconds: 5); //Set saving interval
-    carState = CarState(1, 0, 100, 100); //init car state, can be deleted when Translator provides states
+    carState = CarState("00:00", 0, 100, 100); //init car state, can be deleted when Translator provides states
   }
 
 //  ObdDatabaseHandler() : super()
@@ -36,7 +36,7 @@ class ObdDatabaseHandler extends DatabaseManager {
     List<CarState> carStates = new List();
     for (int i = 0; i < list.length; i++) {
       carStates.add(new CarState(
-          list[i]["id"], list[i]["speed"], list[i]["soc"], list[i]["soh"]));
+          list[i]["time"], list[i]["speed"], list[i]["soc"], list[i]["soh"]));
     }
     return carStates;
   }
@@ -73,7 +73,7 @@ class ObdDatabaseHandler extends DatabaseManager {
         return await txn.rawInsert(
             'INSERT INTO carstates(id, speed, soc, soh) VALUES(' +
                 '\'' +
-                carState.id.toString() +
+                carState.time +
                 '\'' +
                 ',' +
                 '\'' +
@@ -97,7 +97,7 @@ class ObdDatabaseHandler extends DatabaseManager {
     var dbClient = await database;
 
     int res = await dbClient
-        .rawDelete('DELETE FROM carstates WHERE id = ?', [carState.id]);
+        .rawDelete('DELETE FROM carstates WHERE time = ?', [carState.time]);
     return res > 0 ? true : false;
   }
 
@@ -130,7 +130,7 @@ class ObdDatabaseHandler extends DatabaseManager {
     for (int i = 0; i < carStateList.length; i++) {
 //row refer to each column of a row in csv file and rows refer to each row in a file
       List<dynamic> row = List();
-      row.add(carStateList[i].id);
+      row.add(carStateList[i].time);
       row.add(carStateList[i].speed);
       row.add(carStateList[i].soc);
       row.add(carStateList[i].soh);
