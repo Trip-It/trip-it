@@ -1,9 +1,9 @@
 import 'package:trip_it_app/models/protocol.dart';
 import 'package:trip_it_app/models/sid.dart';
 
-class RenaultZoeR90_22 implements Protocol{
+class ProtocolZoeR9022 implements Protocol{
 
-  static final name ='RenaultZoeR90_22';
+  static final name ='ProtocolZoeR9022';
   static List<SID> listSIDs = [new SID("sidAvailableDistance", "654.42"), new SID("sidAvailableEnergy", "427.49"), new SID("sidAverageConsumption", "654.52"),new SID("sidWorstAverageConsumption", "62d.0"), new SID("sidBestAverageConsumption", "62d.10")];
 
   // static final String sidAvailableDistance = "654.42";
