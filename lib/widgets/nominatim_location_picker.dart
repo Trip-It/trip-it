@@ -44,6 +44,9 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   List<Marker> _markers;
   LatLng _point;
   String error;
+  double stdLat=45.2047435;
+  double stdLng=5.7012957;
+  
 
   @override
   void dispose() {
@@ -76,11 +79,13 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
     });
   }
 
-  _getCurrentLocation()  {
-    
-    try {
+  _getCurrentLocation()  async {
+   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+   GeolocationStatus status = await geolocator.checkGeolocationPermissionStatus();
+    if (status == GeolocationStatus.granted) {
+      try {
        final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-     geolocator
+     await geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
        setState(() {
@@ -94,10 +99,20 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         error = 'Permission denied';
       } else if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
         error = 'Permission denied';
-      }
-
-      //_currentPosition = null;
+      }     
     };
+    } else {
+      setState(() {
+         Position stdPos = Position(latitude: stdLat, longitude:  stdLng);
+        _currentPosition = stdPos;
+        _getCurrentLocationMarker();
+        _getCurrentLocationDesc();
+       
+      });
+
+      
+    }
+    
   }
 
   _getCurrentLocationMarker() {
