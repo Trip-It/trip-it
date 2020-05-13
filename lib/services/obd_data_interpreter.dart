@@ -13,6 +13,9 @@ class ObdDataInterpreter {
 //  Car carModel;
   Protocol carProtocol;
   ObdDataInterpreter();
+  static final String SID_RealSoC                          = "7bb.6103.192";
+  static final String SID_SOH                              = "7ec.623206.24";
+  static final String SID_RealSpeed                        = "5d7.0";  //ESC-ABS
 
   chooseProtocol(String carName){
     switch(carName){
@@ -31,7 +34,16 @@ class ObdDataInterpreter {
     }}
 
     List<BluetoothService> filterServices(List<BluetoothService> services){
-    // use necessary SIDs from protocol to filter retrieved data from OBD in order to get only the necessary data for car state
+      List<BluetoothService> filteredServices=new List<BluetoothService>();
+      // use necessary SIDs from protocol to filter retrieved data from OBD in order to get only the necessary data for car state
+      for (BluetoothService service in services) {
+
+        if (service.uuid.toString()==SID_RealSoC) { filteredServices.add(service);}
+        if (service.uuid.toString()==SID_SOH) {filteredServices.add(service);}
+        if (service.uuid.toString()==SID_RealSpeed) {filteredServices.add(service);}
+
+      }
+
     }
 
   CarState translateService(ObdService obdService, Protocol protocol){
