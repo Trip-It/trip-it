@@ -42,7 +42,7 @@ class NominatimService {
   /// coordinates for the request
   Future<List<Map>> reverseGeocoding(double lat, double lng) async {
     var url =
-        "https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lng=${lng}&addressdetails=1";
+        "https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1";
     print(url);
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');

@@ -14,6 +14,9 @@ import 'package:trip_it_app/services/nominatim.dart';
 import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/map.dart';
 
+import '../services/nominatim.dart';
+import '../services/nominatim.dart';
+
 class NominatimLocationPicker extends StatefulWidget {
   NominatimLocationPicker({
     this.searchHint = 'Search',
@@ -67,6 +70,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
     _getCurrentLocation();
     _markers = [
       Marker(
+        anchorPos: AnchorPos.align(AnchorAlign.top),
         width: 50.0,
         height: 50.0,
         point: new LatLng(0.0, 0.0),
@@ -78,6 +82,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         )),
       ),
       Marker(
+        anchorPos: AnchorPos.align(AnchorAlign.top),
         width: 50.0,
         height: 50.0,
         point: new LatLng(0.0, 0.0),
@@ -117,6 +122,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       _lng = _currentPosition.longitude;
       _point = LatLng(_lat, _lng);
       _markers[0] = Marker(
+        anchorPos: AnchorPos.align(AnchorAlign.top),
         width: 80.0,
         height: 80.0,
         point: LatLng(_currentPosition.latitude, _currentPosition.longitude),
@@ -374,6 +380,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                       _addresses = res;
                     });
                     _searchingDestination = true;
+                    _mapController.fitBounds(LatLngBounds(LatLng(_startLat, _startLng),LatLng(_destLat,_destLng)));
                   },
                 ),
               ),
@@ -414,7 +421,33 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       lng: _lng,
       mapController: _mapController,
       markers: _markers,
+      mapOptions: MapOptions(
+        onLongPress: _lookUpLocation,
+        center: LatLng(_lat, _lng),
+        zoom: 18.0,
+      ),
     );
+  }
+
+  _lookUpLocation(LatLng latLng){
+    NominatimService service = new NominatimService();
+    service.reverseGeocoding(latLng.latitude, latLng.longitude);
+
+    setState(() {
+      _markers.add(Marker(
+        anchorPos: AnchorPos.align(AnchorAlign.top),
+        width: 50.0,
+        height: 50.0,
+        point: latLng,
+        builder: (ctx) => new Container(
+          child: Icon(
+            Icons.help,
+            size: 50.0,
+            color: _color,
+      )),
+      ));
+    });
+
   }
 
   Widget _buildBody(BuildContext context) {
