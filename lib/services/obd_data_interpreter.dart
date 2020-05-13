@@ -30,7 +30,7 @@ class ObdDataInterpreter {
         break;
     }}
 
-    List<BluetoothService> filterServices(BluetoothService services){
+    List<BluetoothService> filterServices(List<BluetoothService> services){
     // use necessary SIDs from protocol to filter retrieved data from OBD in order to get only the necessary data for car state
     }
 
