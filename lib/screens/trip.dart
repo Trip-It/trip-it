@@ -14,9 +14,7 @@ class TripScreen extends StatelessWidget {
           title: Text("Your Trips"),
         ),
         drawer: DrawerWidget(),
-        body: Center(child: Consumer<Profile>(//                  <--- Consumer
-            builder: (context, myModel, child) {
-          return Text(myModel.toString());
-        })));
+        body: Center()
+        );
   }
 }

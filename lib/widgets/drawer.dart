@@ -101,21 +101,7 @@ class DrawerWidget extends StatelessWidget {
               ),
               color: TripItColors.primaryDarkBlue,
             ),
-            Container(
-              child: ListTile(
-                title: Text(
-                  'New trip',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.popAndPushNamed(context, NewTripScreen.routeName);
-                },
-              ),
-              color: TripItColors.primaryDarkBlue,
-            ),
+
             Container(
               child: ListTile(
                 title: Text(
