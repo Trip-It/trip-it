@@ -13,9 +13,9 @@ import 'package:trip_it_app/screens/loader.dart';
 import 'package:trip_it_app/services/nominatim.dart';
 import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/map.dart';
+import '../services/nominatim.dart';
+import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 
-import '../services/nominatim.dart';
-import '../services/nominatim.dart';
 
 class NominatimLocationPicker extends StatefulWidget {
   NominatimLocationPicker({
@@ -54,6 +54,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   double _destLat;
   double _destLng;
   MapController _mapController = MapController();
+  PopupController _popupController = PopupController();
   List<Marker> _markers;
   LatLng _point;
 
@@ -222,6 +223,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
 
                       /// Swap markers
                       _markers[0] = Marker(
+                        anchorPos: AnchorPos.align(AnchorAlign.top),
                         width: 80.0,
                         height: 80.0,
                         point: LatLng(_startLat, _startLng),
@@ -230,6 +232,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                         ),
                       );
                       _markers[1] = Marker(
+                        anchorPos: AnchorPos.align(AnchorAlign.top),
                         width: 80.0,
                         height: 80.0,
                         point: LatLng(_destLat, _destLng),
@@ -409,6 +412,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         ));
   }
 
+  /// Method to create a new map Widget which displays the markers
   Widget mapContext(BuildContext context) {
     while (_currentPosition == null) {
       return new Center(
@@ -420,18 +424,21 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       lat: _lat,
       lng: _lng,
       mapController: _mapController,
-      markers: _markers,
+      popupLayerController: _popupController,
+      markers: _markers,                            /// markers that should be displayed
       mapOptions: MapOptions(
-        onLongPress: _lookUpLocation,
-        center: LatLng(_lat, _lng),
-        zoom: 18.0,
+        plugins: [PopupMarkerPlugin()],
+        onLongPress: _lookUpLocation,               /// use reverse geocoding to look up location of long press
+        onTap: (_) => _popupController.hidePopup(), /// hide popups if user taps on map
+        center: LatLng(_lat, _lng),                 /// initial center position
+        zoom: 18.0,                                 /// initial zoom level
       ),
     );
   }
 
+  /// Method to look up a given location [latLng] using Nominatim reverse
+  /// geocoding. Creates a marker at the location that has been looked up
   _lookUpLocation(LatLng latLng){
-    NominatimService service = new NominatimService();
-    service.reverseGeocoding(latLng.latitude, latLng.longitude);
 
     setState(() {
       _markers.add(Marker(
@@ -589,6 +596,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
 
                       /// Add a new marker
                       _markers[1] = Marker(
+                          anchorPos: AnchorPos.align(AnchorAlign.top),
                         width: 80.0,
                         height: 80.0,
                         point: LatLng(double.parse(_addresses[index]['lat']),
@@ -615,6 +623,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
 
                       /// Change the marker
                       _markers[0] = Marker(
+                        anchorPos: AnchorPos.align(AnchorAlign.top),
                         width: 80.0,
                         height: 80.0,
                         point: LatLng(double.parse(_addresses[index]['lat']),
