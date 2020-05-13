@@ -172,6 +172,12 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
     });
   }
 
+  /// Method to reset the bounds of the map such that it shows [destination]
+  /// and [start]
+  _resetBounds(){
+    _mapController.fitBounds(LatLngBounds(start['latlng'],destination['latlng']));
+  }
+
   /// Method to build the AppBar
   _buildAppbar(bool _isResult) {
     return new PreferredSize(
@@ -244,6 +250,9 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                       /// Swap TextField contents
                       _ctrlStartSearch.text = _ctrlDestSearch.text;
                       _ctrlDestSearch.text = textToSwap;
+
+                      /// Reset the bounds of the map
+                      _resetBounds();
                     });
                   },
                 )
@@ -612,6 +621,9 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
 
                       /// Stopped searching for the destination
                       _searchingDestination = false;
+
+                      /// Reset bounds of the map
+                      _resetBounds();
 
                     } else {
 
