@@ -5,6 +5,7 @@
 ///
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
@@ -42,6 +43,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   MapController _mapController = MapController();
   List<Marker> _markers;
   LatLng _point;
+  String error;
 
   @override
   void dispose() {
@@ -74,20 +76,28 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
     });
   }
 
-  _getCurrentLocation() {
-    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-    geolocator
+  _getCurrentLocation()  {
+    
+    try {
+       final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+     geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
-      setState(() {
+       setState(() {
         _currentPosition = position;
         _getCurrentLocationMarker();
         _getCurrentLocationDesc();
+       
       });
-    }).catchError((e) {
-      print(e);
-      print("getfirstlocation error 1");
-    });
+    });} on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {
+        error = 'Permission denied';
+      } else if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
+        error = 'Permission denied';
+      }
+
+      //_currentPosition = null;
+    };
   }
 
   _getCurrentLocationMarker() {
