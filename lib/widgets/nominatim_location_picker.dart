@@ -82,9 +82,11 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   _getCurrentLocation()  async {
    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
    GeolocationStatus status = await geolocator.checkGeolocationPermissionStatus();
-    if (status == GeolocationStatus.granted) {
+   //Checking the status of the location permission. 
+   //If it is allowed, we get the user's location, otherwise we give a default standard location of ENSE3.
+    if (status == GeolocationStatus.granted) { 
       try {
-       final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+       
      await geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
