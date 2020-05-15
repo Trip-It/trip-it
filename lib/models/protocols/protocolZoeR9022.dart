@@ -8,9 +8,6 @@ class ProtocolZoeR9022 implements Protocol{
   static List<SID> listSIDs = [new SID("sidAvailableDistance", "654.42"), new SID("sidAvailableEnergy", "427.49"), new SID("sidAverageConsumption", "654.52"),new SID("sidWorstAverageConsumption", "62d.0"), new SID("sidBestAverageConsumption", "62d.10")];
 
 
-
-
-
   @override
   String getName() {
     return name;
