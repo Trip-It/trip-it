@@ -1,11 +1,12 @@
+import 'package:flutter_map/flutter_map.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:latlong/latlong.dart';
 
 //Routing method getting
-Future<List<Map>> requestOSRM(double startlat, double startlng,double endlat, double endlng) async {
+Future<List<LatLng>> requestOSRM(double startlat, double startlng,double endlat, double endlng) async {
     var url =
-        'http://router.project-osrm.org/route/v1/driving/q=$startlat,q=$startlng;q=$endlat,q=$endlng?geometries=geojson';
+        'http://router.project-osrm.org/route/v1/driving/q=$startlat,q=$startlng;q=$endlat,q=$endlng?geometries=geojson';//geometries=geojson for not encoded coordinates
     print(url);
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
@@ -27,8 +28,9 @@ Future<List<Map>> requestOSRM(double startlat, double startlng,double endlat, do
       suggestedRoute.add(position);
       print('position is $position');
       print(i);
-      }
-      print('suggestedRoute is $suggestedRoute');
+    }
+    print('suggestedRoute is $suggestedRoute');
+    return suggestedRoute;
     } 
     
   
