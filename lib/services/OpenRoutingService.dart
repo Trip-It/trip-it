@@ -5,7 +5,7 @@ import 'package:latlong/latlong.dart';
 //Routing method getting
 Future<List<Map>> requestOSRM(double startlat, double startlng,double endlat, double endlng) async {
     var url =
-        'http://router.project-osrm.org/route/v1/driving/q=$startlat,q=$startlng;q=$endlat,q=$endlng';
+        'http://router.project-osrm.org/route/v1/driving/q=$startlat,q=$startlng;q=$endlat,q=$endlng?geometries=geojson';
     print(url);
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
