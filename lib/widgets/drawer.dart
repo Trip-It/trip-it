@@ -80,7 +80,12 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.popAndPushNamed(context, ProfilesScreen.routeName);
+                  Navigator.popUntil(context, (route){
+                    (route.settings.name != ProfilesScreen.routeName) ? Navigator.popAndPushNamed(
+                        context, ProfilesScreen.routeName) : Navigator.of(context)
+                        .pop();
+                    return true;
+                  });
                 },
               ),
             ),
@@ -96,8 +101,13 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.popAndPushNamed(context, HomeScreen.routeName);
-                },
+                  Navigator.popUntil(context, (route){
+                    (route.settings.name != HomeScreen.routeName) ? Navigator.popAndPushNamed(
+                        context, HomeScreen.routeName) : Navigator.of(context)
+                        .pop();
+                    return true;
+                  });
+                  },
               ),
               color: TripItColors.primaryDarkBlue,
             ),
@@ -128,7 +138,12 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.popAndPushNamed(context, CardsScreen.routeName);
+                  Navigator.popUntil(context, (route){
+                    (route.settings.name != CardsScreen.routeName) ? Navigator.popAndPushNamed(
+                        context, CardsScreen.routeName) : Navigator.of(context)
+                        .pop();
+                    return true;
+                  });
                 },
               ),
               color: TripItColors.primaryDarkBlue,
@@ -143,7 +158,12 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.popAndPushNamed(context, TripScreen.routeName);
+                  Navigator.popUntil(context, (route){
+                    (route.settings.name != TripScreen.routeName) ? Navigator.popAndPushNamed(
+                        context, TripScreen.routeName) : Navigator.of(context)
+                        .pop();
+                    return true;
+                  });
                 },
               ),
               color: TripItColors.primaryDarkBlue,
@@ -158,7 +178,12 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.popAndPushNamed(context, AboutScreen.routeName);
+                  Navigator.popUntil(context, (route){
+                    (route.settings.name != AboutScreen.routeName) ? Navigator.popAndPushNamed(
+                        context, AboutScreen.routeName) : Navigator.of(context)
+                        .pop();
+                    return true;
+                  });
                 },
               ),
               color: TripItColors.primaryDarkBlue,
