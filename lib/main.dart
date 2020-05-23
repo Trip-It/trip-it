@@ -71,7 +71,6 @@ class MyApp extends StatelessWidget {
             AddCardScreen.routeName: (context) => AddCardScreen(),
             NewTripScreen.routeName: (context) => NewTripScreen(),
             ModifyProfileScreen.routeName: (context) => ModifyProfileScreen(myProfile.getId(), myProfile.getFirstName(), myProfile.getLastName(), myProfile.getPicture()),
-            RouteChoiceScreen.routeName: (context) => RouteChoiceScreen(),
           },
         )
         ;

@@ -502,7 +502,8 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                 Icons.arrow_forward,
               ),
               onPressed: () {
-                Navigator.popAndPushNamed(context, RouteChoiceScreen.routeName);
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => RouteChoiceScreen(LatLng(_startLat,_startLng), LatLng(_destLat,_destLng))));
               }),
         ),
       ),
