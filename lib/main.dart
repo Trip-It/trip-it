@@ -14,7 +14,9 @@ import 'package:trip_it_app/screens/test.dart';
 import 'package:provider/provider.dart';
 import 'package:trip_it_app/screens/trip.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -69,7 +71,6 @@ class MyApp extends StatelessWidget {
             AboutScreen.routeName: (context) => AboutScreen(),
             TestScreen.routeName: (context) => TestScreen(),
             AddCardScreen.routeName: (context) => AddCardScreen(),
-            NewTripScreen.routeName: (context) => NewTripScreen(),
             ModifyProfileScreen.routeName: (context) => ModifyProfileScreen(myProfile.getId(), myProfile.getFirstName(), myProfile.getLastName(), myProfile.getPicture()),
           },
         )

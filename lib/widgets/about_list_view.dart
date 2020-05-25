@@ -4,9 +4,11 @@ import 'package:trip_it_app/screens/cards.dart';
 import 'package:trip_it_app/screens/preferences.dart';
 import 'package:trip_it_app/screens/profiles.dart';
 import 'package:trip_it_app/theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutWidget extends StatelessWidget {
   int selected = -1;
+
   @override
   Widget build(BuildContext context) {
     final titles = [
@@ -33,7 +35,7 @@ class AboutWidget extends StatelessWidget {
     final descriptions = [
       'The Trip It! team is composed by 7 students from the engineering school Grenoble INP - Ense3, France.We worked all together in order to provide you the best route planner app for EVs.[Names]',
       'We are convinced that one\'s privacy must be respected, this is why your data is only stored locally on your phone. The only data which we could get is the anonymous feedback you decide to send or not after each trip. (This feedback allows us to refine the estimation calculations.)This is the aim emphasized by Better World Initiative.',
-      'Don\'t hesitate to give us feedback or any suggestions concerning our application via : Mail Adress Contact Yves Maréchal ?',
+      'Don\'t hesitate to give us feedback or any suggestions concerning our application via this email: ',
       'The project is using an Aapache 2.0 License.'];
 
     return ListView.builder(
@@ -41,27 +43,62 @@ class AboutWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return Column(
           children: <Widget>[
-             Card(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                       top: 24.0, left: 6.0, right: 6.0, bottom: 24.0),
-                          child: ExpansionTile(
-                            title: Text(
-                                titles[index], style: TextStyle(fontWeight: FontWeight.bold)),
-                            subtitle: Text(subtitles[index], style: TextStyle(color: Colors.black.withOpacity(0.4))),
-                            leading: Image.asset(icons[index], height: 100, width: 100),
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 24.0, left: 15.0, right: 15.0, bottom: 24.0),
-                                 child: Text(descriptions[index],style: TextStyle(color: Colors.black.withOpacity(0.4)),textAlign: TextAlign.justify),
-                              )
-                            ]),
-                ),
+            Card(
+              child: Padding(
+                padding: EdgeInsets.only(
+                    top: 24.0, left: 6.0, right: 6.0, bottom: 24.0),
+                child: ExpansionTile(
+                    title: Text(
+                        titles[index],
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text(subtitles[index],
+                        style: TextStyle(color: Colors.black.withOpacity(0.4))),
+                    leading: Image.asset(icons[index], height: 100, width: 100),
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 24.0, left: 15.0, right: 15.0, bottom: 24.0),
+                        child:
+                        (index == 2) ?
+                        Column(
+                          children: <Widget>[
+                            Text(descriptions[index], style: TextStyle(
+                                color: Colors.black.withOpacity(0.4)),
+                                textAlign: TextAlign.justify),
+
+                            RaisedButton(
+                              onPressed: _launchURL,
+                              textColor: Colors.white,
+                              color: TripItColors.primaryLightBlue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                  side: BorderSide(color: TripItColors.primaryLightBlue)
+                              ),
+                              child: Text('Send email'),
+                            ),
+
+                          ],)
+                            : Text(
+                            descriptions[index], style: TextStyle(color: Colors
+                            .black.withOpacity(0.4)),
+                            textAlign: TextAlign.justify),
+
+                      )
+                    ]),
               ),
+            ),
           ],
         );
       },
     );
+  }
+
+  _launchURL() async {
+    const url = 'mailto:trip-it.ense3@listes-ense3.grenoble-inp.fr?subject=TripIt!%20user%20feedback&body=';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
