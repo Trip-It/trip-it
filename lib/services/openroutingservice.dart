@@ -45,13 +45,20 @@ class OpenRoutingService {
     Map properties = features.elementAt(0)['properties'];
     Map geometry = features.elementAt(0)['geometry'];
 
+    /// Extract the waypoints
+    List<LatLng> waypoints = List<LatLng>();
+
+    for (List coordinates in geometry['coordinates']){
+      waypoints.add(LatLng(coordinates.elementAt(1), coordinates.elementAt(0)));
+    }
+
     /// Get ascent, descent
     routingInfo = {
       'ascent' : properties['ascent'],
       'descent' : properties['descent'],
       'distance' : properties['summary']['distance'],
       'duration' : properties['summary']['duration'],
-      'coordinates' : geometry['coordinates'],
+      'waypoints' : waypoints,
     };
 
     print(routingInfo.toString());
