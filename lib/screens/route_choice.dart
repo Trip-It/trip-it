@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
 import 'package:trip_it_app/services/openroutingservice.dart';
+import 'package:trip_it_app/screens/loader.dart';
+import 'package:trip_it_app/widgets/map.dart';
+import 'package:flutter_map/flutter_map.dart';
 
 class RouteChoiceScreen extends StatefulWidget {
   static const routeName = '/routechoice';
@@ -20,7 +23,10 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
   double startLng;
   double destinationLat;
   double destinationLng;
-  List<LatLng> waypoints;
+  Map routingInfo;
+  bool _loading = true;
+  MapController _mapController = MapController();
+
 
   _RouteChoiceScreenState(LatLng start, LatLng destination){
     /// Initialize the state variables
@@ -40,17 +46,20 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
           centerTitle: true,
           title: Text("Choose your trip"),
         ),
-        body: Center(
-          child: Text("Coordinates for your trip: \nStart: " + startLat.toString() + " : " + startLng.toString()
-              + "\nDestination: " + destinationLat.toString() + " : " + destinationLng.toString()),
-        ));
+        body: _loading ?  Loader() : MapPage(lat: startLat, lng: startLng, mapController: _mapController, markers: null, coordinates: routingInfo['coordinates'], usePolyline: true,),
+    );
   }
 
 
   /// Method to handle route request
   void getRoute() async{
     OpenRoutingService ors = OpenRoutingService();
-    waypoints = await ors.requestOSRM(startLat, startLng, destinationLat, destinationLng);
+    Map info= await ors.requestOSRM(startLat, startLng, destinationLat, destinationLng);
+    setState(() {
+      routingInfo = info;
+      _loading = false;
+    });
+
   }
 
 }

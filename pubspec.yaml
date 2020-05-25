@@ -27,14 +27,15 @@ dependencies:
 
 
   # Map
-  flutter_map: ^0.8.2
+  flutter_map: any
   mapbox_search: any
   mapbox_search_flutter: any
   provider: ^3.2.0
-  user_location: ^0.1.2
+  user_location: any
   flutter_fluid_slider: ^1.0.2
   search_widget: any
   nominatim_location_picker: any
+
 
   #URL
   url_launcher: ^5.4.2

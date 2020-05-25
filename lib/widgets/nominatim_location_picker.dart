@@ -415,6 +415,8 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       lng: _lng,
       mapController: _mapController,
       markers: _markers,
+      usePolyline: false,
+      coordinates: null,
     );
   }
 

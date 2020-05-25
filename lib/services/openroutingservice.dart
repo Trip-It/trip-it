@@ -1,4 +1,4 @@
-
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:latlong/latlong.dart';
@@ -6,38 +6,57 @@ import 'package:latlong/latlong.dart';
 class OpenRoutingService {
 
   ///Routing method getting a suggested driving route with a start point and end point.
-  Future<List<LatLng>> requestOSRM(double startlat, double startlng,
+  Future<Map> requestOSRM(double startlat, double startlng,
       double endlat, double endlng) async {
-    ///Using of OSRM project for the routing service, the profile "driving" is for cars.
+
+    Map routingInfo;
+    ///Using of OSRM project for the routing service, profile "driving-car" is for cars.
     ///For the future we can implement "bike" profile like the client needs
-    ///geometries=geojson for not encoded coordinates
+    ///specify 'directions' for routing service
     var url =
-        'http://router.project-osrm.org/route/v1/driving/q=$startlat,q=$startlng;q=$endlat,q=$endlng?geometries=geojson';
-    print(url);
-    var response = await http.get(url);
+        'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
+
+    /// Authorization, giving the API Key used for ORS requests
+    var header = {
+      HttpHeaders.authorizationHeader: "5b3ce3597851110001cf62483d0ee3115a0e4df9a6fc57cdcd54a8dd",
+      HttpHeaders.acceptHeader: "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8",
+      HttpHeaders.contentTypeHeader: "application/json; charset=utf-8"};
+
+    /// Body of the requests specifying the options
+    var body = jsonEncode({"coordinates":[[startlng,startlat],[endlng,endlat]],"attributes":["avgspeed","percentage"],"elevation":"true","instructions":"false"});
+
+    /// Launch http POST request
+    var response = await http.post(
+      url,
+      headers: header,
+      body: body);
+
+    /// Print the response
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
-    var jsonResponse = jsonDecode(response.body); //Json format
-    List<
-        dynamic> coordinates = jsonResponse['coordinates']; //List of coordinates provide by the JSON response
-    print('coordinates are : $coordinates');
-    print('coordinates are: ${coordinates.length}');
-    Map<String, dynamic> properties = jsonResponse['properties'];
-    String distance = properties['distance'];
-    print('Route is $distance Km long.');
-    String instructions = properties['description'];
-    print('instructions are $instructions');
 
-    List<LatLng> suggestedRoute = [];
-    for (int i = 0; i < (coordinates.length); i++) {
-      dynamic coordinate = coordinates[i];
-      LatLng position = LatLng(coordinate[1], coordinate[0]);
-      suggestedRoute.add(position);
-      print('position is $position');
-      print(i);
-    }
-    print('suggestedRoute is $suggestedRoute');
-    return suggestedRoute;
+    /// Decode the response, which is a map (starts with curly brackets)
+    Map jsonResponse = jsonDecode(response.body);
+
+    /// Get the features of the route
+    List features = jsonResponse['features'];
+
+    /// Get the properties
+    Map properties = features.elementAt(0)['properties'];
+    Map geometry = features.elementAt(0)['geometry'];
+
+    /// Get ascent, descent
+    routingInfo = {
+      'ascent' : properties['ascent'],
+      'descent' : properties['descent'],
+      'distance' : properties['summary']['distance'],
+      'duration' : properties['summary']['duration'],
+      'coordinates' : geometry['coordinates'],
+    };
+
+    print(routingInfo.toString());
+
+    return routingInfo;
   }
 
 }
