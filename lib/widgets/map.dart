@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
+import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/marker_popup.dart';
 
 class MapPage extends StatefulWidget {
@@ -37,6 +38,7 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   Widget body(BuildContext context) {
+
     return new FlutterMap(
       mapController: widget.mapController,
       options: widget.mapOptions,
@@ -45,7 +47,15 @@ class _MapPageState extends State<MapPage> {
         urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         subdomains: ['a', 'b', 'c']
         ),
-        widget.usePolyline ? Container() : MarkerLayerOptions(
+        widget.usePolyline ? PolylineLayerOptions(
+          polylines: [
+            Polyline(
+              points: widget.coordinates,
+              strokeWidth: 5.0,
+              color: TripItColors.primaryDarkBlue,
+            )
+          ]
+        ) : MarkerLayerOptions(
           markers: widget.markers,
         ),
         PopupMarkerLayerOptions(
