@@ -176,7 +176,8 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   /// Method to reset the bounds of the map such that it shows [destination]
   /// and [start]
   _resetBounds(){
-    _mapController.fitBounds(LatLngBounds(start['latlng'],destination['latlng']));
+    _mapController.fitBounds(
+      LatLngBounds(start['latlng'],destination['latlng']), options: FitBoundsOptions(padding: EdgeInsets.all(40.0)));
   }
 
   /// Method to build the AppBar

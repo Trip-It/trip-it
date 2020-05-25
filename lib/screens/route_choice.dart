@@ -127,6 +127,23 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
           children: <Widget>[
             FittedBox(
               child: FloatingActionButton(
+                  heroTag: "resize",
+                  child: Icon(
+                    Icons.crop_free,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _mapController.fitBounds(
+                          routingInfo['bbox'],
+                          options: FitBoundsOptions(padding: EdgeInsets.all(40.0)));
+                    });
+                  }),
+            ),
+            Container(
+              padding: EdgeInsets.all(2.0),
+            ),
+            FittedBox(
+              child: FloatingActionButton(
                   heroTag: "plusZoom",
                   child: Icon(
                     Icons.add,
