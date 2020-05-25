@@ -46,6 +46,9 @@ dependencies:
   cupertino_icons: ^0.1.2
   webview_flutter: ^0.3.19
 
+  #header
+  sticky_headers: ^0.1.7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
