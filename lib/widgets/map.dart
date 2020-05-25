@@ -17,6 +17,8 @@ class MapPage extends StatefulWidget {
     @required this.lng,
     @required this.mapController,
     @required this.popupLayerController,
+    @required this.usePolyline,
+    @required this.coordinates,
     @required this.markers,
     @required this.mapOptions,
   }) : super(key: key);
@@ -26,6 +28,8 @@ class MapPage extends StatefulWidget {
   final MapController mapController;
   final MapOptions mapOptions;
   final PopupController popupLayerController;
+  final bool usePolyline;
+  final List coordinates;
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -41,7 +45,7 @@ class _MapPageState extends State<MapPage> {
         urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         subdomains: ['a', 'b', 'c']
         ),
-        MarkerLayerOptions(
+        widget.usePolyline ? Container() : MarkerLayerOptions(
           markers: widget.markers,
         ),
         PopupMarkerLayerOptions(

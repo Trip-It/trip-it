@@ -105,6 +105,9 @@
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/webview_flutter/example/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/webview_flutter/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/webview_flutter/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/voca_no/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/voca_no/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/voca_no/build" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Flutter Plugins" level="project" />
