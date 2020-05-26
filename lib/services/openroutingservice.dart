@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:latlong/latlong.dart';
@@ -45,13 +46,27 @@ class OpenRoutingService {
     Map properties = features.elementAt(0)['properties'];
     Map geometry = features.elementAt(0)['geometry'];
 
+    /// Extract the waypoints
+    List<LatLng> waypoints = List<LatLng>();
+
+    for (List coordinates in geometry['coordinates']){
+      waypoints.add(LatLng(coordinates.elementAt(1), coordinates.elementAt(0)));
+    }
+
+    /// Extract the bounding box
+    List boundingBox = jsonResponse['bbox'];
+    LatLng firstCorner = LatLng(boundingBox.elementAt(1), boundingBox.elementAt(0));
+    LatLng secondCorner = LatLng(boundingBox.elementAt(4),boundingBox.elementAt(3));
+    LatLngBounds bbox = LatLngBounds(firstCorner, secondCorner);
+
     /// Get ascent, descent
     routingInfo = {
       'ascent' : properties['ascent'],
       'descent' : properties['descent'],
       'distance' : properties['summary']['distance'],
       'duration' : properties['summary']['duration'],
-      'coordinates' : geometry['coordinates'],
+      'waypoints' : waypoints,
+      'bbox' : bbox,
     };
 
     print(routingInfo.toString());
