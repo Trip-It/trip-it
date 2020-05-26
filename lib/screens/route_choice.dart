@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
 import 'package:trip_it_app/services/openroutingservice.dart';
@@ -6,6 +7,7 @@ import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/map.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 class RouteChoiceScreen extends StatefulWidget {
   static const routeName = '/routechoice';
@@ -26,8 +28,13 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
   double destinationLng;
   Map routingInfo;
   bool _loading = true;
-  List information = List ();
-  List<IconData> icons = [Icons.trending_up, Icons.trending_down, Icons.map, Icons.timer];
+  List information = List();
+  List<IconData> icons = [
+    Icons.trending_up,
+    Icons.trending_down,
+    Icons.map,
+    Icons.timer
+  ];
   MapController _mapController = MapController();
   PopupController _popupController = PopupController();
   List<Marker> _markers;
@@ -47,10 +54,10 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
         point: new LatLng(startLat, startLng),
         builder: (ctx) => new Container(
             child: Icon(
-              Icons.location_on,
-              size: 50.0,
-              color: TripItColors.primaryDarkBlue,
-            )),
+          Icons.location_on,
+          size: 50.0,
+          color: TripItColors.primaryDarkBlue,
+        )),
       ),
       Marker(
         anchorPos: AnchorPos.align(AnchorAlign.top),
@@ -59,16 +66,15 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
         point: new LatLng(destinationLat, destinationLng),
         builder: (ctx) => new Container(
             child: Icon(
-              Icons.flag,
-              size: 50.0,
-              color: TripItColors.primaryDarkBlue,
-            )),
+          Icons.flag,
+          size: 50.0,
+          color: TripItColors.primaryDarkBlue,
+        )),
       )
     ];
 
     /// Set up the routing request
     getRoute();
-
   }
 
   @override
@@ -78,98 +84,118 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
         centerTitle: true,
         title: Text("Choose your trip"),
       ),
-      body: Stack(children: <Widget>[
-          _loading ?  Center(
-            child: Loader(),
-          ) : MapPage(
-            lat: startLat,
-            lng: startLng,
-            mapController: _mapController,
-            popupLayerController: _popupController,
-            markers: _markers,
-            coordinates: routingInfo['waypoints'],
-            usePolyline: true,
-            mapOptions:  MapOptions(
-              plugins: [PopupMarkerPlugin()],
-              onTap: (_) => _popupController.hidePopup(), /// hide popups if user taps on map
-              center: LatLng(startLat, startLng),                 /// initial center position
-              zoom: 18.0,                                 /// initial zoom level
-            ),
-          ),
+      body: Stack(
+        children: <Widget>[
+          _loading
+              ? Center(
+                  child: Loader(),
+                )
+              : MapPage(
+                  lat: startLat,
+                  lng: startLng,
+                  mapController: _mapController,
+                  popupLayerController: _popupController,
+                  markers: _markers,
+                  coordinates: routingInfo['waypoints'],
+                  usePolyline: true,
+                  mapOptions: MapOptions(
+                    plugins: [PopupMarkerPlugin()],
+                    onTap: (_) => _popupController.hidePopup(),
+
+                    /// hide popups if user taps on map
+                    center: LatLng(startLat, startLng),
+
+                    /// initial center position
+                    zoom: 18.0,
+
+                    /// initial zoom level
+                  ),
+                ),
           _loading ? Container() : _segmentedControlZoom(),
           _loading
-          ? Loader()
-          : Container(
-              child: DraggableScrollableSheet(
-                  initialChildSize: 0.1,
-                  minChildSize: 0.1,
-                  maxChildSize: 0.45,
-                  builder: (BuildContext context, myscrollController) {
-                    return Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            new Container(
-                              height: 45.0,
-                              color: Colors.white,
-                              padding:
-                                  new EdgeInsets.symmetric(horizontal: 12.0),
-                              alignment: Alignment.center,
-                              child: new Text(
-                                "Trip Information",
-                                style: const TextStyle(
-                                    color: TripItColors.primaryDarkBlue,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold),
-                              ),
+              ? Container()
+              : Container(
+                  child: DraggableScrollableSheet(
+                      initialChildSize: 0.1,
+                      minChildSize: 0.1,
+                      maxChildSize: 0.5,
+                      builder: (BuildContext context, myscrollController) {
+                        return Card(
+                            color: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
-                            Container(
-                              child: Expanded(
-                              child: new GridView.builder(
-                                shrinkWrap: true,
+                            child: new ListView.builder(
                                 controller: myscrollController,
-                                itemCount: 4,
-                                gridDelegate:
-                                    new SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2, childAspectRatio: 2),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                    child: new Card(
-                                      elevation: 5.0,
-                                      color: Colors.white,
-                                      child: Wrap(
-                                        crossAxisAlignment: WrapCrossAlignment.center,
-                                        children: <Widget>[
-                                          Container(
-                                            alignment: Alignment.center,
-                                            child: new Icon(
-                                              icons[index],
-                                              color: TripItColors.primaryDarkBlue,
-                                              size: 56.0,
-                                            ),
-                                          ),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            child: new Text(
-                                                information.elementAt(index),
-                                                style: TextStyle(
-                                                    color: TripItColors.primaryDarkBlue,
-                                                    fontSize: 15,
-                                                    fontWeight:
+                                itemCount: 1,
+                                itemBuilder: (context, index) {
+                                  return new StickyHeader(
+                                    header: new Container(
+                                      height: 40.0,
+                                      color: Colors.transparent,
+                                      padding: new EdgeInsets.symmetric(
+                                          horizontal: 12.0),
+                                      alignment: Alignment.centerLeft,
+                                      child: new Text(
+                                        "Information",
+                                        style: const TextStyle(
+                                            color: TripItColors.primaryDarkBlue,
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    content: Container(
+                                      child: GridView.builder(
+                                        controller: myscrollController,
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: information.length,
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          childAspectRatio: 1.7,
+                                        ),
+                                        itemBuilder: (context, index) {
+                                          return Card(
+                                            margin: EdgeInsets.all(4.0),
+                                            color: Colors.white,
+                                            child: Column(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Container(
+                                                alignment: Alignment.center,
+                                                child: new Icon(
+                                                  icons[index],
+                                                  color: TripItColors
+                                                      .primaryDarkBlue,
+                                                  size: 56.0,
+                                                ),
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                child: new Text(
+                                                    information
+                                                        .elementAt(index),
+                                                    style: TextStyle(
+                                                        color: TripItColors
+                                                            .primaryDarkBlue,
+                                                        fontSize: 15,
+                                                        fontWeight:
                                                         FontWeight.bold)),
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                          );
+                                        },
                                       ),
                                     ),
                                   );
-                                },
-                              ),
-                              ),
-                            ),
-                          ],
-                        ),
-          ],
-        ),
+                                })
+                            );
+                      }))
+        ],
+      ),
     );
   }
 
@@ -178,19 +204,20 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
     OpenRoutingService ors = OpenRoutingService();
     Map info = await ors.requestOSRM(
         startLat, startLng, destinationLat, destinationLng);
+
     setState(() {
       routingInfo = info;
       _loading = false;
-      information.add(routingInfo['ascent'].toStringAsFixed(0)+"m");
-      information.add(routingInfo['descent'].toStringAsFixed(0)+"m");
-      double distanceKM = routingInfo['distance']/1000;
-      information.add(distanceKM.toStringAsFixed(2)+"km");
-      int durationH = (routingInfo['duration']/3600).toInt();
-      int durationM = (routingInfo['duration']/60 - durationH*60).toInt();
-      information.add(durationH.toString()+"h"+durationM.toString()+"min");
+      information.add(routingInfo['ascent'].toStringAsFixed(0) + "m");
+      information.add(routingInfo['descent'].toStringAsFixed(0) + "m");
+      double distanceKM = routingInfo['distance'] / 1000;
+      information.add(distanceKM.toStringAsFixed(2) + "km");
+      int durationH = (routingInfo['duration'] / 3600).toInt();
+      int durationM = (routingInfo['duration'] / 60 - durationH * 60).toInt();
+      information
+          .add(durationH.toString() + "h" + durationM.toString() + "min");
     });
   }
-
 
   /// Method which returns the zoom control Widget
   _segmentedControlZoom() {
@@ -212,9 +239,9 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
                   ),
                   onPressed: () {
                     setState(() {
-                      _mapController.fitBounds(
-                          routingInfo['bbox'],
-                          options: FitBoundsOptions(padding: EdgeInsets.all(40.0)));
+                      _mapController.fitBounds(routingInfo['bbox'],
+                          options:
+                              FitBoundsOptions(padding: EdgeInsets.all(40.0)));
                     });
                   }),
             ),
@@ -260,5 +287,4 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
       ),
     );
   }
-
 }
