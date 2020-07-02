@@ -9,9 +9,9 @@ import 'package:trip_it_app/models/profile.dart';
 /// is being used
 class DrivingContext{
   String carType;
-  int initialSoC = 100;
-  int energyLowLimit = 10;
-  int energyRefill = 90;
+  double initialSoC = 1;
+  double energyLowLimit = 0.1;
+  double energyRefill = 0.9;
   int numberOfPersons = 2;
   int externalTemp = 20;
   int maxSpeed = 130;
@@ -22,8 +22,8 @@ class DrivingContext{
   /// Constructor using a profile
   DrivingContext(Profile profile){
     this.carType = profile.getCar();
-    this.energyLowLimit = profile.getMinimumCharge();
-    this.energyRefill = profile.getMaximumCharge();
+    this.energyLowLimit = profile.getMinimumCharge()/100;
+    this.energyRefill = profile.getMaximumCharge()/100;
   }
 
 
@@ -35,27 +35,27 @@ class DrivingContext{
     this.carType = carType;
   }
 
-  int getInitialSoC() {
+  double getInitialSoC() {
     return this.initialSoC;
   }
 
-  void setInitialSoc(int initialSoC) {
+  void setInitialSoc(double initialSoC) {
     this.initialSoC = initialSoC;
   }
 
-  int getEnergyLowLimit() {
+  double getEnergyLowLimit() {
     return this.energyLowLimit;
   }
 
-  void setEnergyLowLimit(int energyLowLimit) {
+  void setEnergyLowLimit(double energyLowLimit) {
     this.energyLowLimit = energyLowLimit;
   }
 
-  int getEnergyRefill() {
+  double getEnergyRefill() {
     return this.energyRefill;
   }
 
-  void setEnergyRefill(int energyRefill) {
+  void setEnergyRefill(double energyRefill) {
     this.energyRefill = energyRefill;
   }
 
