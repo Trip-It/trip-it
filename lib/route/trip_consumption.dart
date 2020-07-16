@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:trip_it_app/models/car.dart';
@@ -7,6 +6,7 @@ import 'package:trip_it_app/models/cars/renault_zoe_r110_52.dart';
 import 'package:trip_it_app/models/cars/renault_zoe_r90_22.dart';
 import 'package:trip_it_app/models/cars/renault_zoe_r90_41.dart';
 import 'package:trip_it_app/route/driving_context.dart';
+import 'package:latlong/latlong.dart';
 
 /// Class which is being used to calculate the energy consumption on a given trip
 class TripConsumption{
@@ -17,11 +17,12 @@ class TripConsumption{
   List<double> _soc = new List<double>();
   List<double> _energyUsedSum = new List<double>();
   List waypoints;
+  List steps;
   List <double> distances;
-  List speeds;
+  List<LatLng> chargingPoints = new List<LatLng>();
 
   /// Constructor
-  TripConsumption(this.dc, this.waypoints, this.distances, this.speeds);
+  TripConsumption(this.dc, this.waypoints, this.distances, this.steps);
 
 
   /// Getter methods
@@ -42,10 +43,10 @@ class TripConsumption{
     this._tripConsumption = 0.0;
     List waypoint0 = waypoints[0];
 
-    for(var wp in waypoints){
+    for(int i = 0; i < steps.length; i++){
 
       /// Calculate energy for this waypoint
-      double energyUsed = calculateEnergy(car, weight, waypoint0, wp);
+      double energyUsed = calculateEnergy(car, weight, steps[i]);
 
       this._tripConsumption += energyUsed;
       this._energyUsedSum.add(this._tripConsumption);
@@ -53,7 +54,8 @@ class TripConsumption{
       /// Check if consumption would exceed battery SoC
       if(remainingEnergy - energyUsed < this.dc.getEnergyLowLimit() * battery){
         remainingEnergy = battery * this.dc.getEnergyRefill() - energyUsed;
-        // TODO: Set this waypoint as new point to charge
+        /// Set this waypoint as new point to charge
+        chargingPoints.add(waypoints[steps[i]['way_points'][0]]);
       } else {
         remainingEnergy -= energyUsed;
       }
@@ -66,11 +68,11 @@ class TripConsumption{
 
   /// Method to calculate the energy needed between two waypoints, given the
   /// [car] that is being used as well the total [weight] of the vehicle
-  double calculateEnergy(Car car, double weight, List firstWaypoint, List currentWaypoint){
-    double speed;
-    double elevationNow = currentWaypoint[2];    /// Elevation of the next waypoint
-    double elevationLast = firstWaypoint[2];     /// Elevation of last waypoint
-    double distance;            /// Distance between the two waypoints
+  double calculateEnergy(Car car, double weight, Map step){
+    double speed = step['distance'] / step['duration'];           /// Speed for the step in m/s
+    double elevationNow = waypoints[step['way_points'][1]][2];    /// Elevation of the next waypoint
+    double elevationLast = waypoints[step['way_points'][0]][2];   /// Elevation of last waypoint
+    double distance = step['distance'];                           /// Distance between the two waypoints
 
     /// If distance is negligible an energy consumption of zero is being assumed
     if(distance < 0.0001){
@@ -105,7 +107,7 @@ class TripConsumption{
   }
 
 
-  /// Method to retreive the car matching the saved car name
+  /// Method to retrieve the car matching the saved car name
   Car getCar(){
 
     switch(this.dc.getCarType()){
