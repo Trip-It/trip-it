@@ -53,6 +53,9 @@ class RenaultZoeR90_41 implements Car
   double getEfficiency(int speed)
   {
     int index = SPEEDS.indexOf(speed);
+    if(index == -1){
+      index = 0;
+    }
     return EFFICIENCY[index];
   }
 }

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 
 /// Class defining a profile
-class Profile with ChangeNotifier{
+class Profile extends ChangeNotifier{
   // Fields
   String id;
   String _firstname;
