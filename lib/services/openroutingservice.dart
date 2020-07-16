@@ -24,7 +24,7 @@ class OpenRoutingService {
       HttpHeaders.contentTypeHeader: "application/json; charset=utf-8"};
 
     /// Body of the requests specifying the options
-    var body = jsonEncode({"coordinates":[[startlng,startlat],[endlng,endlat]],"attributes":["avgspeed","percentage"],"elevation":"true","instructions":"false"});
+    var body = jsonEncode({"coordinates":[[startlng,startlat],[endlng,endlat]],"attributes":["avgspeed","percentage"],"elevation":"true","extra_info":["steepness","waycategory","waytype","surface"],"instructions":"true","instructions_format":"text","maneuvers":"false","preference":"fastest"});
 
     /// Launch http POST request
     var response = await http.post(
@@ -47,11 +47,7 @@ class OpenRoutingService {
     Map geometry = features.elementAt(0)['geometry'];
 
     /// Extract the waypoints
-    List<LatLng> waypoints = List<LatLng>();
-
-    for (List coordinates in geometry['coordinates']){
-      waypoints.add(LatLng(coordinates.elementAt(1), coordinates.elementAt(0)));
-    }
+    List waypoints = geometry['coordinates'];
 
     /// Extract the bounding box
     List boundingBox = jsonResponse['bbox'];
@@ -67,6 +63,8 @@ class OpenRoutingService {
       'duration' : properties['summary']['duration'],
       'waypoints' : waypoints,
       'bbox' : bbox,
+      'steps' : properties['segments'][0]['steps'],
+      'avgspeed' : properties['segments'][0]['avgspeed'],
     };
 
     print(routingInfo.toString());
