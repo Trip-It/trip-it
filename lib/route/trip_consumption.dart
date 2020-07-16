@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:math';
 
 import 'package:trip_it_app/models/car.dart';
@@ -18,11 +19,11 @@ class TripConsumption{
   List<double> _energyUsedSum = new List<double>();
   List waypoints;
   List steps;
-  List <double> distances;
+  List elevation;
   List<LatLng> chargingPoints = new List<LatLng>();
 
   /// Constructor
-  TripConsumption(this.dc, this.waypoints, this.distances, this.steps);
+  TripConsumption(this.dc, this.waypoints, this.steps, this.elevation);
 
 
   /// Getter methods
@@ -41,7 +42,6 @@ class TripConsumption{
     double remainingEnergy = battery * this.dc.getInitialSoC();
     double weight = car.getWeight() + this.dc.getPersonsCount().toDouble() * 75.0;
     this._tripConsumption = 0.0;
-    List waypoint0 = waypoints[0];
 
     for(int i = 0; i < steps.length; i++){
 
@@ -55,7 +55,7 @@ class TripConsumption{
       if(remainingEnergy - energyUsed < this.dc.getEnergyLowLimit() * battery){
         remainingEnergy = battery * this.dc.getEnergyRefill() - energyUsed;
         /// Set this waypoint as new point to charge
-        chargingPoints.add(waypoints[steps[i]['way_points'][0]]);
+        chargingPoints.add(waypoints[i]);
       } else {
         remainingEnergy -= energyUsed;
       }
@@ -69,17 +69,17 @@ class TripConsumption{
   /// Method to calculate the energy needed between two waypoints, given the
   /// [car] that is being used as well the total [weight] of the vehicle
   double calculateEnergy(Car car, double weight, Map step){
-    double speed = step['distance'] / step['duration'];           /// Speed for the step in m/s
-    double elevationNow = waypoints[step['way_points'][1]][2];    /// Elevation of the next waypoint
-    double elevationLast = waypoints[step['way_points'][0]][2];   /// Elevation of last waypoint
-    double distance = step['distance'];                           /// Distance between the two waypoints
+    double speed = step['distance'] / step['duration'];        /// Speed for the step in m/s
+    double elevationNow = elevation[step['way_points'][1]];    /// Elevation of the next waypoint
+    double elevationLast = elevation[step['way_points'][0]];   /// Elevation of last waypoint
+    double distance = step['distance'];                        /// Distance between the two waypoints
 
     /// If distance is negligible an energy consumption of zero is being assumed
     if(distance < 0.0001){
       return 0.0;
     } else {
 
-      double slope = elevationNow - elevationLast / distance;
+      double slope = (elevationNow - elevationLast) / distance;
       double rollingP = speed / 3.6 * (weight * _g * slope + weight * _g * car.getCrr() * sqrt(1.0 - slope  * slope));
       double aeroP = speed / 3.6 * speed / 3.6 * speed / 3.6 * 0.5 * this.getRho() * car.getSCx();
       double time = distance / 1000.0 / speed;

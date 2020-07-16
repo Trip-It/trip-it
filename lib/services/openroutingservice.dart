@@ -47,7 +47,16 @@ class OpenRoutingService {
     Map geometry = features.elementAt(0)['geometry'];
 
     /// Extract the waypoints
-    List waypoints = geometry['coordinates'];
+    List waypoints = new List<LatLng>();
+    for(List wp in geometry['coordinates']){
+      waypoints.add(LatLng(wp.elementAt(1),wp.elementAt(0)));
+    }
+
+    /// Extract the elevation data
+    List elevation = new List<double>();
+    for(List wp in geometry['coordinates']){
+      elevation.add(wp.elementAt(2));
+    }
 
     /// Extract the bounding box
     List boundingBox = jsonResponse['bbox'];
@@ -59,9 +68,10 @@ class OpenRoutingService {
     routingInfo = {
       'ascent' : properties['ascent'],
       'descent' : properties['descent'],
-      'distance' : properties['summary']['distance'],
-      'duration' : properties['summary']['duration'],
+      'distance' : properties['segments'][0]['distance'],
+      'duration' : properties['segments'][0]['duration'],
       'waypoints' : waypoints,
+      'elevation' : elevation,
       'bbox' : bbox,
       'steps' : properties['segments'][0]['steps'],
       'avgspeed' : properties['segments'][0]['avgspeed'],
