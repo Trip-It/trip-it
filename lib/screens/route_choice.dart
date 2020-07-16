@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
+import 'package:provider/provider.dart';
+import 'package:trip_it_app/models/profile.dart';
+import 'package:trip_it_app/route/driving_context.dart';
+import 'package:trip_it_app/route/trip_consumption.dart';
 import 'package:trip_it_app/services/openroutingservice.dart';
 import 'package:trip_it_app/screens/loader.dart';
 import 'package:trip_it_app/theme.dart';
@@ -8,6 +12,7 @@ import 'package:trip_it_app/widgets/map.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:sticky_headers/sticky_headers.dart';
+import 'package:trip_it_app/widgets/profile_widget.dart';
 
 class RouteChoiceScreen extends StatefulWidget {
   static const routeName = '/routechoice';
@@ -33,11 +38,14 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
     Icons.trending_up,
     Icons.trending_down,
     Icons.map,
-    Icons.timer
+    Icons.timer,
+    Icons.battery_charging_full,
+    Icons.battery_unknown,
   ];
   MapController _mapController = MapController();
   PopupController _popupController = PopupController();
   List<Marker> _markers;
+  double consumption;
 
   _RouteChoiceScreenState(LatLng start, LatLng destination) {
     /// Initialize the state variables
@@ -75,6 +83,7 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
 
     /// Set up the routing request
     getRoute();
+
   }
 
   @override
@@ -118,7 +127,7 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
                   child: DraggableScrollableSheet(
                       initialChildSize: 0.1,
                       minChildSize: 0.1,
-                      maxChildSize: 0.5,
+                      maxChildSize: 0.6,
                       builder: (BuildContext context, myscrollController) {
                         return Card(
                             color: Colors.transparent,
@@ -205,6 +214,25 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
     Map info = await ors.requestOSRM(
         startLat, startLng, destinationLat, destinationLng);
 
+    /// Calculate consumption
+    Profile profile = new Profile(
+        "FordPrefect",
+        "Ford",
+        "Prefect",
+        "assets/Wolf_profile.png",
+        "Zoe R110 52kWh",
+        15,
+        90,
+        1,
+        0,
+        1,
+        0,
+        "English",
+        "Hybrid");
+    DrivingContext dc = new DrivingContext(profile);
+    TripConsumption tripConsumption = new TripConsumption(dc, info['waypoints'], info['steps'], info['elevation']);
+    tripConsumption.calculateSoc();
+
     setState(() {
       routingInfo = info;
       _loading = false;
@@ -216,6 +244,8 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
       int durationM = (routingInfo['duration'] / 60 - durationH * 60).toInt();
       information
           .add(durationH.toString() + "h" + durationM.toString() + "min");
+      information.add((tripConsumption.getTripConsumption() / 1000).toStringAsFixed(2) + "kWh");
+      information.add((tripConsumption.getSoc().last / 1000).toStringAsFixed(2) + "kW");
     });
   }
 
