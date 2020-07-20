@@ -12,7 +12,6 @@ import 'package:trip_it_app/widgets/map.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:sticky_headers/sticky_headers.dart';
-import 'package:trip_it_app/widgets/profile_widget.dart';
 
 class RouteChoiceScreen extends StatefulWidget {
   static const routeName = '/routechoice';
