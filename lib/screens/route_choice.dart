@@ -83,7 +83,6 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
 
     /// Set up the routing request
     getRoute();
-
   }
 
   @override
@@ -169,39 +168,38 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
                                             margin: EdgeInsets.all(4.0),
                                             color: Colors.white,
                                             child: Column(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                            children: <Widget>[
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: new Icon(
-                                                  icons[index],
-                                                  color: TripItColors
-                                                      .primaryDarkBlue,
-                                                  size: 56.0,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                Container(
+                                                  alignment: Alignment.center,
+                                                  child: new Icon(
+                                                    icons[index],
+                                                    color: TripItColors
+                                                        .primaryDarkBlue,
+                                                    size: 56.0,
+                                                  ),
                                                 ),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: new Text(
-                                                    information
-                                                        .elementAt(index),
-                                                    style: TextStyle(
-                                                        color: TripItColors
-                                                            .primaryDarkBlue,
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                        FontWeight.bold)),
-                                              ),
-                                            ],
-                                          ),
+                                                Container(
+                                                  alignment: Alignment.center,
+                                                  child: new Text(
+                                                      information
+                                                          .elementAt(index),
+                                                      style: TextStyle(
+                                                          color: TripItColors
+                                                              .primaryDarkBlue,
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ),
+                                              ],
+                                            ),
                                           );
                                         },
                                       ),
                                     ),
                                   );
-                                })
-                            );
+                                }));
                       }))
         ],
       ),
@@ -215,22 +213,10 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
         startLat, startLng, destinationLat, destinationLng);
 
     /// Calculate consumption
-    Profile profile = new Profile(
-        "FordPrefect",
-        "Ford",
-        "Prefect",
-        "assets/Wolf_profile.png",
-        "Zoe R110 52kWh",
-        15,
-        90,
-        1,
-        0,
-        1,
-        0,
-        "English",
-        "Hybrid");
+    Profile profile = Provider.of<Profile>(context);
     DrivingContext dc = new DrivingContext(profile);
-    TripConsumption tripConsumption = new TripConsumption(dc, info['waypoints'], info['steps'], info['elevation']);
+    TripConsumption tripConsumption = new TripConsumption(
+        dc, info['waypoints'], info['steps'], info['elevation']);
     tripConsumption.calculateSoc();
 
     setState(() {
@@ -244,8 +230,11 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
       int durationM = (routingInfo['duration'] / 60 - durationH * 60).toInt();
       information
           .add(durationH.toString() + "h" + durationM.toString() + "min");
-      information.add((tripConsumption.getTripConsumption() / 1000).toStringAsFixed(2) + "kWh");
-      information.add((tripConsumption.getSoc().last / 1000).toStringAsFixed(2) + "kW");
+      information.add(
+          (tripConsumption.getTripConsumption() / 1000).toStringAsFixed(2) +
+              "kWh");
+      information.add(
+          (tripConsumption.getSoc().last / 1000).toStringAsFixed(2) + "kW");
     });
   }
 
