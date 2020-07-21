@@ -24,7 +24,7 @@ class OpenRoutingService {
       HttpHeaders.contentTypeHeader: "application/json; charset=utf-8"};
 
     /// Body of the requests specifying the options
-    var body = jsonEncode({"coordinates":[[startlng,startlat],[endlng,endlat]],"attributes":["avgspeed","percentage"],"elevation":"true","instructions":"false"});
+    var body = jsonEncode({"coordinates":[[startlng,startlat],[endlng,endlat]],"attributes":["avgspeed","percentage"],"elevation":"true","extra_info":["steepness","waycategory","waytype","surface"],"instructions":"true","instructions_format":"text","maneuvers":"false","preference":"fastest"});
 
     /// Launch http POST request
     var response = await http.post(
@@ -47,10 +47,15 @@ class OpenRoutingService {
     Map geometry = features.elementAt(0)['geometry'];
 
     /// Extract the waypoints
-    List<LatLng> waypoints = List<LatLng>();
+    List waypoints = new List<LatLng>();
+    for(List wp in geometry['coordinates']){
+      waypoints.add(LatLng(wp.elementAt(1),wp.elementAt(0)));
+    }
 
-    for (List coordinates in geometry['coordinates']){
-      waypoints.add(LatLng(coordinates.elementAt(1), coordinates.elementAt(0)));
+    /// Extract the elevation data
+    List elevation = new List<double>();
+    for(List wp in geometry['coordinates']){
+      elevation.add(wp.elementAt(2));
     }
 
     /// Extract the bounding box
@@ -63,10 +68,13 @@ class OpenRoutingService {
     routingInfo = {
       'ascent' : properties['ascent'],
       'descent' : properties['descent'],
-      'distance' : properties['summary']['distance'],
-      'duration' : properties['summary']['duration'],
+      'distance' : properties['segments'][0]['distance'],
+      'duration' : properties['segments'][0]['duration'],
       'waypoints' : waypoints,
+      'elevation' : elevation,
       'bbox' : bbox,
+      'steps' : properties['segments'][0]['steps'],
+      'avgspeed' : properties['segments'][0]['avgspeed'],
     };
 
     print(routingInfo.toString());

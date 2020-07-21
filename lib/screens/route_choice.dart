@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
+import 'package:provider/provider.dart';
+import 'package:trip_it_app/models/profile.dart';
+import 'package:trip_it_app/route/driving_context.dart';
+import 'package:trip_it_app/route/trip_consumption.dart';
 import 'package:trip_it_app/services/openroutingservice.dart';
 import 'package:trip_it_app/screens/loader.dart';
 import 'package:trip_it_app/theme.dart';
@@ -13,9 +17,12 @@ class RouteChoiceScreen extends StatefulWidget {
   static const routeName = '/routechoice';
   final LatLng startPoint;
   final LatLng destinationPoint;
+  final int initialSoC;
+  final int noOfPers;
+  final int extTemp;
 
   /// Constructor
-  RouteChoiceScreen(this.startPoint, this.destinationPoint);
+  RouteChoiceScreen(this.startPoint, this.destinationPoint, this.initialSoC, this.noOfPers, this.extTemp);
 
   State<StatefulWidget> createState() =>
       _RouteChoiceScreenState(startPoint, destinationPoint);
@@ -33,13 +40,17 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
     Icons.trending_up,
     Icons.trending_down,
     Icons.map,
-    Icons.timer
+    Icons.timer,
+    Icons.battery_charging_full,
+    Icons.battery_unknown,
   ];
   MapController _mapController = MapController();
   PopupController _popupController = PopupController();
   List<Marker> _markers;
+  double consumption;
 
   _RouteChoiceScreenState(LatLng start, LatLng destination) {
+
     /// Initialize the state variables
     startLat = start.latitude;
     startLng = start.longitude;
@@ -118,7 +129,7 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
                   child: DraggableScrollableSheet(
                       initialChildSize: 0.1,
                       minChildSize: 0.1,
-                      maxChildSize: 0.5,
+                      maxChildSize: 0.6,
                       builder: (BuildContext context, myscrollController) {
                         return Card(
                             color: Colors.transparent,
@@ -160,39 +171,38 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
                                             margin: EdgeInsets.all(4.0),
                                             color: Colors.white,
                                             child: Column(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                            children: <Widget>[
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: new Icon(
-                                                  icons[index],
-                                                  color: TripItColors
-                                                      .primaryDarkBlue,
-                                                  size: 56.0,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                Container(
+                                                  alignment: Alignment.center,
+                                                  child: new Icon(
+                                                    icons[index],
+                                                    color: TripItColors
+                                                        .primaryDarkBlue,
+                                                    size: 56.0,
+                                                  ),
                                                 ),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: new Text(
-                                                    information
-                                                        .elementAt(index),
-                                                    style: TextStyle(
-                                                        color: TripItColors
-                                                            .primaryDarkBlue,
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                        FontWeight.bold)),
-                                              ),
-                                            ],
-                                          ),
+                                                Container(
+                                                  alignment: Alignment.center,
+                                                  child: new Text(
+                                                      information
+                                                          .elementAt(index),
+                                                      style: TextStyle(
+                                                          color: TripItColors
+                                                              .primaryDarkBlue,
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ),
+                                              ],
+                                            ),
                                           );
                                         },
                                       ),
                                     ),
                                   );
-                                })
-                            );
+                                }));
                       }))
         ],
       ),
@@ -205,6 +215,13 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
     Map info = await ors.requestOSRM(
         startLat, startLng, destinationLat, destinationLng);
 
+    /// Calculate consumption
+    Profile profile = Provider.of<Profile>(context);
+    DrivingContext dc = new DrivingContext(profile, widget.initialSoC, widget.noOfPers, widget.extTemp);
+    TripConsumption tripConsumption = new TripConsumption(
+        dc, info['waypoints'], info['steps'], info['elevation']);
+    tripConsumption.calculateSoc();
+
     setState(() {
       routingInfo = info;
       _loading = false;
@@ -216,6 +233,11 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
       int durationM = (routingInfo['duration'] / 60 - durationH * 60).toInt();
       information
           .add(durationH.toString() + "h" + durationM.toString() + "min");
+      information.add(
+          (tripConsumption.getTripConsumption() / 1000).toStringAsFixed(2) +
+              "kWh");
+      information.add(
+          (tripConsumption.getSoc().last / 1000).toStringAsFixed(2) + "kW");
     });
   }
 
