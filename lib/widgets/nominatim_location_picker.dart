@@ -5,6 +5,7 @@
 ///
 
 import 'package:flutter/material.dart';
+import 'package:flutter_fluid_slider/flutter_fluid_slider.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
@@ -16,7 +17,7 @@ import 'package:trip_it_app/theme.dart';
 import 'package:trip_it_app/widgets/map.dart';
 import '../services/nominatim.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
-
+import 'package:flutter/cupertino.dart';
 
 class NominatimLocationPicker extends StatefulWidget {
   NominatimLocationPicker({
@@ -32,7 +33,8 @@ class NominatimLocationPicker extends StatefulWidget {
       _NominatimLocationPickerState();
 }
 
-class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
+class _NominatimLocationPickerState extends State<NominatimLocationPicker>
+    with SingleTickerProviderStateMixin {
   Map retorno;
   Map start;
   Map destination;
@@ -58,6 +60,11 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
   PopupController _popupController = PopupController();
   List<Marker> _markers;
   LatLng _point;
+
+  /// Variables used by ModalBottomSheet
+  int initialSoC = 80;
+  int noOfPers = 1;
+  int extTemp = 20;
 
   @override
   void dispose() {
@@ -90,10 +97,10 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         point: new LatLng(0.0, 0.0),
         builder: (ctx) => new Container(
             child: Icon(
-              Icons.location_on,
-              size: 50.0,
-              color: _color,
-            )),
+          Icons.location_on,
+          size: 50.0,
+          color: _color,
+        )),
       )
     ];
   }
@@ -138,7 +145,6 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       );
       _getCurrentLocationDesc();
     });
-
   }
 
   _getCurrentLocationDesc() async {
@@ -152,12 +158,13 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       retorno = {
         'latlng': _point,
         'state': _addresses[0]['state'],
-        'desc': "${_addresses[0]['state']}, ${_addresses[0]['city']}, ${_addresses[0]['suburb']}, ${_addresses[0]['neighbourhood']}, ${_addresses[0]['road']}",
+        'desc':
+            "${_addresses[0]['state']}, ${_addresses[0]['city']}, ${_addresses[0]['suburb']}, ${_addresses[0]['neighbourhood']}, ${_addresses[0]['road']}",
         'city': "${_addresses[0]['city']}",
       };
       _desc = _addresses[0]['description'];
 
-      if(!_startup) {
+      if (!_startup) {
         _ctrlStartSearch.text = _desc;
         start = retorno;
         _enteredStart = true;
@@ -175,9 +182,10 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
 
   /// Method to reset the bounds of the map such that it shows [destination]
   /// and [start]
-  _resetBounds(){
+  _resetBounds() {
     _mapController.fitBounds(
-      LatLngBounds(start['latlng'],destination['latlng']), options: FitBoundsOptions(padding: EdgeInsets.all(40.0)));
+        LatLngBounds(start['latlng'], destination['latlng']),
+        options: FitBoundsOptions(padding: EdgeInsets.all(40.0)));
   }
 
   /// Method to build the AppBar
@@ -187,110 +195,108 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-            Column(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(_isResult ? Icons.close : Icons.my_location,
-                      color: _color),
-                  onPressed: () {
-                    _isSearching
-                        ? setState(() {
-                      _isSearching = false;
-                    })
-                        : _mapController.move(_point, 18);
-                    setState(() {
-                      _isSearching = false;
-                      _getCurrentLocationMarker();
-                    });
-                  },
-                ),
+          Column(
+            children: <Widget>[
+              IconButton(
+                icon: Icon(_isResult ? Icons.close : Icons.my_location,
+                    color: _color),
+                onPressed: () {
+                  _isSearching
+                      ? setState(() {
+                          _isSearching = false;
+                        })
+                      : _mapController.move(_point, 18);
+                  setState(() {
+                    _isSearching = false;
+                    _getCurrentLocationMarker();
+                  });
+                },
+              ),
 
-                ///Button which swaps start and destination
-                _enteredStart
-                ? IconButton(
-                  icon: Icon(Icons.swap_vert, color: _color,
-                  ),
-                  onPressed: (){
+              ///Button which swaps start and destination
+              _enteredStart
+                  ? IconButton(
+                      icon: Icon(
+                        Icons.swap_vert,
+                        color: _color,
+                      ),
+                      onPressed: () {
+                        /// Swap start and destination
+                        String textToSwap = _ctrlStartSearch.text;
+                        double latToSwap = _startLat;
+                        double lngToSwap = _startLng;
+                        Map placeToSwap = start;
 
-                    /// Swap start and destination
-                    String textToSwap = _ctrlStartSearch.text;
-                    double latToSwap = _startLat;
-                    double lngToSwap = _startLng;
-                    Map placeToSwap = start;
+                        setState(() {
+                          /// Swap coordinates
+                          _startLat = _destLat;
+                          _startLng = _destLng;
+                          _destLat = latToSwap;
+                          _destLng = lngToSwap;
 
-                    setState(() {
-                      /// Swap coordinates
-                      _startLat = _destLat;
-                      _startLng = _destLng;
-                      _destLat = latToSwap;
-                      _destLng = lngToSwap;
+                          /// Swap place information Map
+                          start = destination;
+                          destination = placeToSwap;
 
-                      /// Swap place information Map
-                      start = destination;
-                      destination = placeToSwap;
+                          /// Swap markers
+                          _markers[0] = Marker(
+                            anchorPos: AnchorPos.align(AnchorAlign.top),
+                            width: 80.0,
+                            height: 80.0,
+                            point: LatLng(_startLat, _startLng),
+                            builder: (ctx) => new Container(
+                              child: Icon(Icons.location_on, size: 50.0),
+                            ),
+                          );
+                          _markers[1] = Marker(
+                            anchorPos: AnchorPos.align(AnchorAlign.top),
+                            width: 80.0,
+                            height: 80.0,
+                            point: LatLng(_destLat, _destLng),
+                            builder: (ctx) => new Container(
+                              child: Icon(Icons.flag, size: 50.0),
+                            ),
+                          );
 
-                      /// Swap markers
-                      _markers[0] = Marker(
-                        anchorPos: AnchorPos.align(AnchorAlign.top),
-                        width: 80.0,
-                        height: 80.0,
-                        point: LatLng(_startLat, _startLng),
-                        builder: (ctx) => new Container(
-                          child: Icon(Icons.location_on, size: 50.0),
-                        ),
-                      );
-                      _markers[1] = Marker(
-                        anchorPos: AnchorPos.align(AnchorAlign.top),
-                        width: 80.0,
-                        height: 80.0,
-                        point: LatLng(_destLat, _destLng),
-                        builder: (ctx) => new Container(
-                          child: Icon(Icons.flag, size: 50.0),
-                        ),
-                      );
+                          /// Swap TextField contents
+                          _ctrlStartSearch.text = _ctrlDestSearch.text;
+                          _ctrlDestSearch.text = textToSwap;
 
-                      /// Swap TextField contents
-                      _ctrlStartSearch.text = _ctrlDestSearch.text;
-                      _ctrlDestSearch.text = textToSwap;
+                          /// Reset the bounds of the map
+                          _resetBounds();
+                        });
+                      },
+                    )
+                  : Container(),
 
-                      /// Reset the bounds of the map
-                      _resetBounds();
-                    });
-                  },
-                )
-                : Container(),
-
-                _enteredStart
-                    ? IconButton(
-                  icon: Icon(_isResult ? Icons.close : Icons.flag,
-                      color: _color),
-                  onPressed: () {
-                    _isSearching
-                        ? setState(() {
-                      _isSearching = false;
-                    })
-                        :
-                    setState(() {
-                      _isSearching = false;
-                    });
-                  },
-                )
-                    : Container(),
-              ],
+              _enteredStart
+                  ? IconButton(
+                      icon: Icon(_isResult ? Icons.close : Icons.flag,
+                          color: _color),
+                      onPressed: () {
+                        _isSearching
+                            ? setState(() {
+                                _isSearching = false;
+                              })
+                            : setState(() {
+                                _isSearching = false;
+                              });
+                      },
+                    )
+                  : Container(),
+            ],
           ),
           Expanded(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(0, 0, 10.0, 0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  _buildStartTextField(_isResult),
-                  _enteredStart ? _buildDestTextField(_isResult) : Container(),
-                ],
-              ),
-            )
-
-          ),
+              child: Container(
+            padding: EdgeInsets.fromLTRB(0, 0, 10.0, 0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                _buildStartTextField(_isResult),
+                _enteredStart ? _buildDestTextField(_isResult) : Container(),
+              ],
+            ),
+          )),
         ],
       ),
     );
@@ -394,7 +400,9 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                       _addresses = res;
                     });
                     _searchingDestination = true;
-                    _mapController.fitBounds(LatLngBounds(LatLng(_startLat, _startLng),LatLng(_destLat,_destLng)));
+                    _mapController.fitBounds(LatLngBounds(
+                        LatLng(_startLat, _startLng),
+                        LatLng(_destLat, _destLng)));
                   },
                 ),
               ),
@@ -436,13 +444,23 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
       lng: _lng,
       mapController: _mapController,
       popupLayerController: _popupController,
-      markers: _markers,                            /// markers that should be displayed
+      markers: _markers,
+
+      /// markers that should be displayed
       mapOptions: MapOptions(
         plugins: [PopupMarkerPlugin()],
-        onLongPress: _lookUpLocation,               /// use reverse geocoding to look up location of long press
-        onTap: (_) => _popupController.hidePopup(), /// hide popups if user taps on map
-        center: LatLng(_lat, _lng),                 /// initial center position
-        zoom: 18.0,                                 /// initial zoom level
+        onLongPress: _lookUpLocation,
+
+        /// use reverse geocoding to look up location of long press
+        onTap: (_) => _popupController.hidePopup(),
+
+        /// hide popups if user taps on map
+        center: LatLng(_lat, _lng),
+
+        /// initial center position
+        zoom: 18.0,
+
+        /// initial zoom level
       ),
       usePolyline: false,
       coordinates: null,
@@ -451,8 +469,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
 
   /// Method to look up a given location [latLng] using Nominatim reverse
   /// geocoding. Creates a marker at the location that has been looked up
-  _lookUpLocation(LatLng latLng){
-
+  _lookUpLocation(LatLng latLng) {
     setState(() {
       _markers.add(Marker(
         anchorPos: AnchorPos.align(AnchorAlign.top),
@@ -460,14 +477,13 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
         height: 50.0,
         point: latLng,
         builder: (ctx) => new Container(
-          child: Icon(
-            Icons.help,
-            size: 50.0,
-            color: _color,
-      )),
+            child: Icon(
+          Icons.help,
+          size: 50.0,
+          color: _color,
+        )),
       ));
     });
-
   }
 
   Widget _buildBody(BuildContext context) {
@@ -503,7 +519,7 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                         width: MediaQuery.of(context).size.width * 0.7,
                         padding: EdgeInsets.all(15),
                         child: Scrollbar(
-                                child: new SingleChildScrollView(
+                            child: new SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           reverse: false,
                           child: AutoSizeText(
@@ -520,15 +536,17 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
     );
   }
 
-  String _getCardText(){
-
+  String _getCardText() {
     String toReturn = "";
 
-    if(_desc == null){
+    if (_desc == null) {
       toReturn = widget.awaitingForLocation;
     } else {
-      if(_enteredDest){
-        toReturn = "Start the calculation of your route\nfrom \t" + start['city'] + "\nto \t" + destination['city'];
+      if (_enteredDest) {
+        toReturn = "Start the calculation of your route\nfrom \t" +
+            start['city'] +
+            "\nto \t" +
+            destination['city'];
       } else {
         toReturn = "Please enter your starting point and your destination";
       }
@@ -554,8 +572,13 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                 Icons.arrow_forward,
               ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => RouteChoiceScreen(LatLng(_startLat,_startLng), LatLng(_destLat,_destLng))));
+                showModalBottomSheet<void>(
+                    backgroundColor: Colors.transparent,
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return _modalBottomSheet();
+                    });
               }),
         ),
       ),
@@ -591,14 +614,15 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                     retorno = {
                       'latlng': LatLng(_lat, _lng),
                       'state': _addresses[index]['state'],
-                      'desc': "${_addresses[index]['state']}, ${_addresses[index]['city']}, ${_addresses[index]['suburb']}, ${_addresses[index]['neighbourhood']}, ${_addresses[index]['road']}",
+                      'desc':
+                          "${_addresses[index]['state']}, ${_addresses[index]['city']}, ${_addresses[index]['suburb']}, ${_addresses[index]['neighbourhood']}, ${_addresses[index]['road']}",
                       'city': "${_addresses[0]['city']}",
                     };
 
                     IconData iconToUseForMarker;
                     int markerIndex;
 
-                    if(_searchingDestination){
+                    if (_searchingDestination) {
                       /// The entered location is the destination
                       _destLat = _lat;
                       _destLng = _lng;
@@ -608,12 +632,12 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
                       /// Add a new marker
                       _markers[1] = Marker(
                           anchorPos: AnchorPos.align(AnchorAlign.top),
-                        width: 80.0,
-                        height: 80.0,
-                        point: LatLng(double.parse(_addresses[index]['lat']),
-                            double.parse(_addresses[index]['lng'])),
-                        builder: (ctx) => new Container(
-                          child: Icon(iconToUseForMarker, size: 50.0)));
+                          width: 80.0,
+                          height: 80.0,
+                          point: LatLng(double.parse(_addresses[index]['lat']),
+                              double.parse(_addresses[index]['lng'])),
+                          builder: (ctx) => new Container(
+                              child: Icon(iconToUseForMarker, size: 50.0)));
 
                       /// Update text in TextField
                       _ctrlDestSearch.text = _desc;
@@ -626,12 +650,10 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
 
                       /// Reset bounds of the map
                       _resetBounds();
-
                     } else {
-
                       /// The entered location is the starting point
-                      _startLat= _lat;
-                      _startLng= _lng;
+                      _startLat = _lat;
+                      _startLng = _lng;
                       iconToUseForMarker = Icons.location_on;
                       start = retorno;
 
@@ -742,6 +764,215 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  /// Function to build the content of the modal bottom sheet
+  _modalBottomSheet() {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "The following information is required in order to calculate the best route.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 24.0),
+            decoration: BoxDecoration(
+                color: TripItColors.primaryLightBlue,
+                borderRadius: BorderRadius.circular(10)),
+            padding: new EdgeInsets.all(2.0),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                children: <Widget>[
+                  // ChargeSliderWidget for MinimumCharge
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Initial state of carge",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              left: 8.0, top: 0.0, right: 8.0, bottom: 8.0),
+                          child: FluidSlider(
+                            valueTextStyle: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color: TripItColors.primaryDarkBlue,
+                            ),
+                            value: 80,
+                            onChanged: (newCharge) {
+                              setState(() {
+                                initialSoC = newCharge.toInt();
+                              });
+                            },
+                            min: 5,
+                            max: 100,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 24.0),
+            decoration: BoxDecoration(
+                color: TripItColors.primaryLightBlue,
+                borderRadius: BorderRadius.circular(10)),
+            padding: new EdgeInsets.all(2.0),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                children: <Widget>[
+                  // ChargeSliderWidget for MinimumCharge
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Number of persons in the car",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              left: 8.0, top: 0.0, right: 8.0, bottom: 8.0),
+                          child: FluidSlider(
+                            valueTextStyle: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color: TripItColors.primaryDarkBlue,
+                            ),
+                            value: 1,
+                            onChanged: (newNo) {
+                              setState(() {
+                                noOfPers = newNo.toInt();
+                              });
+                            },
+                            min: 1,
+                            max: 10,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 24.0),
+            decoration: BoxDecoration(
+                color: TripItColors.primaryLightBlue,
+                borderRadius: BorderRadius.circular(10)),
+            padding: new EdgeInsets.all(2.0),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                children: <Widget>[
+                  // ChargeSliderWidget for MinimumCharge
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "External temperature in °C",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              left: 8.0, top: 0.0, right: 8.0, bottom: 8.0),
+                          child: FluidSlider(
+                            valueTextStyle: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color: TripItColors.primaryDarkBlue,
+                            ),
+                            value: 20,
+                            onChanged: (newTemp) {
+                              setState(() {
+                                extTemp = newTemp.toInt();
+                              });
+                            },
+                            min: -20,
+                            max: 50,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(8.0),
+            child: FloatingActionButton(
+              tooltip: "Trip it!",
+              heroTag: "nextScreen",
+              child: Icon(
+                Icons.arrow_forward,
+              ),
+              onPressed: () {
+                // TODO: Check if start and destination have been entered
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RouteChoiceScreen(
+                        LatLng(_startLat, _startLng),
+                        LatLng(_destLat, _destLng),
+                        initialSoC,
+                        noOfPers,
+                        extTemp),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

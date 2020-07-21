@@ -19,11 +19,14 @@ class DrivingContext{
   bool lights = false;
   bool climOrHeat= false;
 
-  /// Constructor using a profile
-  DrivingContext(Profile profile){
+  /// Constructor using a [profile], [initialSoC], [numberOfPersons] and [externalTemp]
+  DrivingContext(Profile profile, int initialSoC, int numberOfPersons, int externalTemp){
     this.carType = profile.getCar();
     this.energyLowLimit = profile.getMinimumCharge()/100;
     this.energyRefill = profile.getMaximumCharge()/100;
+    this.initialSoC = initialSoC/100;
+    this.numberOfPersons = numberOfPersons;
+    this.externalTemp = externalTemp;
   }
 
 

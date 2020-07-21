@@ -17,9 +17,12 @@ class RouteChoiceScreen extends StatefulWidget {
   static const routeName = '/routechoice';
   final LatLng startPoint;
   final LatLng destinationPoint;
+  final int initialSoC;
+  final int noOfPers;
+  final int extTemp;
 
   /// Constructor
-  RouteChoiceScreen(this.startPoint, this.destinationPoint);
+  RouteChoiceScreen(this.startPoint, this.destinationPoint, this.initialSoC, this.noOfPers, this.extTemp);
 
   State<StatefulWidget> createState() =>
       _RouteChoiceScreenState(startPoint, destinationPoint);
@@ -47,6 +50,7 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
   double consumption;
 
   _RouteChoiceScreenState(LatLng start, LatLng destination) {
+
     /// Initialize the state variables
     startLat = start.latitude;
     startLng = start.longitude;
@@ -213,7 +217,7 @@ class _RouteChoiceScreenState extends State<RouteChoiceScreen> {
 
     /// Calculate consumption
     Profile profile = Provider.of<Profile>(context);
-    DrivingContext dc = new DrivingContext(profile);
+    DrivingContext dc = new DrivingContext(profile, widget.initialSoC, widget.noOfPers, widget.extTemp);
     TripConsumption tripConsumption = new TripConsumption(
         dc, info['waypoints'], info['steps'], info['elevation']);
     tripConsumption.calculateSoc();
