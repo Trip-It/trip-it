@@ -951,26 +951,52 @@ class _NominatimLocationPickerState extends State<NominatimLocationPicker>
           Container(
             margin: EdgeInsets.all(8.0),
             child: FloatingActionButton(
-              tooltip: "Trip it!",
-              heroTag: "nextScreen",
-              child: Icon(
-                Icons.arrow_forward,
-              ),
-              onPressed: () {
-                // TODO: Check if start and destination have been entered
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => RouteChoiceScreen(
-                        LatLng(_startLat, _startLng),
-                        LatLng(_destLat, _destLng),
-                        initialSoC,
-                        noOfPers,
-                        extTemp),
-                  ),
-                );
-              },
-            ),
+                tooltip: "Trip it!",
+                heroTag: "nextScreen",
+                child: Icon(
+                  Icons.arrow_forward,
+                ),
+                onPressed: () {
+                  /// Check if start and destination have been entered
+                  /// if yes, push next screen and start route calculation
+                  if (_startLat != null &&
+                      _startLng != null &&
+                      _destLat != null &&
+                      _destLng != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RouteChoiceScreen(
+                            LatLng(_startLat, _startLng),
+                            LatLng(_destLat, _destLng),
+                            initialSoC,
+                            noOfPers,
+                            extTemp),
+                      ),
+                    );
+                  } else {
+                    /// Hide ModalBottomSheet and show AlertDialog
+                    Navigator.pop(context);
+                    showCupertinoDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CupertinoAlertDialog(
+                            title: Text(
+                                'No valid start and/or destination entered.'),
+                            content: Text(
+                                'The start and/or the destination provided cannot be processed. Please enter valid places.'),
+                            actions: <Widget>[
+                              CupertinoDialogAction(
+                                child: Text('Dismiss'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                  }
+                }),
           ),
         ],
       ),
